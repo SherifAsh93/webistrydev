@@ -6,9 +6,11 @@ const cairo = Cairo({ subsets: ["arabic"], weight: ["400", "700", "900"] });
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ويب كورنر | حلول برمجية مخصصة - شريف",
-  description:
-    "استوديو تطوير تطبيقات ويب في دمياط، مصر. متخصصون في حلول العيادات والشركات.",
+  title: "Web Corner | ويب كورنر",
+  description: "Software Studio in Damietta",
+  icons: {
+    icon: "/public/favicon.svg",
+  },
 };
 
 export default function RootLayout({

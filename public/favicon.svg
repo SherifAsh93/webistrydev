@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- الخلفية المربعة المنحنية -->
+  <rect width="32" height="32" rx="8" fill="#2563eb"></rect>
+  
+  <!-- أيقونة البرمجة </> -->
+  <path d="M10 12L7 16L10 20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M22 12L25 16L22 20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M18 10L14 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
