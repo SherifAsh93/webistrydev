@@ -1,0 +1,232 @@
+export type Project = {
+  id: string;
+  name: string;
+  description: string;
+  category: "fashion" | "ecommerce" | "clinic" | "web-app" | "corporate" | "landing";
+  categoryLabel: string;
+  categoryColor: string;
+  tags: string[];
+  url: string;
+  screenshot: string;
+  featured: boolean;
+};
+
+export type ServiceItem = {
+  icon: string;
+  title: string;
+  description: string;
+  category: string;
+};
+
+export type PricingTier = {
+  name: string;
+  egp: string;
+  usd: string;
+  description: string;
+  features: string[];
+  timeline: string;
+  popular: boolean;
+  color: string;
+};
+
+export const projects: Project[] = [
+  {
+    id: "ahmed-elakad",
+    name: "Ahmed El Akad",
+    description:
+      "Luxury couture brand website for Cairo's premier fashion designer. Custom gallery, collection management, and appointment booking system.",
+    category: "fashion",
+    categoryLabel: "Fashion Brand",
+    categoryColor: "from-rose-500 to-pink-600",
+    tags: ["Next.js", "Cloudinary", "VPS", "Full-Stack"],
+    url: "https://ahmedelakad.com",
+    screenshot: "/projects/ahmed-elakad.png",
+    featured: true,
+  },
+  {
+    id: "furniture-studio",
+    name: "Furniture Studio",
+    description:
+      "Premium architectural furniture marketplace with full e-commerce: product management, cart, orders, and a powerful admin dashboard.",
+    category: "ecommerce",
+    categoryLabel: "E-Commerce",
+    categoryColor: "from-amber-500 to-orange-600",
+    tags: ["Next.js", "Neon DB", "Admin Panel", "Full-Stack"],
+    url: "https://furniture-studio-fs.vercel.app/",
+    screenshot: "/projects/furniture-studio.png",
+    featured: false,
+  },
+  {
+    id: "zahrtelkhlig",
+    name: "Zahret Elkhaleel",
+    description:
+      "Mobile-first hijab fashion e-commerce store with categories, wishlist, checkout flow, and a complete admin panel.",
+    category: "ecommerce",
+    categoryLabel: "E-Commerce",
+    categoryColor: "from-amber-500 to-orange-600",
+    tags: ["Next.js", "PostgreSQL", "Mobile-First", "E-Commerce"],
+    url: "https://zahrtelkhlig.vercel.app/",
+    screenshot: "/projects/zahrtelkhlig.png",
+    featured: false,
+  },
+  {
+    id: "batrawy-clinic",
+    name: "Al-Batrawy Clinic",
+    description:
+      "Complete medical clinic management system: patient records, appointment scheduling, billing, and a full doctor dashboard.",
+    category: "clinic",
+    categoryLabel: "Web App",
+    categoryColor: "from-teal-500 to-emerald-600",
+    tags: ["Next.js", "Drizzle ORM", "Web App", "Healthcare"],
+    url: "https://batrawy-clinic.vercel.app",
+    screenshot: "/projects/batrawy-clinic.png",
+    featured: false,
+  },
+  {
+    id: "ameer-dental",
+    name: "Ameer Dental",
+    description:
+      "Professional dental clinic platform with smart appointment booking, patient management, and treatment tracking.",
+    category: "clinic",
+    categoryLabel: "Clinic",
+    categoryColor: "from-teal-500 to-emerald-600",
+    tags: ["React", "Next.js", "Tailwind", "Clinic"],
+    url: "https://ameer-dental-clinic.vercel.app",
+    screenshot: "/projects/ameer-dental.png",
+    featured: false,
+  },
+  {
+    id: "elghaly-vr",
+    name: "Elghaly VR",
+    description:
+      "Innovative AR room visualizer — captures real-world colors from your mobile camera and paints virtual rooms in real-time.",
+    category: "web-app",
+    categoryLabel: "Web App",
+    categoryColor: "from-violet-500 to-purple-600",
+    tags: ["Next.js", "Camera API", "WebRTC", "AR/VR"],
+    url: "https://elghaly-vr.vercel.app/",
+    screenshot: "/projects/elghaly-vr.png",
+    featured: false,
+  },
+];
+
+export const services: ServiceItem[] = [
+  {
+    icon: "🛍",
+    title: "E-Commerce Stores",
+    description:
+      "Full online stores with product management, cart, secure checkout, orders tracking, and admin dashboard.",
+    category: "ecommerce",
+  },
+  {
+    icon: "👗",
+    title: "Brand & Fashion Sites",
+    description:
+      "Luxury brand websites that showcase collections, manage media, and convert visitors into clients.",
+    category: "fashion",
+  },
+  {
+    icon: "🏥",
+    title: "Medical & Clinic Apps",
+    description:
+      "End-to-end clinic management systems: appointments, patient records, billing, and doctor portals.",
+    category: "clinic",
+  },
+  {
+    icon: "⚙️",
+    title: "Custom Web Applications",
+    description:
+      "Powerful web apps with authentication, dashboards, real-time data, and complex business logic.",
+    category: "web-app",
+  },
+  {
+    icon: "💼",
+    title: "Corporate Websites",
+    description:
+      "Professional multi-page corporate sites that establish credibility and generate business leads.",
+    category: "corporate",
+  },
+  {
+    icon: "🚀",
+    title: "High-Converting Landing Pages",
+    description:
+      "Fast, focused landing pages engineered to capture leads and drive conversions — built for results.",
+    category: "landing",
+  },
+];
+
+export const pricing: PricingTier[] = [
+  {
+    name: "Starter",
+    egp: "6,000 – 12,000",
+    usd: "$150 – $300",
+    description: "Perfect for individuals and small businesses needing a fast, clean web presence.",
+    features: [
+      "1–3 page website",
+      "Mobile-responsive design",
+      "Contact form",
+      "Basic SEO setup",
+      "Fast hosting on Vercel",
+      "2 revision rounds",
+    ],
+    timeline: "1 – 2 weeks",
+    popular: false,
+    color: "from-slate-600 to-slate-700",
+  },
+  {
+    name: "Business",
+    egp: "18,000 – 38,000",
+    usd: "$400 – $800",
+    description: "For growing businesses that need a full professional website with content management.",
+    features: [
+      "5–10 page website",
+      "Custom design system",
+      "CMS / Admin panel",
+      "SEO optimized",
+      "Performance & analytics",
+      "3 revision rounds",
+      "30 days post-launch support",
+    ],
+    timeline: "3 – 4 weeks",
+    popular: true,
+    color: "from-violet-600 to-purple-700",
+  },
+  {
+    name: "E-Commerce",
+    egp: "40,000 – 75,000",
+    usd: "$900 – $1,600",
+    description: "A complete online store — sell your products globally with a professional storefront.",
+    features: [
+      "Full product catalog",
+      "Cart & secure checkout",
+      "Order management",
+      "Admin dashboard",
+      "Inventory tracking",
+      "Mobile-first design",
+      "Unlimited revisions during build",
+      "60 days post-launch support",
+    ],
+    timeline: "5 – 6 weeks",
+    popular: false,
+    color: "from-amber-600 to-orange-700",
+  },
+  {
+    name: "Custom App",
+    egp: "70,000+",
+    usd: "$1,500+",
+    description: "Complex web applications with advanced features, databases, and business logic.",
+    features: [
+      "Custom architecture",
+      "Authentication & roles",
+      "Real-time features",
+      "Complex database design",
+      "API integrations",
+      "Full test coverage",
+      "Unlimited revisions",
+      "90 days post-launch support",
+    ],
+    timeline: "6+ weeks",
+    popular: false,
+    color: "from-teal-600 to-emerald-700",
+  },
+];
