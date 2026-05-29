@@ -158,3 +158,12 @@ body {
 ::-webkit-scrollbar-thumb { background: #ddd6fe; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #c4b5fd; }
 ::selection { background: rgba(124, 58, 237, 0.15); color: #4c1d95; }
+
+a,
+button,
+[role="button"],
+label[for],
+select,
+[tabindex]:not([tabindex="-1"]) {
+  cursor: pointer;
+}
