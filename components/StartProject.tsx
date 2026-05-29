@@ -7,11 +7,11 @@ import { projects } from "@/lib/data";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 
 const PROJECT_TYPES = [
-  { id: "ecommerce", label: "E-Commerce Store", icon: "🛍" },
-  { id: "fashion", label: "Fashion / Brand", icon: "👗" },
-  { id: "clinic", label: "Medical / Clinic", icon: "🏥" },
-  { id: "web-app", label: "Web Application", icon: "⚙️" },
-  { id: "corporate", label: "Corporate Site", icon: "💼" },
+  { id: "ecommerce", label: "E-Commerce", icon: "🛍" },
+  { id: "fashion", label: "Fashion Brand", icon: "👗" },
+  { id: "clinic", label: "Clinic App", icon: "🏥" },
+  { id: "web-app", label: "Web App", icon: "⚙️" },
+  { id: "corporate", label: "Corporate", icon: "💼" },
   { id: "landing", label: "Landing Page", icon: "🚀" },
 ];
 
