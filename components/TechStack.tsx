@@ -1,7 +1,7 @@
 const techs = [
   { name: "Next.js", icon: "⬡" },
   { name: "React", icon: "⚛" },
-  { name: "TypeScript", icon: "𝗧𝗦" },
+  { name: "TypeScript", icon: "TS" },
   { name: "Tailwind CSS", icon: "✦" },
   { name: "PostgreSQL", icon: "🐘" },
   { name: "Neon DB", icon: "◈" },
@@ -17,17 +17,17 @@ const doubled = [...techs, ...techs];
 
 export default function TechStack() {
   return (
-    <section className="py-12 overflow-hidden border-y border-white/[0.04]">
+    <section className="py-10 overflow-hidden border-y border-violet-100 bg-white">
       <div className="flex">
         <div className="flex gap-10 animate-marquee whitespace-nowrap">
           {doubled.map((tech, i) => (
             <div
               key={i}
-              className="flex items-center gap-2.5 text-slate-500 hover:text-slate-300 transition-colors shrink-0"
+              className="flex items-center gap-2 text-slate-400 hover:text-violet-600 transition-colors shrink-0"
             >
-              <span className="text-base leading-none">{tech.icon}</span>
+              <span className="text-sm font-bold leading-none text-slate-300">{tech.icon}</span>
               <span className="text-sm font-bold tracking-wide">{tech.name}</span>
-              <span className="text-slate-700 ml-4">·</span>
+              <span className="text-slate-200 ml-3">·</span>
             </div>
           ))}
         </div>
