@@ -11,8 +11,10 @@ function detectLang(): Lang {
   try {
     const saved = localStorage.getItem("lang") as Lang | null;
     if (saved === "en" || saved === "ar") return saved;
-    const browserLang = navigator.language?.toLowerCase() || "";
-    if (browserLang.startsWith("ar")) return "ar";
+    // Check all browser language preferences, not just the first one
+    const langs = navigator.languages?.length ? navigator.languages : [navigator.language];
+    const hasArabic = langs.some((l) => l?.toLowerCase().startsWith("ar"));
+    if (hasArabic) return "ar";
   } catch {}
   return "en";
 }
