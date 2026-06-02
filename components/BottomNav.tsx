@@ -1,16 +1,18 @@
 "use client";
 import { Home, Briefcase, DollarSign, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
-
-const items = [
-  { icon: Home, label: "Home", href: "#" },
-  { icon: Briefcase, label: "Work", href: "#portfolio" },
-  { icon: DollarSign, label: "Pricing", href: "#pricing" },
-  { icon: Mail, label: "Contact", href: "#start-project" },
-];
+import { useLang } from "@/lib/language-context";
 
 export default function BottomNav() {
   const [active, setActive] = useState("#");
+  const { t } = useLang();
+
+  const items = [
+    { icon: Home, label: t.bottomNav.home, href: "#" },
+    { icon: Briefcase, label: t.bottomNav.work, href: "#portfolio" },
+    { icon: DollarSign, label: t.bottomNav.pricing, href: "#pricing" },
+    { icon: Mail, label: t.bottomNav.contact, href: "#start-project" },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,7 +36,8 @@ export default function BottomNav() {
   }, []);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-white/95 backdrop-blur-xl border-t border-violet-100 shadow-2xl shadow-violet-100/50"
+    <nav
+      className="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-white/95 backdrop-blur-xl border-t border-violet-100 shadow-2xl shadow-violet-100/50"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="grid grid-cols-4">
@@ -42,7 +45,7 @@ export default function BottomNav() {
           const isActive = active === href;
           return (
             <a
-              key={label}
+              key={href}
               href={href}
               onClick={() => setActive(href)}
               className={`flex flex-col items-center justify-center gap-1 py-3 transition-all ${

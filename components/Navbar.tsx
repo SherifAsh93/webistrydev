@@ -2,13 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Logo from "@/components/Logo";
-
-const links = [
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Services", href: "#services" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "How It Works", href: "#how-it-works" },
-];
+import { useLang } from "@/lib/language-context";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -16,6 +10,14 @@ export default function Navbar() {
   const clickCountRef = useRef(0);
   const lastClickRef = useRef(0);
   const router = useRouter();
+  const { lang, toggle, t } = useLang();
+
+  const links = [
+    { label: t.nav.portfolio, href: "#portfolio" },
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.pricing, href: "#pricing" },
+    { label: t.nav.howItWorks, href: "#how-it-works" },
+  ];
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -63,7 +65,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-7">
           {links.map((l) => (
             <a
-              key={l.label}
+              key={l.href}
               href={l.href}
               className="text-sm text-slate-500 hover:text-violet-700 transition-colors font-semibold"
             >
@@ -72,15 +74,24 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* CTA + mobile toggle */}
-        <div className="flex items-center gap-3">
+        {/* CTA + Lang toggle + mobile toggle */}
+        <div className="flex items-center gap-2">
+          {/* Language toggle */}
+          <button
+            onClick={toggle}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-violet-100 bg-white text-xs font-extrabold text-violet-700 hover:bg-violet-50 hover:border-violet-300 transition-all shadow-sm shrink-0"
+            aria-label="Toggle language"
+          >
+            {lang === "en" ? "عر" : "EN"}
+          </button>
+
           <a
             href="#start-project"
             className="btn-primary hidden md:flex items-center gap-1.5 px-5 py-2.5 text-sm"
           >
-            <span>Hire Me</span>
-            <span className="opacity-70">→</span>
+            {t.nav.hire}
           </a>
+
           <button
             onClick={() => setMenuOpen((v) => !v)}
             className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-xl border border-violet-100 bg-white shadow-sm"
@@ -98,7 +109,7 @@ export default function Navbar() {
         <div className="absolute top-20 left-4 right-4 bg-white rounded-2xl p-5 flex flex-col gap-2 shadow-2xl shadow-violet-100 border border-violet-100 md:hidden">
           {links.map((l) => (
             <a
-              key={l.label}
+              key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
               className="text-sm font-semibold text-slate-600 hover:text-violet-700 py-2.5 border-b border-slate-50 last:border-0 transition-colors"
@@ -111,7 +122,7 @@ export default function Navbar() {
             onClick={() => setMenuOpen(false)}
             className="btn-primary mt-2 flex items-center justify-center gap-2 py-3 text-sm"
           >
-            Hire Me →
+            {t.nav.hire}
           </a>
         </div>
       )}

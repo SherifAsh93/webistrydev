@@ -1,27 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const ROTATING_WORDS = ["Websites", "Web Apps", "E-Commerce", "Digital Products"];
-
-const stats = [
-  { number: "6+", label: "Projects Shipped" },
-  { number: "3+", label: "Years Experience" },
-  { number: "Next.js", label: "Primary Stack" },
-  { number: "100%", label: "On-Time Delivery" },
-];
+import { useLang } from "@/lib/language-context";
 
 export default function Hero() {
   const [wordIdx, setWordIdx] = useState(0);
+  const { t } = useLang();
+  const words = t.hero.rotating;
 
   useEffect(() => {
-    const t = setInterval(() => setWordIdx((i) => (i + 1) % ROTATING_WORDS.length), 2800);
-    return () => clearInterval(t);
-  }, []);
+    setWordIdx(0);
+  }, [words]);
+
+  useEffect(() => {
+    const timer = setInterval(() => setWordIdx((i) => (i + 1) % words.length), 2800);
+    return () => clearInterval(timer);
+  }, [words]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-28 pb-20">
-      {/* Subtle aurora blobs (light mode) */}
+      {/* Subtle aurora blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
         <div
           className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full blur-3xl animate-aurora opacity-30"
@@ -35,13 +33,9 @@ export default function Hero() {
           className="absolute -bottom-40 left-1/4 w-[400px] h-[400px] rounded-full blur-3xl animate-aurora opacity-15"
           style={{ background: "radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%)", animationDelay: "6s" }}
         />
-        {/* Light dot grid */}
         <div
           className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage: "radial-gradient(#7c3aed 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
+          style={{ backgroundImage: "radial-gradient(#7c3aed 1px, transparent 1px)", backgroundSize: "32px 32px" }}
         />
       </div>
 
@@ -54,7 +48,7 @@ export default function Hero() {
           className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-violet-200 bg-violet-50 text-sm text-violet-700 mb-8 font-semibold shadow-sm"
         >
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-dot" />
-          Available for new projects worldwide
+          {t.hero.badge}
         </motion.div>
 
         {/* Headline */}
@@ -65,8 +59,8 @@ export default function Hero() {
           className="mb-8"
         >
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.05] text-slate-900">
-            I Build{" "}
-            <span className="inline-block min-w-[3ch] text-left">
+            {t.hero.titlePre}{" "}
+            <span className="inline-block min-w-[3ch]">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={wordIdx}
@@ -76,13 +70,12 @@ export default function Hero() {
                   transition={{ duration: 0.45 }}
                   className="text-gradient inline-block"
                 >
-                  {ROTATING_WORDS[wordIdx]}
+                  {words[wordIdx]}
                 </motion.span>
               </AnimatePresence>
             </span>
             <br />
-            <span className="text-slate-900">That </span>
-            <span className="text-gradient-gold">Win.</span>
+            <span className="text-gradient-gold">{t.hero.titlePost}</span>
           </h1>
         </motion.div>
 
@@ -93,11 +86,7 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed font-medium"
         >
-          Full-Stack Web Developer specializing in{" "}
-          <span className="text-violet-600 font-semibold">Next.js</span>,{" "}
-          <span className="text-sky-600 font-semibold">React</span> &{" "}
-          <span className="text-amber-600 font-semibold">modern web apps</span>.
-          I turn your vision into fast, elegant digital products — available to clients worldwide.
+          {t.hero.desc}
         </motion.p>
 
         {/* CTAs */}
@@ -107,17 +96,14 @@ export default function Hero() {
           transition={{ delay: 0.55, duration: 0.5 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
         >
-          <a
-            href="#start-project"
-            className="btn-primary flex items-center justify-center gap-2 px-9 py-4 text-base"
-          >
-            Start a Project →
+          <a href="#start-project" className="btn-primary flex items-center justify-center gap-2 px-9 py-4 text-base">
+            {t.hero.cta1} →
           </a>
           <a
             href="#portfolio"
             className="flex items-center justify-center gap-2 px-9 py-4 text-base font-bold text-slate-700 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-violet-200 hover:shadow-md hover:-translate-y-0.5 transition-all"
           >
-            See My Work ↓
+            {t.hero.cta2} ↓
           </a>
         </motion.div>
 
@@ -128,7 +114,7 @@ export default function Hero() {
           transition={{ delay: 0.7, duration: 0.5 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto"
         >
-          {stats.map((s, i) => (
+          {t.hero.stats.map((s, i) => (
             <div key={i} className="card rounded-2xl py-4 px-3 text-center">
               <div className="text-xl md:text-2xl font-extrabold text-violet-700 mb-1">{s.number}</div>
               <div className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">{s.label}</div>
@@ -139,7 +125,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Scroll</span>
+        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">{t.hero.scroll}</span>
         <div className="w-px h-8 bg-gradient-to-b from-violet-300 to-transparent" />
       </div>
     </section>

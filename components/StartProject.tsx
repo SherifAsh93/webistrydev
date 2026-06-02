@@ -5,24 +5,7 @@ import { CheckCircle2, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/lib/data";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
-
-const PROJECT_TYPES = [
-  { id: "ecommerce",  label: "Online Store",        icon: "🛒" },
-  { id: "website",    label: "Business Website",     icon: "🌐" },
-  { id: "web-app",    label: "Web Application",      icon: "⚙️" },
-  { id: "system",     label: "Management System",    icon: "📊" },
-  { id: "landing",    label: "Landing Page",         icon: "🚀" },
-  { id: "other",      label: "Something Else",       icon: "💡" },
-];
-
-const BUDGET_OPTIONS = [
-  "Under 12,000 EGP (~$300)",
-  "12,000 – 38,000 EGP ($300–$800)",
-  "38,000 – 75,000 EGP ($800–$1,600)",
-  "Over 75,000 EGP ($1,600+)",
-  "International rates (USD)",
-  "I'm flexible — let's discuss",
-];
+import { useLang } from "@/lib/language-context";
 
 type Status = "idle" | "sending" | "success";
 
@@ -35,16 +18,17 @@ export default function StartProject() {
   const [budget, setBudget] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const { t } = useLang();
+  const sp = t.startProject;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const ref = params.get("ref");
-    const t = params.get("type");
+    const tp = params.get("type");
     if (ref) setReference(ref);
-    if (t) setType(t);
+    if (tp) setType(tp);
   }, []);
 
-  // Show all portfolio projects as inspiration — client picks freely
   const filteredRefs = type ? projects : [];
 
   async function handleSubmit(e: React.FormEvent) {
@@ -68,11 +52,11 @@ export default function StartProject() {
             <div className="w-20 h-20 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center">
               <CheckCircle2 size={36} className="text-emerald-500" />
             </div>
-            <h2 className="text-3xl font-extrabold text-slate-900">Message Sent!</h2>
+            <h2 className="text-3xl font-extrabold text-slate-900">{sp.successTitle}</h2>
             <p className="text-slate-500 leading-relaxed">
-              Thanks <strong className="text-slate-800">{name}</strong>! I&apos;ve received your project request and will get back to you within 24 hours.
+              {sp.successMessage.replace("{name}", name)}
             </p>
-            <p className="text-sm text-slate-400">I&apos;ll reach out via the contact details you provided.</p>
+            <p className="text-sm text-slate-400">{sp.successNote}</p>
             <button
               onClick={() => {
                 setStatus("idle");
@@ -80,7 +64,7 @@ export default function StartProject() {
               }}
               className="text-sm font-bold text-violet-600 hover:text-violet-800 underline"
             >
-              Submit another request
+              {sp.successAgain}
             </button>
           </motion.div>
         </div>
@@ -92,16 +76,13 @@ export default function StartProject() {
     <section id="start-project" className="py-28 px-4 md:px-6 bg-white">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-14">
-          <p className="section-label justify-center mb-4">I&apos;m Listening</p>
+          <p className="section-label justify-center mb-4">{sp.sectionLabel}</p>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-            Tell Me Your Dream,
+            {sp.title1}
             <br />
-            <span className="text-gradient">I&apos;ll Build It for You.</span>
+            <span className="text-gradient">{sp.title2}</span>
           </h2>
-          <p className="text-slate-500 text-lg max-w-xl mx-auto">
-            You don&apos;t need to know anything about code or design — just describe what you want.
-            I&apos;ll turn your vision into a real, fast, beautiful product from scratch.
-          </p>
+          <p className="text-slate-500 text-lg max-w-xl mx-auto">{sp.desc}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -109,12 +90,12 @@ export default function StartProject() {
           <div className="card rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
               <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600">
-                Step 1 — What type of project?
+                {sp.step1Label}
               </p>
-              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Optional</span>
+              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{sp.step1Optional}</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-              {PROJECT_TYPES.map((pt) => (
+              {sp.types.map((pt) => (
                 <button
                   key={pt.id}
                   type="button"
@@ -142,11 +123,9 @@ export default function StartProject() {
                 className="card rounded-2xl p-6"
               >
                 <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-1">
-                  Step 2 — Pick a reference (optional)
+                  {sp.step2Label}
                 </p>
-                <p className="text-xs text-slate-400 mb-4">
-                  Choose a project from my portfolio as inspiration — or skip and describe from scratch.
-                </p>
+                <p className="text-xs text-slate-400 mb-4">{sp.step2Hint}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {filteredRefs.map((proj) => (
                     <button
@@ -175,7 +154,7 @@ export default function StartProject() {
                 </div>
                 {reference && (
                   <button type="button" onClick={() => setReference("")} className="mt-3 text-xs text-slate-400 hover:text-slate-600 underline">
-                    Clear selection
+                    {sp.clearRef}
                   </button>
                 )}
               </motion.div>
@@ -185,25 +164,25 @@ export default function StartProject() {
           {/* Step 3 */}
           <div className="card rounded-2xl p-6">
             <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-4">
-              Step 3 — Describe your idea
+              {sp.step3Label}
             </p>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
               rows={5}
-              placeholder="Tell me your dream — what do you want to build? Who is it for? What should it do? No technical knowledge needed, just describe it and I'll handle the rest..."
+              placeholder={sp.step3Placeholder}
               className="field w-full rounded-xl px-4 py-3 text-sm resize-none"
             />
             <div className="mt-3">
-              <label className="text-xs text-slate-500 font-semibold block mb-2">Budget range</label>
+              <label className="text-xs text-slate-500 font-semibold block mb-2">{sp.budgetLabel}</label>
               <select
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
                 className="field w-full rounded-xl px-4 py-2.5 text-sm"
               >
-                <option value="">Select a budget range (optional)</option>
-                {BUDGET_OPTIONS.map((b) => (
+                <option value="">{sp.budgetPlaceholder}</option>
+                {sp.budgets.map((b) => (
                   <option key={b} value={b}>{b}</option>
                 ))}
               </select>
@@ -213,44 +192,44 @@ export default function StartProject() {
           {/* Step 4 */}
           <div className="card rounded-2xl p-6">
             <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-4">
-              Step 4 — How to reach you
+              {sp.step4Label}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs text-slate-500 font-semibold block mb-2">
-                  Your Name <span className="text-rose-400">*</span>
+                  {sp.nameLabel} <span className="text-rose-400">*</span>
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  placeholder="Full name"
+                  placeholder={sp.namePlaceholder}
                   className="field w-full rounded-xl px-4 py-2.5 text-sm"
                 />
               </div>
               <div>
-                <label className="text-xs text-slate-500 font-semibold block mb-2">WhatsApp / Phone</label>
+                <label className="text-xs text-slate-500 font-semibold block mb-2">{sp.phoneLabel}</label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+20 100 000 0000"
+                  placeholder={sp.phonePlaceholder}
                   className="field w-full rounded-xl px-4 py-2.5 text-sm"
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="text-xs text-slate-500 font-semibold block mb-2">Email Address</label>
+                <label className="text-xs text-slate-500 font-semibold block mb-2">{sp.emailLabel}</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  placeholder={sp.emailPlaceholder}
                   className="field w-full rounded-xl px-4 py-2.5 text-sm"
                 />
               </div>
             </div>
-            <p className="text-[11px] text-slate-400 mt-3">* Provide at least one contact method (phone or email).</p>
+            <p className="text-[11px] text-slate-400 mt-3">{sp.contactNote}</p>
           </div>
 
           <button
@@ -261,12 +240,12 @@ export default function StartProject() {
             {status === "sending" ? (
               <>
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Sending...
+                {sp.sending}
               </>
             ) : (
               <>
                 <Send size={18} />
-                Send My Project Request
+                {sp.submit}
               </>
             )}
           </button>

@@ -1,10 +1,14 @@
+"use client";
 import Logo from "@/components/Logo";
+import { useLang } from "@/lib/language-context";
 
 const PHONE = "+20 100 752 6882";
 const WHATSAPP = "201007526882";
 const EMAIL = "sherif.ash93@gmail.com";
 
 export default function Footer() {
+  const { t } = useLang();
+
   return (
     <footer className="border-t border-violet-100 py-16 px-4 md:px-6 bg-white mb-16 md:mb-0">
       <div className="max-w-6xl mx-auto">
@@ -20,20 +24,20 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
-              Full-stack web developer building fast, modern digital products for businesses and entrepreneurs worldwide.
+              {t.footer.desc}
             </p>
           </div>
 
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-4">Navigation</p>
+            <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-4">{t.footer.navTitle}</p>
             <ul className="flex flex-col gap-2.5">
-              {["Portfolio", "Services", "Pricing", "How It Works", "Start a Project"].map((item) => (
-                <li key={item}>
+              {t.footer.navLinks.map((item) => (
+                <li key={item.href}>
                   <a
-                    href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+                    href={item.href}
                     className="text-sm text-slate-500 hover:text-violet-700 transition-colors font-medium"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -41,7 +45,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-4">Contact</p>
+            <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-4">{t.footer.contactTitle}</p>
             <ul className="flex flex-col gap-3">
               <li>
                 <a
@@ -53,7 +57,7 @@ export default function Footer() {
                   <span className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-base shrink-0 group-hover:bg-emerald-100 transition">
                     💬
                   </span>
-                  WhatsApp (fastest)
+                  {t.footer.whatsapp}
                 </a>
               </li>
               <li>
@@ -77,8 +81,8 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-slate-400">© {new Date().getFullYear()} Webistrydev. All rights reserved.</p>
-          <p className="text-xs text-slate-300">Built with Next.js · Tailwind · Deployed on Vercel</p>
+          <p className="text-xs text-slate-400">{t.footer.rights}</p>
+          <p className="text-xs text-slate-300">{t.footer.built}</p>
         </div>
       </div>
     </footer>
