@@ -9,7 +9,7 @@ export const translations = {
       services: "خدماتي",
       pricing: "الأسعار",
       howItWorks: "طريقة شغلي",
-      hire: "وظّفني ←",
+      hire: "ابدأ مشروعك ←",
     },
     hero: {
       badge: "فاضي لمشاريع جديدة",
@@ -211,7 +211,7 @@ export const translations = {
       services: "Services",
       pricing: "Pricing",
       howItWorks: "How It Works",
-      hire: "Hire Me →",
+      hire: "Start a Project →",
     },
     hero: {
       badge: "Available for new projects worldwide",
