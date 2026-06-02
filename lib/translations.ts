@@ -186,6 +186,22 @@ export const translations = {
       pricing: "الأسعار",
       contact: "تواصل",
     },
+    projectDescs: {
+      "ahmed-elakad": "موقع براند كوتور فاخر لأشهر مصمم أزياء في القاهرة. جاليري مخصص وإدارة مجموعات وحجز مواعيد.",
+      "furniture-studio": "ماركت بليس أثاث معماري فاخر بتجارة إلكترونية كاملة: إدارة منتجات وكارت وأوردرات ولوحة تحكم قوية.",
+      "zahrtelkhlig": "متجر حجاب كامل — كتالوج منتجات واختيار مقاسات وويش ليست وكارت وكاشير وتتبع أوردرات ونظام POS ولوحة تحكم كاملة. موبايل فيرست عشان يحس إنه آب أصلي.",
+      "batrawy-clinic": "نظام إدارة عيادة متكامل — ملفات مرضى وحجز مواعيد وفواتير ودوبورد دكتور. متاح من أي موبايل زي الآب الأصلي.",
+      "ameer-dental": "منصة عيادة أسنان بحجز مواعيد ذكي وإدارة مرضى وتتبع علاجات — شغّال بسلاسة على أي متصفح موبايل.",
+      "elghaly-vr": "تطبيق AR مبتكر — يلتقط الألوان الحقيقية من كاميرا الموبايل ويصبغ غرف افتراضية في الوقت الفعلي.",
+    } as Record<string, string>,
+    categoryLabels: {
+      fashion: "براند أزياء",
+      ecommerce: "تجارة إلكترونية",
+      clinic: "تطبيق ويب",
+      "web-app": "تطبيق ويب",
+      corporate: "موقع شركة",
+      landing: "صفحة هبوط",
+    } as Record<string, string>,
   },
   en: {
     dir: "ltr" as const,
@@ -372,6 +388,8 @@ export const translations = {
       pricing: "Pricing",
       contact: "Contact",
     },
+    projectDescs: {} as Record<string, string>,
+    categoryLabels: {} as Record<string, string>,
   },
 };
 

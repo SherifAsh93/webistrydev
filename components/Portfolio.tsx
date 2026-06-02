@@ -81,12 +81,21 @@ export default function Portfolio() {
   const { t } = useLang();
   const p = t.portfolio;
 
-  const ahmed     = projects.find((proj) => proj.id === "ahmed-elakad")!;
-  const furniture = projects.find((proj) => proj.id === "furniture-studio")!;
-  const zahret    = projects.find((proj) => proj.id === "zahrtelkhlig")!;
-  const batrawy   = projects.find((proj) => proj.id === "batrawy-clinic")!;
-  const ameer     = projects.find((proj) => proj.id === "ameer-dental")!;
-  const elghaly   = projects.find((proj) => proj.id === "elghaly-vr")!;
+  const localize = (id: string) => {
+    const proj = projects.find((pr) => pr.id === id)!;
+    return {
+      ...proj,
+      description: t.projectDescs[id] || proj.description,
+      categoryLabel: t.categoryLabels[proj.category] || proj.categoryLabel,
+    };
+  };
+
+  const ahmed     = localize("ahmed-elakad");
+  const furniture = localize("furniture-studio");
+  const zahret    = localize("zahrtelkhlig");
+  const batrawy   = localize("batrawy-clinic");
+  const ameer     = localize("ameer-dental");
+  const elghaly   = localize("elghaly-vr");
 
   return (
     <section id="portfolio" className="py-28 px-4 md:px-6 bg-white">

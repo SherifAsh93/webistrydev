@@ -11,7 +11,6 @@ function detectLang(): Lang {
   try {
     const saved = localStorage.getItem("lang") as Lang | null;
     if (saved === "en" || saved === "ar") return saved;
-    // Check all browser language preferences, not just the first one
     const langs = navigator.languages?.length ? navigator.languages : [navigator.language];
     const hasArabic = langs.some((l) => l?.toLowerCase().startsWith("ar"));
     if (hasArabic) return "ar";
@@ -19,14 +18,23 @@ function detectLang(): Lang {
   return "en";
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
+function applyLang(lang: Lang) {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = translations[lang].dir;
+  try { localStorage.setItem("lang", lang); } catch {}
+}
 
-  // Detect language once on mount — before any useEffect writes to localStorage
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  // Lazy init runs on client only — picks up localStorage/browser lang instantly
+  const [lang, setLang] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "en";
+    return detectLang();
+  });
+
+  // Apply DOM attributes once on mount (catches SSR→client transition)
   useEffect(() => {
-    const detected = detectLang();
-    setLang(detected);
-    applyLang(detected);
+    applyLang(lang);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function toggle() {
@@ -42,12 +50,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       {children}
     </LanguageContext.Provider>
   );
-}
-
-function applyLang(lang: Lang) {
-  document.documentElement.lang = lang;
-  document.documentElement.dir = translations[lang].dir;
-  try { localStorage.setItem("lang", lang); } catch {}
 }
 
 export function useLang() {

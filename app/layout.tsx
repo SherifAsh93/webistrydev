@@ -36,10 +36,29 @@ export const viewport: Viewport = {
   themeColor: "#7c3aed",
 };
 
+// Runs synchronously before React paints — sets dir/lang immediately for Arabic users
+const langDetectScript = `
+(function(){try{
+  var saved=localStorage.getItem('lang');
+  if(!saved){
+    var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language];
+    if(ls.some(function(l){return l&&l.toLowerCase().startsWith('ar')})){saved='ar';}
+  }
+  if(saved==='ar'){
+    document.documentElement.lang='ar';
+    document.documentElement.dir='rtl';
+  }
+}catch(e){}})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className={`${plusJakarta.variable} ${cairo.variable}`}>
-      <body className={`${plusJakarta.className} antialiased`}>
+    <html lang="en" dir="ltr" className={`${plusJakarta.variable} ${cairo.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Blocking script: sets dir/lang before first paint — no RTL flash */}
+        <script dangerouslySetInnerHTML={{ __html: langDetectScript }} />
+      </head>
+      <body className={`${plusJakarta.className} antialiased`} suppressHydrationWarning>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
