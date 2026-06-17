@@ -64,7 +64,7 @@ export const translations = {
       items: [
         { title: "متاجر اونلاين", description: "متاجر متكاملة فيها إدارة منتجات وعربة ودفع آمن وتتبع أوردرات ولوحة تحكم." },
         { title: "مواقع البراندات", description: "مواقع فخمة تعرض مجموعاتك وتدير ميديا البراند وتحوّل الزوار لعملاء." },
-        { title: "تطبيقات العيادات", description: "أنظمة إدارة عيادات متكاملة: مواعيد وسجلات مرضى وفواتير وبوابات أطباء." },
+        { title: "تطبيقات إدارة الأعمال", description: "أنظمة إدارة متكاملة لأي نوع شغل — عيادات ومطاعم وصالونات وشركات. مواعيد وسجلات وفواتير ولوحة تحكم كاملة." },
         { title: "تطبيقات ويب مخصصة", description: "تطبيقات قوية فيها تسجيل دخول ولوحات تحكم وبيانات لحظية ومنطق أعمال معقد." },
         { title: "مواقع الشركات", description: "مواقع شركات احترافية متعددة الصفحات تبني الثقة وتجيب عملاء جدد." },
         { title: "صفحات ترويجية", description: "صفحات ويب سريعة ومركّزة تجذب العملاء وتجمع الطلبات وتنمّي شغلك." },
@@ -124,7 +124,7 @@ export const translations = {
       sectionLabel: "قولّي",
       title1: "احكيلي عن فكرتك،",
       title2: "وهبنيهالك.",
-      desc: "مش محتاج تعرف حاجة عن البرمجة أو التصميم — بس وصفلي اللي عايزه. هعمل منه منتج حقيقي وسريع وجميل من الصفر.",
+      desc: "مش محتاج تعرف حاجة عن البرمجة أو التصميم — بس اوصفلي اللي عايزه. هعمل منه منتج حقيقي وسريع وجميل من الصفر.",
       step1Label: "الخطوة 1 — إيه نوع المشروع؟",
       step1Optional: "اختياري",
       step2Label: "الخطوة 2 — اختار مرجع (اختياري)",
@@ -266,7 +266,7 @@ export const translations = {
       items: [
         { title: "E-Commerce Stores", description: "Full online stores with product management, cart, secure checkout, orders tracking, and admin dashboard." },
         { title: "Brand & Fashion Sites", description: "Luxury brand websites that showcase collections, manage media, and convert visitors into clients." },
-        { title: "Medical & Clinic Apps", description: "End-to-end clinic management systems: appointments, patient records, billing, and doctor portals." },
+        { title: "Business Management Apps", description: "Full management systems for any business — clinics, restaurants, salons, and more. Appointments, records, billing, and admin dashboards." },
         { title: "Custom Web Applications", description: "Powerful web apps with authentication, dashboards, real-time data, and complex business logic." },
         { title: "Corporate Websites", description: "Professional multi-page corporate sites that establish credibility and generate business leads." },
         { title: "Promotional Pages", description: "Fast, focused single-page websites built to attract customers, capture leads, and grow your business." },

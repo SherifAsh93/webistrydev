@@ -98,11 +98,11 @@ export default function Portfolio() {
   const elghaly   = localize("elghaly-vr");
 
   return (
-    <section id="portfolio" className="py-16 px-4 md:px-6 bg-white">
+    <section id="portfolio" className="py-10 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <p className="section-label justify-center mb-4">{p.sectionLabel}</p>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
             {p.title1}

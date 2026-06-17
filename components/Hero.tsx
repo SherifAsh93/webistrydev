@@ -18,7 +18,7 @@ export default function Hero() {
   }, [words]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-28 pb-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-28 pb-10">
       {/* Subtle aurora blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
         <div
