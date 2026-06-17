@@ -12,7 +12,7 @@
 
 ```bash
 # 1. Navigate to project
-cd /home/sherif/sites/web-corner
+cd /home/sherif/sites/webistrydev
 
 # 2. Install dependencies
 npm install

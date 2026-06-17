@@ -6,7 +6,7 @@ const techs = [
   { name: "PostgreSQL", icon: "🐘" },
   { name: "Neon DB", icon: "◈" },
   { name: "Drizzle ORM", icon: "◭" },
-  { name: "Vercel", icon: "▲" },
+  { name: "Cloud Hosting", icon: "▲" },
   { name: "Node.js", icon: "⬡" },
   { name: "Cloudinary", icon: "☁" },
   { name: "Framer Motion", icon: "◎" },

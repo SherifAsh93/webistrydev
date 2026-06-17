@@ -86,7 +86,7 @@ export const translations = {
           name: "الباقة الأساسية",
           description: "مناسب للأفراد والشركات الصغيرة اللي محتاجة حضور ويب سريع وبسيط.",
           timeline: "1 – 2 أسبوع",
-          features: ["1–3 صفحات", "تصميم شغّال على الموبايل", "فورم تواصل", "إعداد SEO أساسي", "استضافة سريعة على Vercel", "جولتين تعديل"],
+          features: ["1–3 صفحات", "تصميم شغّال على الموبايل", "فورم تواصل", "إعداد SEO أساسي", "استضافة سريعة وآمنة", "جولتين تعديل"],
         },
         {
           name: "باقة الأعمال",
@@ -178,7 +178,7 @@ export const translations = {
       contactTitle: "تواصل",
       whatsapp: "واتساب (الأسرع)",
       rights: `© ${new Date().getFullYear()} Webistrydev. كل الحقوق محفوظة.`,
-      built: "مبني بـ Next.js · Tailwind · Vercel",
+      built: "مبني بـ Next.js · Tailwind CSS",
     },
     bottomNav: {
       home: "الرئيسية",
@@ -288,7 +288,7 @@ export const translations = {
           name: "Starter",
           description: "Perfect for individuals and small businesses needing a fast, clean web presence.",
           timeline: "1 – 2 weeks",
-          features: ["1–3 page website", "Mobile-responsive design", "Contact form", "Basic SEO setup", "Fast hosting on Vercel", "2 revision rounds"],
+          features: ["1–3 page website", "Mobile-responsive design", "Contact form", "Basic SEO setup", "Fast, secure hosting", "2 revision rounds"],
         },
         {
           name: "Business",
@@ -380,7 +380,7 @@ export const translations = {
       contactTitle: "Contact",
       whatsapp: "WhatsApp (fastest)",
       rights: `© ${new Date().getFullYear()} Webistrydev. All rights reserved.`,
-      built: "Built with Next.js · Tailwind · Deployed on Vercel",
+      built: "Built with Next.js · Tailwind CSS",
     },
     bottomNav: {
       home: "Home",

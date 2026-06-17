@@ -166,7 +166,7 @@ export const pricing: PricingTier[] = [
       "Mobile-responsive design",
       "Contact form",
       "Basic SEO setup",
-      "Fast hosting on Vercel",
+      "Fast, secure hosting",
       "2 revision rounds",
     ],
     timeline: "1 – 2 weeks",

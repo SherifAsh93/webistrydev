@@ -4,7 +4,7 @@
 
 A full-stack developer portfolio and lead capture platform for Sherif (Webistrydev). It showcases services, past projects, and pricing, and lets prospective clients submit project inquiries that are stored in a PostgreSQL database and viewable in an admin dashboard.
 
-**Live URL:** webistrydev.vercel.app  
+**Live URL:** webcorner.com  
 **Stack:** Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Neon PostgreSQL · Drizzle ORM · Framer Motion · Vercel
 
 ---
@@ -22,7 +22,7 @@ A full-stack developer portfolio and lead capture platform for Sherif (Webistryd
 ## Complete Folder Structure
 
 ```
-web-corner/                            # Root directory
+webistrydev/                            # Root directory
 ├── app/                               # Next.js App Router
 │   ├── layout.tsx                     # Root layout (fonts, metadata, globals)
 │   ├── page.tsx                       # Home page (renders all sections in order)
@@ -169,7 +169,7 @@ npx vercel --prod
 
 ### Local Development
 ```bash
-cd /home/sherif/sites/web-corner
+cd /home/sherif/sites/webistrydev
 npm install
 # Create .env.local with DATABASE_URL
 npm run dev    # http://localhost:3000

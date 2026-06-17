@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "Webistrydev — Full-Stack Web Developer",
     description: "I build fast, elegant websites and web applications for businesses worldwide.",
     type: "website",
-    url: "https://webistrydev.vercel.app",
+    url: "https://webcorner.com",
   },
 };
 
