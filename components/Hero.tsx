@@ -18,7 +18,7 @@ export default function Hero() {
   }, [words]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-28 pb-10">
+    <section className="relative min-h-screen flex items-center justify-center px-6 pt-28 pb-10">
       {/* Subtle aurora blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
         <div
@@ -58,7 +58,7 @@ export default function Hero() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-8"
         >
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.15] text-slate-900">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.3] text-slate-900">
             {t.hero.titlePre}{" "}
             <span className="inline-block overflow-visible">
               <AnimatePresence mode="wait">
