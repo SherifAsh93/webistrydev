@@ -65,7 +65,7 @@ export default function Footer() {
                   <span className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-base shrink-0 group-hover:bg-sky-100 transition">
                     📞
                   </span>
-                  {PHONE}
+                  <span dir="ltr">{PHONE}</span>
                 </a>
               </li>
               <li>

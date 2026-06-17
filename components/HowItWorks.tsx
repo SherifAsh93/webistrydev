@@ -14,7 +14,7 @@ export default function HowItWorks() {
   const { t } = useLang();
 
   return (
-    <section id="how-it-works" className="py-28 px-4 md:px-6 bg-[#f7f6ff]">
+    <section id="how-it-works" className="py-16 px-4 md:px-6 bg-[#f7f6ff]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="section-label justify-center mb-4">{t.howItWorks.sectionLabel}</p>

@@ -98,7 +98,7 @@ export default function Portfolio() {
   const elghaly   = localize("elghaly-vr");
 
   return (
-    <section id="portfolio" className="py-28 px-4 md:px-6 bg-white">
+    <section id="portfolio" className="py-16 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}

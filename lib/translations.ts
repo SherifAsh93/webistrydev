@@ -29,8 +29,8 @@ export const translations = {
     },
     portfolio: {
       sectionLabel: "شغلي",
-      title1: "شغل بيتكلم",
-      title2: "عن نفسه",
+      title1: "معرض",
+      title2: "أعمالي",
       desc: "مشاريع حقيقية، عملاء حقيقيين — كل موقع بنيته بتقنيات حديثة.",
       liveSite: "شوف الموقع",
       buildLike: "ابني زيه ←",
@@ -59,7 +59,7 @@ export const translations = {
     services: {
       sectionLabel: "خدماتي",
       title: "إيه اللي بعمله",
-      desc: "من صفحة هبوط لتطبيق كامل — كل منتج ببنيه بأقصى أداء ومصمم للناس.",
+      desc: "من موقع بسيط لتطبيق متكامل — كل منتج ببنيه بأقصى أداء ومصمم للناس.",
       quote: "احصل على عرض سعر ←",
       items: [
         { title: "متاجر اونلاين", description: "متاجر متكاملة فيها إدارة منتجات وعربة ودفع آمن وتتبع أوردرات ولوحة تحكم." },
@@ -200,7 +200,7 @@ export const translations = {
       clinic: "تطبيق ويب",
       "web-app": "تطبيق ويب",
       corporate: "موقع شركة",
-      landing: "صفحة هبوط",
+      landing: "صفحة ترويجية",
     } as Record<string, string>,
   },
   en: {
@@ -261,7 +261,7 @@ export const translations = {
     services: {
       sectionLabel: "Services",
       title: "What I Build",
-      desc: "From landing pages to full-scale applications — every product is engineered for performance, designed for people.",
+      desc: "From simple websites to full-scale applications — every product is engineered for performance, designed for people.",
       quote: "Get a quote →",
       items: [
         { title: "E-Commerce Stores", description: "Full online stores with product management, cart, secure checkout, orders tracking, and admin dashboard." },

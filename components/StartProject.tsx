@@ -42,7 +42,7 @@ export default function StartProject() {
 
   if (status === "success") {
     return (
-      <section id="start-project" className="py-28 px-4 md:px-6 bg-white">
+      <section id="start-project" className="py-16 px-4 md:px-6 bg-white">
         <div className="max-w-xl mx-auto text-center">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}

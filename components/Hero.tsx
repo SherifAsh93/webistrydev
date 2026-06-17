@@ -58,9 +58,9 @@ export default function Hero() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-8"
         >
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.05] text-slate-900">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.15] text-slate-900">
             {t.hero.titlePre}{" "}
-            <span className="inline-block min-w-[3ch]">
+            <span className="inline-block overflow-visible">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={wordIdx}
@@ -94,7 +94,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
         >
           <a href="#start-project" className="btn-primary flex items-center justify-center gap-2 px-9 py-4 text-base">
             {t.hero.cta1} →

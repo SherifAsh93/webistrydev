@@ -7,7 +7,7 @@ export default function Services() {
   const icons = services.map((s) => s.icon);
 
   return (
-    <section id="services" className="py-28 px-4 md:px-6 bg-[#f7f6ff]">
+    <section id="services" className="py-16 px-4 md:px-6 bg-[#f7f6ff]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="section-label justify-center mb-4">{t.services.sectionLabel}</p>

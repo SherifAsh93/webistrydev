@@ -7,7 +7,7 @@ export default function Pricing() {
   const { t } = useLang();
 
   return (
-    <section id="pricing" className="py-28 px-4 md:px-6 bg-white">
+    <section id="pricing" className="py-16 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="section-label justify-center mb-4">{t.pricing.sectionLabel}</p>
