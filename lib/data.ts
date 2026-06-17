@@ -148,9 +148,9 @@ export const services: ServiceItem[] = [
   },
   {
     icon: "🚀",
-    title: "High-Converting Landing Pages",
+    title: "Promotional Pages",
     description:
-      "Fast, focused landing pages engineered to capture leads and drive conversions — built for results.",
+      "Fast, focused single-page websites built to attract customers, capture leads, and grow your business.",
     category: "landing",
   },
 ];
@@ -158,8 +158,8 @@ export const services: ServiceItem[] = [
 export const pricing: PricingTier[] = [
   {
     name: "Starter",
-    egp: "6,000 – 12,000",
-    usd: "$150 – $300",
+    egp: "4,500 – 9,000",
+    usd: "$110 – $220",
     description: "Perfect for individuals and small businesses needing a fast, clean web presence.",
     features: [
       "1–3 page website",
@@ -175,8 +175,8 @@ export const pricing: PricingTier[] = [
   },
   {
     name: "Business",
-    egp: "18,000 – 38,000",
-    usd: "$400 – $800",
+    egp: "14,000 – 28,000",
+    usd: "$300 – $600",
     description: "For growing businesses that need a full professional website with content management.",
     features: [
       "5–10 page website",
@@ -192,9 +192,9 @@ export const pricing: PricingTier[] = [
     color: "from-violet-600 to-purple-700",
   },
   {
-    name: "E-Commerce",
-    egp: "40,000 – 75,000",
-    usd: "$900 – $1,600",
+    name: "Online Store",
+    egp: "30,000 – 56,000",
+    usd: "$680 – $1,200",
     description: "A complete online store — sell your products globally with a professional storefront.",
     features: [
       "Full product catalog",
@@ -212,8 +212,8 @@ export const pricing: PricingTier[] = [
   },
   {
     name: "Custom App",
-    egp: "70,000+",
-    usd: "$1,500+",
+    egp: "52,000+",
+    usd: "$1,100+",
     description: "Complex web applications with advanced features, databases, and business logic.",
     features: [
       "Custom architecture",

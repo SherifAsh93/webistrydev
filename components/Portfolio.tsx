@@ -300,22 +300,49 @@ export default function Portfolio() {
               className="group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer"
               style={{ background: "linear-gradient(160deg, #1e1b4b 0%, #0f172a 50%, #0c0a1a 100%)" }}
             >
-              <div className="flex-1 flex items-center justify-center py-8 px-4 relative min-h-[300px]">
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-48 h-48 bg-violet-600/25 rounded-full blur-3xl" />
+              <div className="flex-1 flex items-center justify-center py-8 px-6 relative min-h-[300px]">
+                {/* Ambient glows */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 bg-violet-600/20 rounded-full blur-3xl" />
+                  <div className="absolute top-1/4 right-1/4 w-28 h-28 bg-rose-400/15 rounded-full blur-2xl" />
+                  <div className="absolute bottom-1/4 left-1/4 w-28 h-28 bg-sky-400/15 rounded-full blur-2xl" />
                 </div>
-                <div className="absolute top-4 left-4">
-                  <CategoryBadge label="Web App" color={elghaly.categoryColor} />
+
+                <div className="absolute top-4 left-4 z-10">
+                  <CategoryBadge label="AR / VR App" color={elghaly.categoryColor} />
                 </div>
-                <div className="relative z-10 w-[138px] h-[275px] rounded-[2.5rem] border-[3px] border-slate-600 bg-black shadow-[0_0_50px_rgba(124,58,237,0.4),0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-14 h-[14px] bg-black rounded-b-xl z-20" />
-                  <Image
-                    src="/projects/elghaly-vr-mobile.png"
-                    alt="Elghaly VR"
-                    fill
-                    sizes="138px"
-                    className="object-cover object-top"
-                  />
+
+                <div className="relative z-10 flex flex-col items-center gap-4">
+                  {/* Room wall simulation */}
+                  <div className="w-[230px] h-[140px] rounded-xl overflow-hidden shadow-[0_0_40px_rgba(124,58,237,0.35)] border border-white/10 relative">
+                    <div className="absolute inset-0 flex">
+                      <div className="flex-1" style={{ background: "linear-gradient(180deg,#e8c4a0,#d4a06a)" }} />
+                      <div className="flex-1" style={{ background: "linear-gradient(180deg,#a8c8e8,#6fa4d0)" }} />
+                      <div className="flex-1" style={{ background: "linear-gradient(180deg,#b8d8a8,#88be78)" }} />
+                      <div className="flex-1" style={{ background: "linear-gradient(180deg,#d4b8e8,#b490d4)" }} />
+                    </div>
+                    {/* Camera scan ring on 2nd panel */}
+                    <div className="absolute inset-0 flex items-center" style={{ paddingLeft: "31%" }}>
+                      <div className="w-11 h-11 rounded-full border-2 border-white/80 shadow-lg flex items-center justify-center">
+                        <div className="w-5 h-5 rounded-full border-2 border-white/60" style={{ background: "rgba(107,164,208,0.7)" }} />
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  </div>
+
+                  {/* Color info bar */}
+                  <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl px-4 py-2.5 w-full max-w-[230px]">
+                    <div className="w-7 h-7 rounded-lg shadow-md shrink-0" style={{ background: "#a8c8e8" }} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[9px] text-slate-400 uppercase tracking-wider font-bold">SELECTION</p>
+                      <p className="text-sm font-black text-white">#A8C8E8</p>
+                    </div>
+                    <div className="flex gap-1.5">
+                      {["#e8c4a0", "#a8c8e8", "#b8d8a8", "#d4b8e8"].map((c) => (
+                        <div key={c} className="w-4 h-4 rounded-full border border-white/20 shadow-sm shrink-0" style={{ background: c }} />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="p-5 flex flex-col border-t border-slate-700/50 bg-black/20">
