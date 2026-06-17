@@ -16,7 +16,7 @@ export const translations = {
       rotating: ["مواقع", "تطبيقات ويب", "متاجر اونلاين", "منتجات رقمية"],
       titlePre: "بنبني",
       titlePost: "بتكسب.",
-      desc: "مطور ويب بشتغل على Next.js وReact. بحوّل فكرتك لموقع سريع وشيك — بخدم عملاء من مصر والعالم.",
+      desc: "أي حاجة تتخيلها أو تحتاجها — هبنيهالك. احكيلي بس اللي عايزه وأنا هحوله لمنتج حقيقي وسريع وجميل يحل مشكلتك ويحقق اللي عايزه.",
       cta1: "ابدأ مشروعك",
       cta2: "شوف شغلي",
       stats: [
@@ -114,7 +114,7 @@ export const translations = {
       title2: "مع بعض",
       desc: "خطوات واضحة ومحددة — عشان تعرف دايمًا المشروع وصل لفين.",
       steps: [
-        { title: "بنتكلم", description: "حكيلي عن فكرتك وهدفك وميزانيتك. نتفق على النطاق والمواعيد وخطة واضحة." },
+        { title: "بنتكلم", description: "احكيلي عن فكرتك وهدفك وميزانيتك. نتفق على النطاق والمواعيد وخطة واضحة." },
         { title: "بنصمم ونوافق", description: "بعمل ليك تصميم مفصّل. بتراجعه، بتدي رأيك، وتوافق قبل ما يبدأ أي كود." },
         { title: "بنبني ونختبر", description: "الشغل الحقيقي يبدأ. ببني وبختبر على كل الأجهزة وبخليك على اطلاع طول الوقت." },
         { title: "بنطلق ونكمّل", description: "موقعك يطلع للدنيا. بتولى التشغيل، براقب، وبقدم الدعم بعد الإطلاق." },
@@ -122,7 +122,7 @@ export const translations = {
     },
     startProject: {
       sectionLabel: "قولّي",
-      title1: "حكيلي عن فكرتك،",
+      title1: "احكيلي عن فكرتك،",
       title2: "وهبنيهالك.",
       desc: "مش محتاج تعرف حاجة عن البرمجة أو التصميم — بس وصفلي اللي عايزه. هعمل منه منتج حقيقي وسريع وجميل من الصفر.",
       step1Label: "الخطوة 1 — إيه نوع المشروع؟",
@@ -130,7 +130,7 @@ export const translations = {
       step2Label: "الخطوة 2 — اختار مرجع (اختياري)",
       step2Hint: "اختار مشروع من شغلي كمصدر إلهام — أو اعدي واوصفلي من الصفر.",
       step3Label: "الخطوة 3 — وصفلي الفكرة",
-      step3Placeholder: "حكيلي عن حلمك — عايز تبني إيه؟ للمين؟ هيعمل إيه؟ مش لازم تعرف تقنية، بس وصفلي وأنا هتكفل بالباقي...",
+      step3Placeholder: "احكيلي عن حلمك — عايز تبني إيه؟ للمين؟ هيعمل إيه؟ مش لازم تعرف تقنية، بس اوصفلي وأنا هتكفل بالباقي...",
       budgetLabel: "نطاق الميزانية",
       budgetPlaceholder: "اختار نطاق ميزانية (اختياري)",
       step4Label: "الخطوة 4 — إزاي أوصلك؟",
@@ -218,7 +218,7 @@ export const translations = {
       rotating: ["Websites", "Web Apps", "E-Commerce", "Digital Products"],
       titlePre: "I Build",
       titlePost: "That Win.",
-      desc: "Full-Stack Web Developer specializing in Next.js, React & modern web apps. I turn your vision into fast, elegant digital products — available to clients worldwide.",
+      desc: "Whatever you can imagine or need — I can build it. Just tell me what you want and I'll turn your idea into a real, fast, beautiful product that solves your problems and achieves your goals.",
       cta1: "Start a Project",
       cta2: "See My Work",
       stats: [

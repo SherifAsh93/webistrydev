@@ -212,6 +212,7 @@ export default function StartProject() {
                 <label className="text-xs text-slate-500 font-semibold block mb-2">{sp.phoneLabel}</label>
                 <input
                   type="tel"
+                  dir="ltr"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder={sp.phonePlaceholder}

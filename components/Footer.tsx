@@ -4,7 +4,7 @@ import { useLang } from "@/lib/language-context";
 
 const PHONE = "+20 100 752 6882";
 const WHATSAPP = "201007526882";
-const EMAIL = "sherif.ash93@gmail.com";
+const EMAIL = "sherif.hany@proton.me";
 
 export default function Footer() {
   const { t } = useLang();
