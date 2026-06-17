@@ -4,7 +4,7 @@
 
 Sherif's freelance developer portfolio and lead capture platform. Showcases services, past projects, and pricing. Prospective clients submit project inquiries via a multi-step form; submissions are stored in PostgreSQL and viewable in an admin dashboard.
 
-**Live URL:** https://webcorner.com  
+**Live URL:** https://webistrydev.com  
 **GitHub:** https://github.com/SherifAsh93/webistrydev  
 **Local:** `/home/sherif/sites/webistrydev`  
 **Stack:** Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Neon PostgreSQL · Drizzle ORM · Framer Motion · Vercel
