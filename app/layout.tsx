@@ -26,6 +26,13 @@ export const metadata: Metadata = {
     description: "I build fast, elegant websites and web applications for businesses worldwide.",
     type: "website",
     url: "https://webistrydev.com",
+    images: [{ url: "https://webistrydev.com/opengraph-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Webistrydev — Full-Stack Web Developer",
+    description: "I build fast, elegant websites and web applications for businesses worldwide.",
+    images: ["https://webistrydev.com/opengraph-image.png"],
   },
 };
 
