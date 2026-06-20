@@ -31,6 +31,10 @@ export default function StartProject() {
 
   const filteredRefs = type ? projects : [];
 
+  // Step 2 is conditional — renumber steps 3 & 4 when it's hidden
+  const s3label = type ? sp.step3Label : sp.step3Label.replace(/\d+/, "2");
+  const s4label = type ? sp.step4Label : sp.step4Label.replace(/\d+/, "3");
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
@@ -164,7 +168,7 @@ export default function StartProject() {
           {/* Step 3 */}
           <div className="card rounded-2xl p-6">
             <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-4">
-              {sp.step3Label}
+              {s3label}
             </p>
             <textarea
               value={message}
@@ -192,7 +196,7 @@ export default function StartProject() {
           {/* Step 4 */}
           <div className="card rounded-2xl p-6">
             <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-4">
-              {sp.step4Label}
+              {s4label}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
