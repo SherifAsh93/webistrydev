@@ -108,6 +108,11 @@ export const translations = {
         },
       ],
     },
+    hireCTA: {
+      headline: "عندك فكرة؟",
+      sub: "احكيلي عنها وأنا هحولها لموقع أو تطبيق حقيقي — من الصفر لآخر تفصيلة.",
+      cta: "ابدأ مشروعك الآن ←",
+    },
     howItWorks: {
       sectionLabel: "الطريقة",
       title1: "إزاي بنشتغل",
@@ -309,6 +314,11 @@ export const translations = {
           features: ["Custom architecture", "Authentication & roles", "Real-time features", "Complex database design", "API integrations", "Full test coverage", "Unlimited revisions", "90 days post-launch support"],
         },
       ],
+    },
+    hireCTA: {
+      headline: "Have a Project in Mind?",
+      sub: "Tell me your idea and I'll turn it into a real, fast, beautiful website or app — from zero to launch.",
+      cta: "Start Your Project Now →",
     },
     howItWorks: {
       sectionLabel: "Process",

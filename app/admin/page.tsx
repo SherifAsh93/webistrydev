@@ -3,7 +3,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Logo from "@/components/Logo";
 import { getLeads } from "@/app/actions/get-leads";
-import { LogOut, RefreshCw, MessageSquare, Phone, Mail, Calendar, Tag, DollarSign } from "lucide-react";
+import { updateLeadStatus } from "@/app/actions/update-lead";
+import { deleteLead } from "@/app/actions/delete-lead";
+import { LogOut, RefreshCw, MessageSquare, Phone, Mail, Calendar, Tag, DollarSign, Trash2, CheckCircle, Archive, Bell } from "lucide-react";
+
+type Status = "new" | "contacted" | "archived";
 
 type Lead = {
   id: number;
@@ -15,6 +19,7 @@ type Lead = {
   budget: string | null;
   message: string;
   createdAt: Date | null;
+  status: Status;
 };
 
 const ADMIN_PW = "114891";
@@ -25,25 +30,40 @@ function formatDate(d: Date | null) {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  ecommerce:  "bg-amber-100 text-amber-700 border-amber-200",
-  website:    "bg-pink-100 text-pink-700 border-pink-200",
-  "web-app":  "bg-violet-100 text-violet-700 border-violet-200",
-  system:     "bg-teal-100 text-teal-700 border-teal-200",
-  landing:    "bg-emerald-100 text-emerald-700 border-emerald-200",
-  other:      "bg-slate-100 text-slate-600 border-slate-200",
-  // legacy values from old leads
-  fashion:    "bg-pink-100 text-pink-700 border-pink-200",
-  clinic:     "bg-teal-100 text-teal-700 border-teal-200",
-  corporate:  "bg-sky-100 text-sky-700 border-sky-200",
+  ecommerce: "bg-amber-100 text-amber-700 border-amber-200",
+  website:   "bg-pink-100 text-pink-700 border-pink-200",
+  "web-app": "bg-violet-100 text-violet-700 border-violet-200",
+  system:    "bg-teal-100 text-teal-700 border-teal-200",
+  landing:   "bg-emerald-100 text-emerald-700 border-emerald-200",
+  other:     "bg-slate-100 text-slate-600 border-slate-200",
+  fashion:   "bg-pink-100 text-pink-700 border-pink-200",
+  clinic:    "bg-teal-100 text-teal-700 border-teal-200",
+  corporate: "bg-sky-100 text-sky-700 border-sky-200",
 };
 
+const STATUS_CONFIG = {
+  new:       { label: "New",       color: "bg-emerald-100 text-emerald-700 border-emerald-300", dot: "bg-emerald-500" },
+  contacted: { label: "Contacted", color: "bg-sky-100 text-sky-700 border-sky-200",            dot: "bg-sky-500" },
+  archived:  { label: "Archived",  color: "bg-slate-100 text-slate-500 border-slate-200",      dot: "bg-slate-400" },
+};
+
+const FILTER_TABS: { key: "all" | Status; label: string }[] = [
+  { key: "all",       label: "All" },
+  { key: "new",       label: "New" },
+  { key: "contacted", label: "Contacted" },
+  { key: "archived",  label: "Archived" },
+];
+
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [pw, setPw] = useState("");
-  const [pwError, setPwError] = useState(false);
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [authed, setAuthed]     = useState(false);
+  const [pw, setPw]             = useState("");
+  const [pwError, setPwError]   = useState(false);
+  const [leads, setLeads]       = useState<Lead[]>([]);
+  const [loading, setLoading]   = useState(false);
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [filter, setFilter]     = useState<"all" | Status>("all");
+  const [deleting, setDeleting] = useState<number | null>(null);
+  const [updating, setUpdating] = useState<number | null>(null);
   const router = useRouter();
 
   const load = useCallback(async () => {
@@ -72,12 +92,22 @@ export default function AdminPage() {
     }
   }
 
-  function handleLogout() {
-    sessionStorage.removeItem("wc-admin");
-    router.push("/");
+  async function handleStatusChange(id: number, status: Status) {
+    setUpdating(id);
+    await updateLeadStatus(id, status);
+    setLeads((prev) => prev.map((l) => l.id === id ? { ...l, status } : l));
+    setUpdating(null);
   }
 
-  /* ── Login screen ── */
+  async function handleDelete(id: number) {
+    if (!confirm("Delete this message permanently?")) return;
+    setDeleting(id);
+    await deleteLead(id);
+    setLeads((prev) => prev.filter((l) => l.id !== id));
+    setExpanded(null);
+    setDeleting(null);
+  }
+
   if (!authed) {
     return (
       <div className="min-h-screen bg-[#f7f6ff] flex items-center justify-center px-4">
@@ -85,13 +115,10 @@ export default function AdminPage() {
           <div className="flex items-center justify-center gap-2.5 mb-8">
             <Logo size={36} />
             <div>
-              <div className="font-extrabold text-slate-900 text-lg leading-tight">
-                Webistry<span className="text-gradient">dev</span>
-              </div>
+              <div className="font-extrabold text-slate-900 text-lg leading-tight">Webistry<span className="text-gradient">dev</span></div>
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admin Panel</div>
             </div>
           </div>
-
           <form onSubmit={handleLogin} className="card rounded-2xl p-8 flex flex-col gap-5">
             <h1 className="text-xl font-extrabold text-slate-900 text-center">Admin Access</h1>
             <div>
@@ -104,173 +131,257 @@ export default function AdminPage() {
                 autoFocus
                 className={`field w-full rounded-xl px-4 py-3 text-sm ${pwError ? "border-rose-400 bg-rose-50" : ""}`}
               />
-              {pwError && <p className="text-xs text-rose-500 mt-1.5 font-semibold">Wrong password. Try again.</p>}
+              {pwError && <p className="text-xs text-rose-500 mt-1.5 font-semibold">Wrong password.</p>}
             </div>
-            <button type="submit" className="btn-primary py-3 text-sm">
-              Enter →
-            </button>
+            <button type="submit" className="btn-primary py-3 text-sm">Enter →</button>
           </form>
         </div>
       </div>
     );
   }
 
-  /* ── Dashboard ── */
-  const today = leads.filter((l) => {
+  const newCount  = leads.filter((l) => l.status === "new").length;
+  const todayCount = leads.filter((l) => {
     if (!l.createdAt) return false;
-    const d = new Date(l.createdAt);
-    const now = new Date();
-    return d.toDateString() === now.toDateString();
+    return new Date(l.createdAt).toDateString() === new Date().toDateString();
   }).length;
+  const weekCount = leads.filter((l) => {
+    if (!l.createdAt) return false;
+    return Date.now() - new Date(l.createdAt).getTime() < 7 * 86400000;
+  }).length;
+
+  const filtered = filter === "all" ? leads : leads.filter((l) => l.status === filter);
 
   return (
     <div className="min-h-screen bg-[#f7f6ff]">
       {/* Header */}
       <header className="bg-white border-b border-violet-100 sticky top-0 z-20">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <Logo size={28} />
-            <div>
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Logo size={26} />
+            <div className="min-w-0">
               <span className="font-extrabold text-slate-900 text-sm">Webistry<span className="text-gradient">dev</span></span>
               <span className="ml-2 text-xs font-bold text-violet-600 bg-violet-50 border border-violet-200 px-2 py-0.5 rounded-full">Admin</span>
             </div>
+            {newCount > 0 && (
+              <span className="flex items-center gap-1 bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse shrink-0">
+                <Bell size={9} /> {newCount} new
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={load}
-              disabled={loading}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border border-slate-200 rounded-xl transition-all"
-            >
-              <RefreshCw size={13} className={loading ? "animate-spin" : ""} />
-              Refresh
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button onClick={load} disabled={loading} className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-slate-500 hover:text-violet-700 bg-slate-50 border border-slate-200 rounded-xl transition-all">
+              <RefreshCw size={12} className={loading ? "animate-spin" : ""} />
+              <span className="hidden sm:inline">Refresh</span>
             </button>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-rose-600 bg-slate-50 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 rounded-xl transition-all"
-            >
-              <LogOut size={13} />
-              Logout
+            <button onClick={() => { sessionStorage.removeItem("wc-admin"); router.push("/"); }} className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-slate-500 hover:text-rose-600 bg-slate-50 border border-slate-200 hover:border-rose-200 rounded-xl transition-all">
+              <LogOut size={12} />
+              <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-6">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { label: "Total Messages", value: leads.length, icon: MessageSquare, color: "text-violet-600 bg-violet-50 border-violet-200" },
-            { label: "Today", value: today, icon: Calendar, color: "text-emerald-600 bg-emerald-50 border-emerald-200" },
-            { label: "This Week", value: leads.filter((l) => { if (!l.createdAt) return false; const d = new Date(l.createdAt); const now = new Date(); return (now.getTime() - d.getTime()) < 7 * 24 * 60 * 60 * 1000; }).length, icon: Tag, color: "text-sky-600 bg-sky-50 border-sky-200" },
+            { label: "Total",   value: leads.length,  icon: MessageSquare, color: "text-violet-600 bg-violet-50 border-violet-200" },
+            { label: "New",     value: newCount,       icon: Bell,          color: "text-emerald-600 bg-emerald-50 border-emerald-200" },
+            { label: "Today",   value: todayCount,     icon: Calendar,      color: "text-sky-600 bg-sky-50 border-sky-200" },
           ].map((stat, i) => (
-            <div key={i} className="card rounded-2xl p-5 flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${stat.color}`}>
-                <stat.icon size={18} />
+            <div key={i} className="card rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center shrink-0 ${stat.color}`}>
+                <stat.icon size={15} />
               </div>
-              <div>
-                <div className="text-2xl font-extrabold text-slate-900">{stat.value}</div>
-                <div className="text-xs text-slate-400 font-semibold">{stat.label}</div>
+              <div className="min-w-0">
+                <div className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-none">{stat.value}</div>
+                <div className="text-[10px] text-slate-400 font-semibold mt-0.5">{stat.label}</div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Messages list */}
-        <h2 className="text-lg font-extrabold text-slate-900 mb-4">
-          All Messages <span className="text-slate-400 font-semibold text-sm ml-1">({leads.length})</span>
-        </h2>
+        {/* Filter tabs */}
+        <div className="flex gap-1.5 mb-4 overflow-x-auto pb-1">
+          {FILTER_TABS.map((tab) => {
+            const count = tab.key === "all" ? leads.length : leads.filter((l) => l.status === tab.key).length;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setFilter(tab.key)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+                  filter === tab.key
+                    ? "bg-violet-600 text-white border-violet-600"
+                    : "bg-white text-slate-500 border-slate-200 hover:border-violet-200"
+                }`}
+              >
+                {tab.label}
+                <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${filter === tab.key ? "bg-white/25 text-white" : "bg-slate-100 text-slate-500"}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
-        {loading && (
-          <div className="flex justify-center py-16">
-            <div className="w-8 h-8 border-3 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
-          </div>
-        )}
-
-        {!loading && leads.length === 0 && (
-          <div className="card rounded-2xl p-12 text-center">
-            <MessageSquare size={32} className="text-slate-200 mx-auto mb-3" />
-            <p className="text-slate-400 font-semibold">No messages yet.</p>
-            <p className="text-sm text-slate-300 mt-1">Project requests will appear here.</p>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-3">
-          {leads.map((lead) => (
-            <div
-              key={lead.id}
-              className="card rounded-2xl overflow-hidden cursor-pointer"
-              onClick={() => setExpanded(expanded === lead.id ? null : lead.id)}
-            >
-              {/* Row summary */}
-              <div className="p-4 flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-base shrink-0 font-bold text-violet-700">
-                  {lead.name.charAt(0).toUpperCase()}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-extrabold text-slate-900 text-sm">{lead.name}</span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider ${TYPE_COLORS[lead.projectType] ?? "bg-slate-100 text-slate-600 border-slate-200"}`}>
-                      {lead.projectType}
-                    </span>
-                    {lead.budget && (
-                      <span className="text-[10px] font-semibold text-slate-400 flex items-center gap-0.5">
-                        <DollarSign size={9} />{lead.budget}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-slate-500 truncate">{lead.message}</p>
-                  <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-                    {lead.phone && (
-                      <a href={`tel:${lead.phone}`} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[11px] text-sky-600 hover:underline font-semibold">
-                        <Phone size={10} />{lead.phone}
-                      </a>
-                    )}
-                    {lead.email && (
-                      <a href={`mailto:${lead.email}`} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[11px] text-violet-600 hover:underline font-semibold">
-                        <Mail size={10} />{lead.email}
-                      </a>
-                    )}
-                    <span className="text-[10px] text-slate-300 ml-auto">{formatDate(lead.createdAt)}</span>
-                  </div>
-                </div>
-                <span className={`text-slate-300 text-xs transition-transform shrink-0 mt-1 ${expanded === lead.id ? "rotate-180" : ""}`}>▾</span>
-              </div>
-
-              {/* Expanded message */}
-              {expanded === lead.id && (
-                <div className="border-t border-violet-50 bg-violet-50/50 px-5 py-4">
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Full Message</p>
-                  <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{lead.message}</p>
-                  {lead.reference && (
-                    <p className="text-xs text-slate-400 mt-3">
-                      <span className="font-bold">Reference project:</span> {lead.reference}
-                    </p>
-                  )}
-                  <div className="flex gap-2 mt-4">
-                    {lead.phone && (
-                      <a
-                        href={`https://wa.me/${lead.phone.replace(/\D/g, "")}`}
-                        target="_blank"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-[#25D366] rounded-xl hover:bg-[#1eb85a] transition"
-                      >
-                        💬 WhatsApp
-                      </a>
-                    )}
-                    {lead.email && (
-                      <a
-                        href={`mailto:${lead.email}?subject=Re: Your project request`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-violet-700 bg-violet-100 border border-violet-200 rounded-xl hover:bg-violet-200 transition"
-                      >
-                        ✉️ Reply
-                      </a>
-                    )}
-                  </div>
-                </div>
-              )}
+        {/* List */}
+        <div className="flex flex-col gap-2.5">
+          {loading && (
+            <div className="flex justify-center py-16">
+              <div className="w-8 h-8 border-[3px] border-violet-200 border-t-violet-600 rounded-full animate-spin" />
             </div>
-          ))}
+          )}
+
+          {!loading && filtered.length === 0 && (
+            <div className="card rounded-2xl p-12 text-center">
+              <MessageSquare size={28} className="text-slate-200 mx-auto mb-3" />
+              <p className="text-slate-400 font-semibold text-sm">
+                {filter === "all" ? "No messages yet." : `No ${filter} messages.`}
+              </p>
+            </div>
+          )}
+
+          {filtered.map((lead) => {
+            const sc = STATUS_CONFIG[lead.status];
+            const isExpanded = expanded === lead.id;
+            const isNew = lead.status === "new";
+
+            return (
+              <div
+                key={lead.id}
+                className={`card rounded-2xl overflow-hidden transition-all ${isNew ? "border-l-4 border-l-emerald-400" : ""}`}
+              >
+                {/* Summary row */}
+                <button
+                  className="w-full text-left p-4 flex items-start gap-3"
+                  onClick={() => setExpanded(isExpanded ? null : lead.id)}
+                >
+                  {/* Avatar */}
+                  <div className="w-9 h-9 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-sm font-black text-violet-700 shrink-0">
+                    {lead.name.charAt(0).toUpperCase()}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    {/* Name + badges row */}
+                    <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                      <span className="font-extrabold text-slate-900 text-sm">{lead.name}</span>
+                      {/* Status badge */}
+                      <span className={`inline-flex items-center gap-1 text-[9px] font-black px-1.5 py-0.5 rounded-full border uppercase tracking-wider ${sc.color}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${sc.dot}`} />
+                        {sc.label}
+                      </span>
+                      {/* Type badge */}
+                      {lead.projectType && (
+                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider ${TYPE_COLORS[lead.projectType] ?? "bg-slate-100 text-slate-600 border-slate-200"}`}>
+                          {lead.projectType}
+                        </span>
+                      )}
+                    </div>
+                    {/* Message preview */}
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{lead.message}</p>
+                    {/* Meta row */}
+                    <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                      {lead.phone && (
+                        <span className="flex items-center gap-0.5 text-[10px] text-sky-600 font-semibold">
+                          <Phone size={9} />{lead.phone}
+                        </span>
+                      )}
+                      {lead.email && (
+                        <span className="flex items-center gap-0.5 text-[10px] text-violet-600 font-semibold truncate max-w-[140px]">
+                          <Mail size={9} />{lead.email}
+                        </span>
+                      )}
+                      <span className="text-[9px] text-slate-300 ml-auto shrink-0">{formatDate(lead.createdAt)}</span>
+                    </div>
+                  </div>
+
+                  <span className={`text-slate-300 text-xs shrink-0 mt-1 transition-transform ${isExpanded ? "rotate-180" : ""}`}>▾</span>
+                </button>
+
+                {/* Expanded detail */}
+                {isExpanded && (
+                  <div className="border-t border-slate-100 bg-slate-50/60 px-4 py-4 space-y-4">
+                    {/* Full message */}
+                    <div>
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1.5">Message</p>
+                      <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{lead.message}</p>
+                    </div>
+
+                    {/* Details grid */}
+                    {(lead.budget || lead.reference) && (
+                      <div className="flex gap-4 flex-wrap">
+                        {lead.budget && (
+                          <div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Budget</p>
+                            <p className="text-xs text-slate-700 font-semibold flex items-center gap-1"><DollarSign size={10} />{lead.budget}</p>
+                          </div>
+                        )}
+                        {lead.reference && (
+                          <div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5">Reference</p>
+                            <p className="text-xs text-slate-700 font-semibold flex items-center gap-1"><Tag size={10} />{lead.reference}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Status controls */}
+                    <div>
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">Status</p>
+                      <div className="flex gap-1.5 flex-wrap">
+                        {(["new", "contacted", "archived"] as Status[]).map((s) => {
+                          const cfg = STATUS_CONFIG[s];
+                          const isActive = lead.status === s;
+                          return (
+                            <button
+                              key={s}
+                              onClick={() => handleStatusChange(lead.id, s)}
+                              disabled={updating === lead.id || isActive}
+                              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                                isActive
+                                  ? `${cfg.color} cursor-default`
+                                  : "bg-white text-slate-500 border-slate-200 hover:border-slate-400"
+                              } disabled:opacity-60`}
+                            >
+                              {s === "new"       && <Bell size={10} />}
+                              {s === "contacted" && <CheckCircle size={10} />}
+                              {s === "archived"  && <Archive size={10} />}
+                              {cfg.label}
+                              {isActive && " ✓"}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-100">
+                      {lead.phone && (
+                        <a href={`https://wa.me/${lead.phone.replace(/\D/g, "")}`} target="_blank" className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-[#25D366] rounded-xl hover:bg-[#1eb85a] transition">
+                          💬 WhatsApp
+                        </a>
+                      )}
+                      {lead.email && (
+                        <a href={`mailto:${lead.email}?subject=Re: Your project request`} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-violet-700 bg-violet-100 border border-violet-200 rounded-xl hover:bg-violet-200 transition">
+                          ✉️ Email
+                        </a>
+                      )}
+                      <button
+                        onClick={() => handleDelete(lead.id)}
+                        disabled={deleting === lead.id}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl hover:bg-rose-100 transition ml-auto disabled:opacity-50"
+                      >
+                        <Trash2 size={11} />
+                        {deleting === lead.id ? "Deleting…" : "Delete"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

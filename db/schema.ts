@@ -10,4 +10,5 @@ export const leads = pgTable("leads", {
   budget: varchar("budget", { length: 100 }),
   message: text("message").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
+  status: varchar("status", { length: 20 }).notNull().default("new"),
 });
