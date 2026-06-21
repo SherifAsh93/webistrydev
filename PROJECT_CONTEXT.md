@@ -2,13 +2,13 @@
 
 ## What It Does
 
-Sherif's freelance developer portfolio and lead capture platform. Showcases services, past projects, and pricing. Prospective clients submit inquiries via a **voice recorder or free-text form** (3 fields only: voice/text + name + phone). Submissions are stored in Neon PostgreSQL and viewable in an admin dashboard with audio playback for voice leads.
+Sherif's freelance developer portfolio and lead capture platform. Showcases services, past projects, and pricing. Prospective clients submit inquiries via a **voice recorder or free-text form** (3 fields: voice/text + name + phone). Each submission gets a unique private chat link. Admin can reply from the dashboard; client sees replies on their link — no registration needed.
 
 **Live URL:** https://webistrydev.com  
 **GitHub:** https://github.com/SherifAsh93/webistrydev  
 **Local:** `/home/sherif/sites/webistrydev`  
 **Stack:** Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Neon PostgreSQL · Drizzle ORM · Framer Motion  
-**Process:** PM2 (id: 2) — `pm2 restart webistrydev` to deploy after build  
+**Process:** PM2 (id: 2) — `npm run build && pm2 restart webistrydev` to deploy  
 **Admin password:** `114891`
 
 ---
@@ -22,33 +22,38 @@ webistrydev/
 │   ├── page.tsx                # Homepage (all sections in sequence)
 │   ├── globals.css             # Tailwind base + design tokens + animations
 │   ├── actions/
-│   │   ├── submit-inquiry.ts   # Server action: insert lead (name, phone, message, voiceNote)
-│   │   ├── get-leads.ts        # Server action: fetch all leads
-│   │   ├── update-lead.ts      # Server action: update lead status
-│   │   └── delete-lead.ts      # Server action: delete lead
-│   └── admin/page.tsx          # Admin dashboard — leads list + voice player
+│   │   ├── submit-inquiry.ts   # Insert lead + generate chat_token → returns token
+│   │   ├── get-leads.ts        # Fetch all leads for admin
+│   │   ├── update-lead.ts      # Update lead status
+│   │   ├── delete-lead.ts      # Delete lead (cascades messages)
+│   │   ├── get-messages.ts     # getMessagesByToken (client) / getMessagesByLeadId (admin)
+│   │   └── send-message.ts     # sendClientMessage (by token) / sendAdminMessage (by leadId)
+│   ├── admin/page.tsx          # Admin dashboard — leads + voice player + chat thread
+│   └── m/[token]/
+│       ├── page.tsx            # Server wrapper — awaits params
+│       └── ChatPage.tsx        # Client chat page (Arabic, polls every 5s)
 ├── components/
-│   ├── Navbar.tsx              # Sticky top nav
-│   ├── Hero.tsx                # Animated hero + rotating words + stats
-│   ├── TechStack.tsx           # Scrolling tech marquee
-│   ├── Portfolio.tsx           # 6 project cards + biz apps feature
-│   ├── HireCTA.tsx             # Purple CTA banner with scarcity badge
-│   ├── Services.tsx            # 6 service category cards
-│   ├── Pricing.tsx             # 4 pricing tiers
-│   ├── HowItWorks.tsx          # 4-step process
-│   ├── StartProject.tsx        # Voice recorder + free-text form (3 fields)
+│   ├── Navbar.tsx
+│   ├── Hero.tsx
+│   ├── TechStack.tsx
+│   ├── Portfolio.tsx
+│   ├── HireCTA.tsx
+│   ├── Services.tsx
+│   ├── Pricing.tsx
+│   ├── HowItWorks.tsx
+│   ├── StartProject.tsx        # Voice recorder + free-text form + success screen with chat link
 │   ├── Footer.tsx
-│   ├── FloatingWhatsApp.tsx    # Fixed WhatsApp button
-│   └── BottomNav.tsx           # Mobile-only bottom nav
+│   ├── FloatingWhatsApp.tsx
+│   └── BottomNav.tsx
 ├── db/
-│   ├── schema.ts               # Drizzle table: leads
+│   ├── schema.ts               # leads table + messages table
 │   └── index.ts                # Neon + Drizzle client
 ├── lib/
-│   ├── data.ts                 # Static: projects, services, pricing tiers
-│   ├── language-context.tsx    # AR/EN language context + toggle
-│   ├── projects.ts             # Project list for portfolio
-│   └── translations.ts         # Full AR/EN string map
-├── public/projects/            # Project screenshots
+│   ├── data.ts
+│   ├── language-context.tsx
+│   ├── projects.ts
+│   └── translations.ts         # Full AR/EN strings incl. chatSaveTitle/chatSaveDesc/chatCopy/chatCopied/chatOpen
+├── public/projects/
 ├── drizzle.config.ts
 └── package.json
 ```
@@ -61,31 +66,54 @@ webistrydev/
 |-------|---------|
 | `/` | Single-page portfolio (all sections, anchor nav) |
 | `/admin` | Lead viewer — password: `114891` (sessionStorage only) |
+| `/m/[token]` | Client chat page — Arabic only, no auth, polls every 5s |
 
 Page section order: Hero → TechStack → Portfolio → HireCTA → Services → Pricing → HowItWorks → StartProject → Footer
 
-Nav anchor links: `#portfolio`, `#services`, `#pricing`, `#how-it-works`, `#start-project`
-
 ---
 
-## DB Schema — `leads` table
+## DB Schema
+
+### `leads` table
 
 | Column | Type | Notes |
 |--------|------|-------|
 | id | serial PK | |
 | name | varchar(100) NOT NULL | |
 | phone | varchar(30) | |
-| email | varchar(255) | legacy, no longer collected in form |
-| project_type | varchar(50) | nullable — no longer collected |
+| email | varchar(255) | legacy, no longer collected |
+| project_type | varchar(50) | legacy, nullable |
 | reference | varchar(100) | legacy |
 | budget | varchar(100) | legacy |
 | message | text | nullable — empty when voice only |
-| voice_note | text | base64 data URL — `data:audio/webm;base64,...` |
+| voice_note | text | base64 data URL `data:audio/webm;base64,...` |
+| chat_token | varchar(64) UNIQUE | UUID generated on insert — powers `/m/[token]` |
 | created_at | timestamp | defaultNow() |
 | status | varchar(20) | `new` / `contacted` / `archived` |
 
+### `messages` table
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | serial PK | |
+| lead_id | integer FK → leads.id ON DELETE CASCADE | |
+| sender | varchar(10) | `admin` or `client` |
+| body | text NOT NULL | |
+| created_at | timestamp | defaultNow() |
+
 **DB connection (Neon):**
 `postgresql://neondb_owner:npg_wYHleQ5MGX9N@ep-steep-resonance-ahctbjr8-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require`
+
+---
+
+## Messaging Flow
+
+1. Client submits form → `submit-inquiry.ts` generates `crypto.randomUUID()` as `chat_token` → stored on lead row → returned to client
+2. Success screen shows the chat link card with warm Egyptian copy ("احتفظ بالرابط ده كويس!") + Copy + Open buttons
+3. Client visits `webistrydev.com/m/[token]` → sees conversation in Arabic → can send messages anytime
+4. `/m/[token]` polls `getMessagesByToken` every 5 seconds for new replies
+5. Admin expands any lead → sees "CONVERSATION" section inline with full thread → types reply → hits Send or Enter
+6. Admin can also "Copy Client Link" from the conversation header to share the link via WhatsApp/SMS
 
 ---
 
@@ -93,9 +121,9 @@ Nav anchor links: `#portfolio`, `#services`, `#pricing`, `#how-it-works`, `#star
 
 - Uses browser `MediaRecorder` API — no external library
 - Prefers `audio/webm;codecs=opus`, falls back to `audio/webm` then `audio/mp4`
-- Max 60 seconds — auto-stops at 1 minute
-- On mic permission denied: falls back gracefully to showing the text textarea
-- Blob → `FileReader.readAsDataURL()` → stored as full data URL in `voice_note` column
+- Max 60 seconds — auto-stops
+- Mic denied: falls back to text textarea
+- Blob → `FileReader.readAsDataURL()` → stored as data URL in `voice_note`
 - Admin plays back via `<audio src={lead.voiceNote} controls />`
 - States: `idle → requesting → recording → recorded`
 
@@ -103,18 +131,18 @@ Nav anchor links: `#portfolio`, `#services`, `#pricing`, `#how-it-works`, `#star
 
 ## Language System
 
-- **Arabic (default):** RTL, Cairo font, warm Egyptian dialect throughout
+- **Arabic (default):** RTL, Cairo font, warm Egyptian dialect
 - **English:** LTR, toggled via EN button in navbar
-- All strings in `lib/translations.ts` — `ar` and `en` objects
-- Language choice persists via `lib/language-context.tsx` (React context)
-- Key tone: no "project/مشروع" language — replaced with "فكرة/idea" everywhere
+- All strings in `lib/translations.ts`
+- Key tone: "فكرة/idea" everywhere — no "project/مشروع"
   - Nav CTA: "قولّي فكرتك ←" / "Share Your Idea →"
   - Hero CTA: "احكيلي فكرتك" / "Share Your Idea"
-  - HireCTA badge: "⚡ متاح دلوقتي — مكانين فاضيين" / "⚡ Available Now — 2 Spots Open"
+  - HireCTA badge: "⚡ متاح دلوقتي — مكانين فاضيين"
+- `/m/[token]` is Arabic-only (hardcoded, no language toggle)
 
 ---
 
-## How to Run
+## How to Deploy
 
 ```bash
 cd /home/sherif/sites/webistrydev
@@ -129,31 +157,28 @@ pm2 restart webistrydev
 
 ## How to Continue
 
-- **Update portfolio projects:** `lib/data.ts` → `projects` array + add screenshot to `public/projects/`
-- **Update pricing tiers:** `lib/data.ts` → `pricing` array
-- **Update services:** `lib/data.ts` → `services` array (icons defined in `services.tsx`)
-- **Change any UI text:** `lib/translations.ts` — edit both `ar` and `en` objects
-- **Change contact info (WhatsApp):** `components/FloatingWhatsApp.tsx` + `app/admin/page.tsx` WhatsApp link
-- **Change admin password:** `app/admin/page.tsx` → `ADMIN_PW` constant
-- **Change scarcity badge text:** `lib/translations.ts` → `hireCTA.badge`
-- **Change brand colors:** `app/globals.css` → `@theme` block
+- **Update portfolio:** `lib/data.ts` → `projects` + screenshot in `public/projects/`
+- **Update pricing:** `lib/data.ts` → `pricing`
+- **Change UI text:** `lib/translations.ts` — both `ar` and `en`
+- **Change admin password:** `app/admin/page.tsx` → `ADMIN_PW`
+- **Change scarcity badge:** `lib/translations.ts` → `hireCTA.badge`
+- **Change brand colors:** `app/globals.css` → `@theme`
 - **DB direct access:** `psql "postgresql://neondb_owner:npg_..."` then SQL
-- **Add new DB column:** Run `ALTER TABLE leads ADD COLUMN ...`, update `db/schema.ts`
+- **Add DB column:** `ALTER TABLE ... ADD COLUMN ...` → update `db/schema.ts`
 
 ---
 
 ## Known Issues / Notes
 
-- Admin auth is client-side only (`sessionStorage`) — no server protection on `/admin` route
+- Admin auth is client-side only (`sessionStorage`) — no server-side protection on `/admin`
 - Neon free tier cold start ~500ms after inactivity
-- Voice notes are stored as base64 data URLs in text column — large (a 60s note ≈ 1–1.5MB as base64). Fine for current volume
-- `email`, `project_type`, `reference`, `budget` columns exist in DB but are no longer collected by the form — kept for historical leads
+- Voice notes stored as base64 in text column — 60s ≈ 1–1.5MB. Fine for current volume
+- `email`, `project_type`, `reference`, `budget` exist in DB but are no longer collected — kept for historical leads
+- Existing leads before 2026-06-21 had `chat_token` auto-generated by migration (`gen_random_uuid()`)
 
 ---
 
 ## Audit Status — 2026-06-21 ✓
-
-All sections verified working:
 
 | Section | AR | EN | Mobile |
 |---------|----|----|--------|
@@ -165,11 +190,11 @@ All sections verified working:
 | Services | ✓ | ✓ | ✓ |
 | Pricing | ✓ | ✓ | ✓ |
 | HowItWorks | ✓ | ✓ | ✓ |
-| StartProject form (voice) | ✓ | ✓ | ✓ |
-| StartProject form (text) | ✓ | ✓ | ✓ |
+| StartProject (voice) | ✓ | ✓ | ✓ |
+| StartProject (text) | ✓ | ✓ | ✓ |
 | Form submission → DB | ✓ | — | — |
-| Success screen | ✓ | — | — |
-| Admin panel | ✓ | — | — |
+| Success screen + chat link | ✓ | ✓ | — |
+| Client chat page /m/[token] | ✓ | — | — |
+| Admin panel + chat thread | ✓ | — | — |
 | Footer | ✓ | ✓ | ✓ |
-| Bottom nav (mobile) | — | — | ✓ |
 | WhatsApp button | ✓ | ✓ | ✓ |
