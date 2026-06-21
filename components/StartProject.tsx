@@ -37,6 +37,8 @@ export default function StartProject() {
   const [showText, setShowText] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
 
+  const [chatToken, setChatToken] = useState<string | null>(null);
+  const [chatLinkCopied, setChatLinkCopied] = useState(false);
   const [recordState, setRecordState] = useState<RecordState>("idle");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -152,7 +154,8 @@ export default function StartProject() {
       voiceNote = await blobToDataUrl(audioBlob);
     }
 
-    await submitInquiry({ name, phone, message: textMessage || "", voiceNote });
+    const result = await submitInquiry({ name, phone, message: textMessage || "", voiceNote });
+    if (result.chatToken) setChatToken(result.chatToken);
     setFormStatus("success");
   }
 
@@ -163,13 +166,22 @@ export default function StartProject() {
     (!!audioBlob || textMessage.trim());
 
   if (formStatus === "success") {
+    const chatUrl = chatToken ? `https://webistrydev.com/m/${chatToken}` : null;
+
+    function copyChatLink() {
+      if (!chatUrl) return;
+      navigator.clipboard.writeText(chatUrl);
+      setChatLinkCopied(true);
+      setTimeout(() => setChatLinkCopied(false), 2500);
+    }
+
     return (
       <section id="start-project" className="py-16 px-4 md:px-6 bg-white">
-        <div className="max-w-lg mx-auto text-center">
+        <div className="max-w-lg mx-auto">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-6 text-center"
           >
             <div className="w-24 h-24 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center">
               <CheckCircle2 size={44} className="text-emerald-500" />
@@ -179,16 +191,53 @@ export default function StartProject() {
               {sp.successMessage.replace("{name}", name)}
             </p>
             <p className="text-sm text-slate-400">{sp.successNote}</p>
+
+            {/* Chat link card */}
+            {chatUrl && (
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="w-full card rounded-3xl p-6 text-start"
+                style={{ borderColor: "rgba(124,58,237,0.2)", background: "linear-gradient(135deg, #faf8ff 0%, #f3f0ff 100%)" }}
+              >
+                <p className="text-base font-extrabold text-violet-700 mb-2">{sp.chatSaveTitle}</p>
+                <p className="text-sm text-slate-500 leading-relaxed mb-4">{sp.chatSaveDesc}</p>
+
+                {/* URL display */}
+                <div className="bg-white border border-violet-200 rounded-2xl px-4 py-3 mb-4 flex items-center gap-3">
+                  <span className="text-xs text-slate-500 font-mono break-all flex-1">{chatUrl}</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={copyChatLink}
+                    className={`flex-1 py-3 rounded-xl text-sm font-bold border transition-all ${
+                      chatLinkCopied
+                        ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                        : "bg-white border-violet-200 text-violet-700 hover:bg-violet-50"
+                    }`}
+                  >
+                    {chatLinkCopied ? sp.chatCopied : sp.chatCopy}
+                  </button>
+                  <a
+                    href={chatUrl}
+                    target="_blank"
+                    className="flex-1 btn-primary py-3 rounded-xl text-sm flex items-center justify-center"
+                  >
+                    {sp.chatOpen}
+                  </a>
+                </div>
+              </motion.div>
+            )}
+
             <button
               onClick={() => {
                 setFormStatus("idle");
-                setName("");
-                setPhone("");
-                setTextMessage("");
-                setAudioBlob(null);
-                setAudioUrl(null);
-                setRecordState("idle");
-                setRecordSeconds(0);
+                setName(""); setPhone(""); setTextMessage("");
+                setAudioBlob(null); setAudioUrl(null);
+                setRecordState("idle"); setRecordSeconds(0);
+                setChatToken(null); setChatLinkCopied(false);
               }}
               className="text-sm font-bold text-violet-600 hover:text-violet-800 underline"
             >

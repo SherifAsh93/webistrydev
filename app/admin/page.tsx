@@ -5,7 +5,9 @@ import Logo from "@/components/Logo";
 import { getLeads } from "@/app/actions/get-leads";
 import { updateLeadStatus } from "@/app/actions/update-lead";
 import { deleteLead } from "@/app/actions/delete-lead";
-import { LogOut, RefreshCw, MessageSquare, Phone, Mail, Calendar, Tag, DollarSign, Trash2, CheckCircle, Archive, Bell } from "lucide-react";
+import { LogOut, RefreshCw, MessageSquare, Phone, Mail, Calendar, Tag, DollarSign, Trash2, CheckCircle, Archive, Bell, Link2, Send, MessageCircle } from "lucide-react";
+import { getMessagesByLeadId } from "@/app/actions/get-messages";
+import { sendAdminMessage } from "@/app/actions/send-message";
 
 type Status = "new" | "contacted" | "archived";
 
@@ -19,8 +21,16 @@ type Lead = {
   budget: string | null;
   message: string | null;
   voiceNote: string | null;
+  chatToken: string | null;
   createdAt: Date | null;
   status: Status;
+};
+
+type ChatMessage = {
+  id: number;
+  sender: string;
+  body: string;
+  createdAt: Date | null;
 };
 
 const ADMIN_PW = "114891";
@@ -56,15 +66,19 @@ const FILTER_TABS: { key: "all" | Status; label: string }[] = [
 ];
 
 export default function AdminPage() {
-  const [authed, setAuthed]     = useState(false);
-  const [pw, setPw]             = useState("");
-  const [pwError, setPwError]   = useState(false);
-  const [leads, setLeads]       = useState<Lead[]>([]);
-  const [loading, setLoading]   = useState(false);
-  const [expanded, setExpanded] = useState<number | null>(null);
-  const [filter, setFilter]     = useState<"all" | Status>("all");
-  const [deleting, setDeleting] = useState<number | null>(null);
-  const [updating, setUpdating] = useState<number | null>(null);
+  const [authed, setAuthed]         = useState(false);
+  const [pw, setPw]                 = useState("");
+  const [pwError, setPwError]       = useState(false);
+  const [leads, setLeads]           = useState<Lead[]>([]);
+  const [loading, setLoading]       = useState(false);
+  const [expanded, setExpanded]     = useState<number | null>(null);
+  const [filter, setFilter]         = useState<"all" | Status>("all");
+  const [deleting, setDeleting]     = useState<number | null>(null);
+  const [updating, setUpdating]     = useState<number | null>(null);
+  const [chatMsgs, setChatMsgs]     = useState<Record<number, ChatMessage[]>>({});
+  const [chatInput, setChatInput]   = useState<Record<number, string>>({});
+  const [chatSending, setChatSending] = useState<number | null>(null);
+  const [copiedToken, setCopiedToken] = useState<number | null>(null);
   const router = useRouter();
 
   const load = useCallback(async () => {
@@ -108,6 +122,32 @@ export default function AdminPage() {
     setExpanded(null);
     setDeleting(null);
   }
+
+  async function loadChat(leadId: number) {
+    const msgs = await getMessagesByLeadId(leadId);
+    setChatMsgs((prev) => ({ ...prev, [leadId]: msgs as ChatMessage[] }));
+  }
+
+  async function handleAdminReply(leadId: number) {
+    const body = (chatInput[leadId] || "").trim();
+    if (!body) return;
+    setChatSending(leadId);
+    setChatInput((prev) => ({ ...prev, [leadId]: "" }));
+    await sendAdminMessage(leadId, body);
+    await loadChat(leadId);
+    setChatSending(null);
+  }
+
+  function copyClientLink(lead: Lead) {
+    if (!lead.chatToken) return;
+    navigator.clipboard.writeText(`https://webistrydev.com/m/${lead.chatToken}`);
+    setCopiedToken(lead.id);
+    setTimeout(() => setCopiedToken(null), 2500);
+  }
+
+  useEffect(() => {
+    if (expanded !== null) loadChat(expanded);
+  }, [expanded]);
 
   if (!authed) {
     return (
@@ -394,6 +434,72 @@ export default function AdminPage() {
                         <Trash2 size={11} />
                         {deleting === lead.id ? "Deleting…" : "Delete"}
                       </button>
+                    </div>
+
+                    {/* Chat section */}
+                    <div className="border-t border-slate-100 pt-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                          <MessageCircle size={10} /> Conversation
+                        </p>
+                        {lead.chatToken && (
+                          <button
+                            onClick={() => copyClientLink(lead)}
+                            className={`flex items-center gap-1 text-[10px] font-bold transition ${copiedToken === lead.id ? "text-emerald-600" : "text-violet-600 hover:text-violet-800"}`}
+                          >
+                            <Link2 size={10} />
+                            {copiedToken === lead.id ? "Copied!" : "Copy Client Link"}
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Message thread */}
+                      <div className="bg-white border border-slate-100 rounded-2xl p-3 max-h-52 overflow-y-auto flex flex-col gap-2.5 mb-3">
+                        {!(chatMsgs[lead.id]?.length) ? (
+                          <p className="text-[11px] text-slate-400 text-center py-5">No messages yet — start the conversation below.</p>
+                        ) : (
+                          chatMsgs[lead.id].map((msg) => (
+                            <div key={msg.id} className={`flex ${msg.sender === "admin" ? "justify-end" : "justify-start"}`}>
+                              <div className={`max-w-[75%] px-3 py-2 rounded-xl text-xs leading-relaxed ${
+                                msg.sender === "admin"
+                                  ? "text-white rounded-br-sm"
+                                  : "bg-slate-100 text-slate-700 rounded-bl-sm"
+                              }`} style={msg.sender === "admin" ? { background: "linear-gradient(135deg, #7c3aed, #6d28d9)" } : {}}>
+                                <p className={`text-[9px] font-bold mb-1 ${msg.sender === "admin" ? "text-violet-200" : "text-slate-400"}`}>
+                                  {msg.sender === "admin" ? "You" : lead.name}
+                                </p>
+                                <p>{msg.body}</p>
+                                <p className={`text-[9px] mt-1 ${msg.sender === "admin" ? "text-violet-300" : "text-slate-400"}`}>
+                                  {formatDate(msg.createdAt)}
+                                </p>
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+
+                      {/* Reply input */}
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={chatInput[lead.id] || ""}
+                          onChange={(e) => setChatInput((prev) => ({ ...prev, [lead.id]: e.target.value }))}
+                          onKeyDown={(e) => e.key === "Enter" && handleAdminReply(lead.id)}
+                          placeholder="Type a reply..."
+                          className="field flex-1 rounded-xl px-3 py-2 text-xs"
+                          disabled={chatSending === lead.id}
+                        />
+                        <button
+                          onClick={() => handleAdminReply(lead.id)}
+                          disabled={chatSending === lead.id || !(chatInput[lead.id] || "").trim()}
+                          className="btn-primary px-3 py-2 rounded-xl flex items-center gap-1 text-xs disabled:opacity-50"
+                        >
+                          {chatSending === lead.id
+                            ? <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            : <><Send size={11} /> Send</>
+                          }
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}

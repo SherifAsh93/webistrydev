@@ -1,4 +1,4 @@
-import { pgTable, serial, text, varchar, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, timestamp, integer } from "drizzle-orm/pg-core";
 
 export const leads = pgTable("leads", {
   id: serial("id").primaryKey(),
@@ -10,6 +10,15 @@ export const leads = pgTable("leads", {
   budget: varchar("budget", { length: 100 }),
   message: text("message"),
   voiceNote: text("voice_note"),
+  chatToken: varchar("chat_token", { length: 64 }).unique(),
   createdAt: timestamp("created_at").defaultNow(),
   status: varchar("status", { length: 20 }).notNull().default("new"),
+});
+
+export const messages = pgTable("messages", {
+  id: serial("id").primaryKey(),
+  leadId: integer("lead_id").references(() => leads.id, { onDelete: "cascade" }).notNull(),
+  sender: varchar("sender", { length: 10 }).notNull(),
+  body: text("body").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });

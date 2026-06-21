@@ -154,6 +154,11 @@ export const translations = {
       successMessage: "شكرًا {name}! استلمت رسالتك وهتواصل معاك خلال 24 ساعة.",
       successNote: "هوصلك على الواتساب أو المكالمة.",
       successAgain: "ابعت تاني",
+      chatSaveTitle: "🔗 احتفظ بالرابط ده كويس!",
+      chatSaveDesc: "ده رابط محادثتنا الخاصة مع بعض — أي وقت عندك سؤال أو عايز تضيف تفاصيل، ابعتهالي من هنا وهتشوف ردودي في أي وقت من غير ما تحتاج أي حاجة تانية.",
+      chatCopy: "نسخ الرابط",
+      chatCopied: "اتنسخ ✓",
+      chatOpen: "افتح المحادثة ←",
     },
     footer: {
       desc: "مطور ويب بيبني منتجات رقمية عصرية وسريعة للشركات ورواد الأعمال في كل حتة.",
@@ -346,6 +351,11 @@ export const translations = {
       successMessage: "Thanks {name}! I received your message and will get back to you within 24 hours.",
       successNote: "I'll reach you on WhatsApp or by phone.",
       successAgain: "Send another",
+      chatSaveTitle: "🔗 Save this link!",
+      chatSaveDesc: "This is our private conversation space — message me anytime with questions or extra details, and you'll see my replies here whenever you want, no account needed.",
+      chatCopy: "Copy Link",
+      chatCopied: "Copied ✓",
+      chatOpen: "Open Chat →",
     },
     footer: {
       desc: "Full-stack web developer building fast, modern digital products for businesses and entrepreneurs worldwide.",
