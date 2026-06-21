@@ -14,10 +14,11 @@ type Lead = {
   name: string;
   email: string | null;
   phone: string | null;
-  projectType: string;
+  projectType: string | null;
   reference: string | null;
   budget: string | null;
-  message: string;
+  message: string | null;
+  voiceNote: string | null;
   createdAt: Date | null;
   status: Status;
 };
@@ -272,7 +273,12 @@ export default function AdminPage() {
                         <span className={`w-1.5 h-1.5 rounded-full ${sc.dot}`} />
                         {sc.label}
                       </span>
-                      {/* Type badge */}
+                      {/* Voice badge or type badge */}
+                      {lead.voiceNote && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider bg-violet-100 text-violet-700 border-violet-200">
+                          🎙️ voice
+                        </span>
+                      )}
                       {lead.projectType && (
                         <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider ${TYPE_COLORS[lead.projectType] ?? "bg-slate-100 text-slate-600 border-slate-200"}`}>
                           {lead.projectType}
@@ -280,7 +286,9 @@ export default function AdminPage() {
                       )}
                     </div>
                     {/* Message preview */}
-                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{lead.message}</p>
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      {lead.message || (lead.voiceNote ? "🎙️ Voice message" : "—")}
+                    </p>
                     {/* Meta row */}
                     <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                       {lead.phone && (
@@ -303,11 +311,21 @@ export default function AdminPage() {
                 {/* Expanded detail */}
                 {isExpanded && (
                   <div className="border-t border-slate-100 bg-slate-50/60 px-4 py-4 space-y-4">
-                    {/* Full message */}
-                    <div>
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1.5">Message</p>
-                      <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{lead.message}</p>
-                    </div>
+                    {/* Voice note */}
+                    {lead.voiceNote && (
+                      <div>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1.5">🎙️ Voice Message</p>
+                        <audio controls src={lead.voiceNote} className="w-full rounded-xl h-10" />
+                      </div>
+                    )}
+
+                    {/* Text message */}
+                    {lead.message && (
+                      <div>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1.5">Message</p>
+                        <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{lead.message}</p>
+                      </div>
+                    )}
 
                     {/* Details grid */}
                     {(lead.budget || lead.reference) && (

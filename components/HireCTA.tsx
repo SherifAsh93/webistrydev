@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language-context";
-import { Sparkles } from "lucide-react";
 
 export default function HireCTA() {
   const { t } = useLang();
@@ -25,9 +24,8 @@ export default function HireCTA() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
 
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-white/90 text-xs font-bold px-3 py-1.5 rounded-full mb-5 uppercase tracking-widest">
-              <Sparkles size={11} />
-              Available Now
+            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-white/90 text-xs font-bold px-3 py-1.5 rounded-full mb-5 tracking-wide">
+              {c.badge}
             </div>
 
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-3 leading-tight">

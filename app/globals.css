@@ -42,6 +42,15 @@
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+@keyframes wave-bar {
+  from { transform: scaleY(0.15); }
+  to   { transform: scaleY(1); }
+}
+@keyframes mic-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.5); }
+  70%  { box-shadow: 0 0 0 28px rgba(124, 58, 237, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
 
 @layer utilities {
   .animate-aurora      { animation: aurora 10s ease-in-out infinite; }
@@ -51,6 +60,8 @@
   .animate-fade-in     { animation: fade-in 0.6s ease-out both; }
   .animate-pulse-dot   { animation: pulse-dot 2s ease-in-out infinite; }
   .animate-spin-slow   { animation: spin-slow 20s linear infinite; }
+  .animate-wave-bar    { animation: wave-bar 0.5s ease-in-out infinite alternate; }
+  .animate-mic-pulse   { animation: mic-pulse 2s ease-out infinite; }
 
   /* Light-mode card */
   .card {
