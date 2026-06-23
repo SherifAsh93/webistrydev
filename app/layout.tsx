@@ -48,7 +48,7 @@ const langDetectScript = `
   var saved=localStorage.getItem('lang');
   if(!saved){
     var ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language];
-    if(ls.some(function(l){return l&&l.toLowerCase().startsWith('ar')})){saved='ar';}
+    if(ls[0]&&ls[0].toLowerCase().startsWith('ar')){saved='ar';}
   }
   if(saved==='ar'){
     document.documentElement.lang='ar';
