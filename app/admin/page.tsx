@@ -332,9 +332,9 @@ export default function AdminPage() {
                     {/* Meta row */}
                     <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                       {lead.phone && (
-                        <span className="flex items-center gap-0.5 text-[10px] text-sky-600 font-semibold">
+                        <a href={`tel:${lead.phone.replace(/\s/g, "")}`} className="flex items-center gap-0.5 text-[10px] text-sky-600 font-semibold">
                           <Phone size={9} />{lead.phone}
-                        </span>
+                        </a>
                       )}
                       {lead.email && (
                         <span className="flex items-center gap-0.5 text-[10px] text-violet-600 font-semibold truncate max-w-[140px]">
