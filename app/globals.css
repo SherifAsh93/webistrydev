@@ -172,6 +172,17 @@ body {
 
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes bounce-x-left {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(-6px); opacity: 0.5; }
+}
+@keyframes bounce-x-right {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(6px); opacity: 0.5; }
+}
+.animate-bounce-left { animation: bounce-x-left 1.2s ease-in-out infinite; }
+.animate-bounce-right { animation: bounce-x-right 1.2s ease-in-out infinite; }
 ::selection { background: rgba(124, 58, 237, 0.15); color: #4c1d95; }
 
 a,

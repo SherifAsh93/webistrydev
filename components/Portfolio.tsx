@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { ExternalLink, ArrowRight, CheckCircle2, Smartphone } from "lucide-react";
+import { ExternalLink, ArrowRight, CheckCircle2, Smartphone, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { projects } from "@/lib/data";
 import { useLang } from "@/lib/language-context";
@@ -156,10 +156,19 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Scroll hint */}
-          <p className="text-center text-[11px] text-slate-400 font-medium mt-2 tracking-wide">
-            ← {allProjects.length + 1} projects · swipe →
-          </p>
+          {/* Animated swipe indicator */}
+          <div className="flex items-center justify-center gap-3 mt-3">
+            <ChevronLeft size={18} className="text-violet-400 animate-bounce-left" />
+            <div className="flex gap-1.5 items-center">
+              {[...Array(allProjects.length + 1)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`rounded-full transition-all ${i === 0 ? "w-5 h-1.5 bg-violet-500" : "w-1.5 h-1.5 bg-slate-200"}`}
+                />
+              ))}
+            </div>
+            <ChevronRight size={18} className="text-violet-400 animate-bounce-right" />
+          </div>
         </div>
 
         {/* ── DESKTOP: bento grid ── */}
