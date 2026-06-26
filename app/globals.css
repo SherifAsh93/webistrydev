@@ -169,6 +169,9 @@ body {
 ::-webkit-scrollbar-track { background: #f7f6ff; }
 ::-webkit-scrollbar-thumb { background: #ddd6fe; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #c4b5fd; }
+
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
 ::selection { background: rgba(124, 58, 237, 0.15); color: #4c1d95; }
 
 a,
