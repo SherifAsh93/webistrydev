@@ -1,0 +1,120 @@
+================================================================
+FACEBOOK PAGE SETUP — WEBISTRYDEV
+================================================================
+Site: www.webistrydev.com
+Prepared: 2026-06-26
+================================================================
+
+
+PAGE IDENTITY
+-------------
+Page name:     Webistrydev
+Username/URL:  @webistrydev  (facebook.com/webistrydev)
+Category:      Web Designer · Software Developer · Internet Company
+Tagline:       Full-Stack Web Developer | websites that work for you.
+
+
+PROFILE PICTURE
+---------------
+Use: facebook/logo-profile.svg (1024×1024)
+Facebook crops it to a circle — the icon sits centered on dark background,
+so it renders perfectly at any size (180px thumb → 32px notification icon).
+
+
+COVER PHOTO
+-----------
+Use: facebook/logo-wordmark.svg (820×312)
+Contains: icon + "Webistrydev" wordmark + tagline + website URL.
+Upload at 2x (1640×624) for retina screens if you convert to PNG.
+
+
+ABOUT SECTION
+-------------
+Short description (255 chars max):
+  "Full-stack web developer building fast, modern websites for businesses,
+   freelancers & brands. Clean code. Real results. Let's build something great."
+
+Website: https://www.webistrydev.com
+Phone:   (your WhatsApp number)
+Email:   sherif.ash93@gmail.com
+Location: Egypt
+
+
+CALL-TO-ACTION BUTTON
+---------------------
+Button type: "Send message" (WhatsApp) or "Contact us"
+Link to: https://www.webistrydev.com/#start-project
+This sends visitors directly to the "Start a Project" section.
+
+
+PAGE TABS TO ENABLE
+-------------------
+✓ Home (feed)
+✓ Services
+✓ Reviews
+✓ About
+✗ Shop (disable — not needed)
+✗ Events (disable — not needed)
+
+
+CONTENT STRATEGY (to connect page ↔ website)
+----------------------------------------------
+1. PIN A POST — First post should be a short intro video or screenshot of
+   the live site with link: "🌐 Check out my portfolio → webistrydev.com"
+
+2. PORTFOLIO POSTS — Share each project from the website as a Facebook post:
+   - Screenshot of the project
+   - 2-3 sentences about what was built and the tech stack
+   - Link to the live site
+   - Hashtags: #webdesign #fullstackdeveloper #Egypt #webdevelopment
+
+3. SOCIAL PROOF — Share testimonials or project results as image posts.
+   Match the purple/blue gradient style of the site.
+
+4. TIPS / VALUE POSTS — 1-2 posts/week with short web tips
+   (e.g., "Why your website needs to load in under 3 seconds 🚀").
+   Builds authority and keeps the page active.
+
+5. BEHIND THE SCENES — Short clips or screenshots of your workflow,
+   code editor, design mockups. Makes the page feel personal.
+
+
+WEBSITE INTEGRATION (after page is created)
+--------------------------------------------
+1. ADD FACEBOOK LINK to website footer and/or contact section.
+   Update: components/Footer.tsx → add Facebook icon with page URL.
+
+2. FACEBOOK PIXEL — Install the Meta Pixel on the site to track visitors
+   who came from Facebook (helps retargeting and ad analytics later).
+   Add to: app/layout.tsx in the <head> tag.
+
+3. FACEBOOK PAGE PLUGIN (optional) — Embed a "Follow us" widget on the
+   website contact section to grow the page from site traffic.
+
+4. MESSENGER CHAT BUBBLE (optional) — Show a live chat bubble on the site
+   powered by your Facebook Page inbox. Good for leads.
+   Add to: app/layout.tsx as a client-side script.
+
+
+HASHTAGS TO USE CONSISTENTLY
+------------------------------
+Arabic audience:   #تطوير_مواقع #مطور_ويب #مصر #تصميم_مواقع
+English audience:  #webdeveloper #fullstack #nextjs #freelancedev #webdesign
+
+
+BRAND COLORS (match the site exactly)
+--------------------------------------
+Primary purple:  #7c3aed
+Accent blue:     #0ea5e9
+Dark background: #0f0f1a
+White text:      #ffffff
+Slate muted:     #64748b
+
+
+================================================================
+FILES IN THIS FOLDER
+================================================================
+logo-profile.svg    → 1024×1024 — use as Facebook profile photo
+logo-wordmark.svg   → 820×312  — use as Facebook cover photo
+facebook-page-recommendations.txt → this file
+================================================================

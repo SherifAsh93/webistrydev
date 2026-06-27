@@ -1,0 +1,44 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#0f0f1a"/>
+
+  <!-- Subtle radial glow -->
+  <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#0f0f1a" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1024" height="1024" fill="url(#bg-glow)"/>
+
+  <!-- Logo icon centered, scaled up from 32→420 (factor ~13.125) -->
+  <!-- Original paths scaled: multiply all coords by 13.125, then translate to center (origin: 512-210=302, 512-210=302) -->
+  <!-- Corner bracket L shape -->
+  <path
+    d="M354.5 698.75 L354.5 302 L750.5 302"
+    stroke="url(#logo-g)"
+    stroke-width="45.9375"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Slash line -->
+  <path
+    d="M564.5 919.375 L616.5 513.625"
+    stroke="url(#logo-g)"
+    stroke-width="39.375"
+    stroke-linecap="round"
+  />
+  <!-- Arrow/bracket right -->
+  <path
+    d="M750.5 643.625 L828.5 710.9375 L750.5 778.25"
+    stroke="url(#logo-g)"
+    stroke-width="32.8125"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <defs>
+    <linearGradient id="logo-g" x1="354.5" y1="302" x2="828.5" y2="919.375" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+</svg>

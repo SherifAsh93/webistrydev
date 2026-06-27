@@ -1,4 +1,5 @@
 "use client";
+import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLang } from "@/lib/language-context";
 
@@ -8,11 +9,26 @@ const stepStyles = [
   { bg: "bg-amber-50", border: "border-amber-200", text: "text-amber-700", icon: "⚙️" },
   { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-700", icon: "🚀" },
 ];
-
 const stepNumbers = ["01", "02", "03", "04"];
 
 export default function HowItWorks() {
   const { t } = useLang();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const total = t.howItWorks.steps.length;
+
+  function slide(dir: 1 | -1) {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.offsetWidth * 0.8, behavior: "smooth" });
+  }
+
+  function onScroll() {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardW = el.scrollWidth / total;
+    setActiveIdx(Math.min(Math.round(el.scrollLeft / cardW), total - 1));
+  }
 
   return (
     <section id="how-it-works" className="py-10 bg-[#f7f6ff]">
@@ -20,53 +36,60 @@ export default function HowItWorks() {
         <div className="text-center mb-8">
           <p className="section-label justify-center mb-4">{t.howItWorks.sectionLabel}</p>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-            {t.howItWorks.title1}
-            <br />
+            {t.howItWorks.title1}<br />
             <span className="text-gradient">{t.howItWorks.title2}</span>
           </h2>
-          <p className="text-slate-500 text-lg max-w-xl mx-auto">
-            {t.howItWorks.desc}
-          </p>
+          <p className="text-slate-500 text-lg max-w-xl mx-auto">{t.howItWorks.desc}</p>
         </div>
       </div>
 
       {/* Mobile: horizontal scroll */}
       <div className="md:hidden px-4">
-        <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar">
-          {t.howItWorks.steps.map((step, i) => {
-            const s = stepStyles[i];
-            return (
-              <div
-                key={i}
-                className="snap-start shrink-0 w-[72vw] card rounded-2xl p-6 flex flex-col items-center text-center gap-5"
-              >
-                <div className={`relative w-16 h-16 rounded-2xl ${s.bg} border ${s.border} flex items-center justify-center text-3xl shrink-0 shadow-sm`}>
-                  {s.icon}
-                  <span className={`absolute -top-2 -right-2 w-5 h-5 rounded-full bg-white border ${s.border} text-[9px] font-black ${s.text} flex items-center justify-center`}>
-                    {stepNumbers[i]}
-                  </span>
+        <div className="relative">
+          <button
+            onClick={() => slide(-1)}
+            className="absolute left-0 top-[45%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 border border-violet-100 shadow-md flex items-center justify-center text-violet-600 hover:bg-violet-50 transition"
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          <div
+            ref={scrollRef}
+            dir="ltr"
+            onScroll={onScroll}
+            className="flex gap-3 overflow-x-auto snap-x snap-mandatory px-4 pb-4 hide-scrollbar"
+          >
+            {t.howItWorks.steps.map((step, i) => {
+              const s = stepStyles[i];
+              return (
+                <div key={i} className="snap-start shrink-0 w-[72vw] card rounded-2xl p-6 flex flex-col items-center text-center gap-5">
+                  <div className={`relative w-16 h-16 rounded-2xl ${s.bg} border ${s.border} flex items-center justify-center text-3xl shrink-0 shadow-sm`}>
+                    {s.icon}
+                    <span className={`absolute -top-2 -right-2 w-5 h-5 rounded-full bg-white border ${s.border} text-[9px] font-black ${s.text} flex items-center justify-center`}>
+                      {stepNumbers[i]}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-extrabold text-slate-900 mb-2">{step.title}</h3>
+                    <p className="text-sm text-slate-500 leading-relaxed">{step.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-extrabold text-slate-900 mb-2">{step.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{step.description}</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => slide(1)}
+            className="absolute right-0 top-[45%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 border border-violet-100 shadow-md flex items-center justify-center text-violet-600 hover:bg-violet-50 transition"
+          >
+            <ChevronRight size={16} />
+          </button>
         </div>
 
-        {/* Animated swipe indicator */}
-        <div className="flex items-center justify-center gap-3 mt-1">
-          <ChevronLeft size={18} className="text-violet-400 animate-bounce-left" />
-          <div className="flex gap-1.5 items-center">
-            {[...Array(t.howItWorks.steps.length)].map((_, i) => (
-              <div
-                key={i}
-                className={`rounded-full ${i === 0 ? "w-5 h-1.5 bg-violet-500" : "w-1.5 h-1.5 bg-slate-200"}`}
-              />
-            ))}
-          </div>
-          <ChevronRight size={18} className="text-violet-400 animate-bounce-right" />
+        <div className="flex gap-1.5 items-center justify-center mt-3">
+          {[...Array(total)].map((_, i) => (
+            <div key={i} className={`rounded-full transition-all duration-300 ${i === activeIdx ? "w-5 h-1.5 bg-violet-500" : "w-1.5 h-1.5 bg-slate-200"}`} />
+          ))}
         </div>
       </div>
 

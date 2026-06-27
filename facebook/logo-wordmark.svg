@@ -1,0 +1,58 @@
+<svg width="820" height="312" viewBox="0 0 820 312" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="820" height="312" fill="#0f0f1a"/>
+
+  <!-- Radial glow behind logo area -->
+  <radialGradient id="bg-glow" cx="20%" cy="50%" r="40%">
+    <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.2"/>
+    <stop offset="100%" stop-color="#0f0f1a" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="820" height="312" fill="url(#bg-glow)"/>
+
+  <!-- Logo icon (scaled ×4 from 32→128, centered vertically at 156-64=92 Y, X=60) -->
+  <!-- corner bracket -->
+  <path
+    d="M68 220 L68 92 L196 92"
+    stroke="url(#logo-g)"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- slash -->
+  <path
+    d="M156 284 L172 220"
+    stroke="url(#logo-g)"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+  <!-- arrow bracket -->
+  <path
+    d="M196 252 L220 268 L196 284"
+    stroke="url(#logo-g)"
+    stroke-width="10"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Brand name -->
+  <text x="260" y="170" font-family="'Segoe UI', Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="-2">
+    <tspan fill="white">Webistry</tspan><tspan fill="url(#text-g)">dev</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="260" y="210" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="600" fill="#64748b" letter-spacing="4">FULL-STACK DEVELOPER</text>
+
+  <!-- Website URL -->
+  <text x="260" y="252" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="500" fill="#7c3aed" letter-spacing="1">www.webistrydev.com</text>
+
+  <defs>
+    <linearGradient id="logo-g" x1="68" y1="92" x2="220" y2="284" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="text-g" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+</svg>
