@@ -158,7 +158,7 @@ export const services: ServiceItem[] = [
 export const pricing: PricingTier[] = [
   {
     name: "Starter",
-    egp: "4,500 – 9,000",
+    egp: "5,000 – 10,000",
     usd: "$110 – $220",
     description: "Perfect for individuals and small businesses needing a fast, clean web presence.",
     features: [
@@ -175,8 +175,8 @@ export const pricing: PricingTier[] = [
   },
   {
     name: "Business",
-    egp: "14,000 – 28,000",
-    usd: "$300 – $600",
+    egp: "15,000 – 30,000",
+    usd: "$330 – $660",
     description: "For growing businesses that need a full professional website with content management.",
     features: [
       "5–10 page website",
@@ -193,8 +193,8 @@ export const pricing: PricingTier[] = [
   },
   {
     name: "Online Store",
-    egp: "30,000 – 56,000",
-    usd: "$680 – $1,200",
+    egp: "28,000 – 55,000",
+    usd: "$620 – $1,220",
     description: "A complete online store — sell your products globally with a professional storefront.",
     features: [
       "Full product catalog",
@@ -212,8 +212,8 @@ export const pricing: PricingTier[] = [
   },
   {
     name: "Custom App",
-    egp: "52,000+",
-    usd: "$1,100+",
+    egp: "38,000+",
+    usd: "$840+",
     description: "Complex web applications with advanced features, databases, and business logic.",
     features: [
       "Custom architecture",
