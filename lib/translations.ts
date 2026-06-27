@@ -29,8 +29,8 @@ export const translations = {
     },
     portfolio: {
       sectionLabel: "شغلي",
-      title1: "معرض",
-      title2: "أعمالي",
+      title1: "شغل",
+      title2: "بيتكلم عن نفسه",
       desc: "شغل حقيقي، عملاء حقيقيين — اتفرج على اللي عملناه.",
       liveSite: "شوف الموقع",
       buildLike: "ابني زيه ←",
