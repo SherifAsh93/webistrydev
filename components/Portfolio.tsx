@@ -2,9 +2,11 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { ExternalLink, ArrowRight, CheckCircle2, Smartphone, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/lib/data";
+import type { Project } from "@/lib/data";
 import { useLang } from "@/lib/language-context";
+import ProjectInquiryModal from "@/components/ProjectInquiryModal";
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } };
 const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } };
@@ -26,10 +28,11 @@ function LiveBadge({ label, dark = false }: { label: string; dark?: boolean }) {
   );
 }
 
-function BookButton({ href = "#start-project", label, dark = false }: { href?: string; label: string; dark?: boolean }) {
+function BookButton({ label, dark = false, onClick }: { label: string; dark?: boolean; onClick: () => void }) {
   return (
-    <a
-      href={href}
+    <button
+      type="button"
+      onClick={onClick}
       className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-center ${
         dark
           ? "text-violet-300 hover:text-white bg-violet-900/50 hover:bg-violet-700 border border-violet-700/50 hover:border-violet-500"
@@ -37,7 +40,7 @@ function BookButton({ href = "#start-project", label, dark = false }: { href?: s
       }`}
     >
       {label}
-    </a>
+    </button>
   );
 }
 
@@ -59,6 +62,11 @@ export default function Portfolio() {
   const p = t.portfolio;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [modalProject, setModalProject] = useState<{ project: Project; displayName: string } | null>(null);
+
+  function openModal(project: Project, displayName: string) {
+    setModalProject({ project, displayName });
+  }
 
   const localize = (id: string) => {
     const proj = projects.find((pr) => pr.id === id)!;
@@ -92,6 +100,16 @@ export default function Portfolio() {
   }
 
   return (
+    <>
+    <AnimatePresence>
+      {modalProject && (
+        <ProjectInquiryModal
+          project={modalProject.project}
+          projectDisplayName={modalProject.displayName}
+          onClose={() => setModalProject(null)}
+        />
+      )}
+    </AnimatePresence>
     <section id="portfolio" className="py-10 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
 
@@ -145,7 +163,7 @@ export default function Portfolio() {
                         <ExternalLink size={12} />
                         {p.liveSite}
                       </a>
-                      <BookButton label={p.buildLike} dark />
+                      <BookButton label={p.buildLike} dark onClick={() => openModal(project, localize(project.id).name)} />
                     </div>
                   </div>
                 </div>
@@ -205,9 +223,9 @@ export default function Portfolio() {
                   <a href={ahmed.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-sm transition">
                     <ExternalLink size={12} />{p.liveSite}
                   </a>
-                  <a href="#start-project" className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-violet-600/80 hover:bg-violet-600 border border-violet-500/50 backdrop-blur-sm transition">
+                  <button onClick={() => openModal(ahmed, ahmed.name)} className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-violet-600/80 hover:bg-violet-600 border border-violet-500/50 backdrop-blur-sm transition">
                     {p.buildLike}
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -230,7 +248,7 @@ export default function Portfolio() {
                     <a href={project.url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 transition">
                       <ExternalLink size={12} />{p.liveSite}
                     </a>
-                    <BookButton label={p.buildLike} />
+                    <BookButton label={p.buildLike} onClick={() => openModal(project, project.name)} />
                   </div>
                 </div>
               </motion.div>
@@ -325,7 +343,7 @@ export default function Portfolio() {
                   <a href={elghaly.url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 transition">
                     <ExternalLink size={12} />{p.liveSite}
                   </a>
-                  <BookButton label={p.buildLike} dark />
+                  <BookButton label={p.buildLike} dark onClick={() => openModal(elghaly, elghaly.name)} />
                 </div>
               </div>
             </motion.div>
@@ -344,5 +362,6 @@ export default function Portfolio() {
         </motion.div>
       </div>
     </section>
+    </>
   );
 }

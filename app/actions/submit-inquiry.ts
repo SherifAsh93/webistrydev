@@ -9,6 +9,7 @@ export async function submitInquiry(formData: {
   phone: string;
   message?: string;
   voiceNote?: string | null;
+  reference?: string | null;
 }) {
   const chatToken = randomUUID();
 
@@ -18,6 +19,7 @@ export async function submitInquiry(formData: {
       phone: formData.phone || null,
       message: formData.message || null,
       voiceNote: formData.voiceNote || null,
+      reference: formData.reference || null,
       chatToken,
     });
   } catch (error) {
