@@ -33,7 +33,7 @@ export const translations = {
       title2: "مشاريعي",
       desc: "شغل حقيقي، عملاء حقيقيين.",
       liveSite: "شوف الموقع",
-      buildLike: "ابني زيه ←",
+      buildLike: "عايز مشروع زيه ←",
       viewLive: "زور الموقع",
       live: "شغّال",
       bizApps: {
@@ -57,9 +57,9 @@ export const translations = {
       },
     },
     projectModal: {
-      referenceLabel: "هتبني زي",
-      title: "احكيلي عن فكرتك",
-      subtitle: "قولّي تفاصيل مشروعك وأنا هرد عليك خلال 24 ساعة.",
+      referenceLabel: "عايز مشروع زي",
+      title: "احكيلي عايز إيه بالظبط",
+      subtitle: "شايف مشروع عجبك؟ قولّي عايز إيه وأنا هبنيهولك — هرد عليك خلال 24 ساعة.",
       close: "إغلاق",
     },
     services: {
@@ -236,7 +236,7 @@ export const translations = {
       title2: "My Work",
       desc: "Real clients, real results.",
       liveSite: "Live Site",
-      buildLike: "Build Like This →",
+      buildLike: "I Want Something Like This →",
       viewLive: "View Live Site",
       live: "Live",
       bizApps: {
@@ -260,9 +260,9 @@ export const translations = {
       },
     },
     projectModal: {
-      referenceLabel: "Building something like",
-      title: "Tell Me About Your Project",
-      subtitle: "Share your idea and I'll get back to you within 24 hours.",
+      referenceLabel: "I want something like",
+      title: "Tell Me What You Need",
+      subtitle: "You saw something you liked — tell me what you want and I'll build it for you. I'll get back within 24 hours.",
       close: "Close",
     },
     services: {
