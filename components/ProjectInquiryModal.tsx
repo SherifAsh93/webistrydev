@@ -39,7 +39,7 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [textMessage, setTextMessage] = useState("");
-  const [showText, setShowText] = useState(false);
+  const [showVoice, setShowVoice] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [chatToken, setChatToken] = useState<string | null>(null);
   const [chatLinkCopied, setChatLinkCopied] = useState(false);
@@ -97,9 +97,9 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
       setRecordState("recording");
       setRecordSeconds(0);
       timerRef.current = setInterval(() => {
-        setRecordSeconds((prev) => { const next = prev + 1; if (next >= 60) { stopRecording(); return 60; } return next; });
+        setRecordSeconds((prev) => prev + 1);
       }, 1000);
-    } catch { setRecordState("idle"); setShowText(true); }
+    } catch { setRecordState("idle"); }
   }
 
   function stopRecording() {
@@ -110,6 +110,13 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
   function reRecord() {
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     setAudioBlob(null); setAudioUrl(null); setRecordState("idle"); setRecordSeconds(0); setIsPlaying(false);
+    setShowVoice(true);
+  }
+
+  function removeVoice() {
+    if (audioUrl) URL.revokeObjectURL(audioUrl);
+    setAudioBlob(null); setAudioUrl(null); setRecordState("idle"); setRecordSeconds(0); setIsPlaying(false);
+    setShowVoice(false);
   }
 
   function togglePlay() {
@@ -128,15 +135,14 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !phone.trim()) return;
-    if (!audioBlob && !textMessage.trim()) return;
+    if (!name.trim() || !phone.trim() || !textMessage.trim()) return;
     setFormStatus("sending");
     let voiceNote: string | null = null;
     if (audioBlob) voiceNote = await blobToDataUrl(audioBlob);
     const result = await submitInquiry({
       name,
       phone,
-      message: textMessage || "",
+      message: textMessage,
       voiceNote,
       reference: projectDisplayName,
     });
@@ -144,7 +150,7 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
     setFormStatus("success");
   }
 
-  const canSubmit = formStatus !== "sending" && name.trim() && phone.trim() && (!!audioBlob || textMessage.trim());
+  const canSubmit = formStatus !== "sending" && name.trim() !== "" && phone.trim() !== "" && textMessage.trim() !== "";
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -226,91 +232,97 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
                 <p className="text-xs text-slate-400">{m.subtitle}</p>
               </div>
 
-              {/* Voice / Text */}
-              <div className="card rounded-2xl p-4 min-h-[160px] flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  {recordState === "idle" && (
-                    <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full flex flex-col items-center text-center gap-4 py-1">
-                      <button type="button" onClick={startRecording}
-                        className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center shadow-xl shadow-violet-200 hover:scale-105 transition-all animate-mic-pulse">
-                        <Mic size={26} className="text-white" />
-                      </button>
-                      <div>
-                        <p className="text-sm font-extrabold text-slate-900 mb-0.5">{sp.voiceTitle}</p>
-                        <p className="text-xs text-slate-400">{sp.voiceHint}</p>
-                      </div>
-                      <button type="button" onClick={() => setShowText(v => !v)} className="text-xs text-violet-500 hover:text-violet-700 font-semibold underline underline-offset-2">
-                        {sp.voiceOrType}
-                      </button>
-                      <AnimatePresence>
-                        {showText && (
-                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="w-full overflow-hidden">
-                            <textarea value={textMessage} onChange={e => setTextMessage(e.target.value)} rows={4}
-                              placeholder={sp.textPlaceholder} className="field w-full rounded-xl px-4 py-3 text-sm resize-none mt-1" />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  )}
+              {/* Message — text is primary */}
+              <div className="card rounded-2xl p-4 flex flex-col gap-3">
+                <div>
+                  <label className="text-xs font-bold text-slate-500 block mb-1.5">
+                    {sp.textLabel} <span className="text-rose-400">*</span>
+                  </label>
+                  <textarea value={textMessage} onChange={e => setTextMessage(e.target.value)} rows={4}
+                    required placeholder={sp.textPlaceholder} className="field w-full rounded-xl px-4 py-3 text-sm resize-none" />
+                </div>
 
-                  {recordState === "requesting" && (
-                    <motion.div key="requesting" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center gap-3 py-6">
-                      <div className="w-8 h-8 border-[3px] border-violet-200 border-t-violet-600 rounded-full animate-spin" />
-                      <p className="text-xs text-slate-500">{sp.voiceRequesting}</p>
-                    </motion.div>
-                  )}
-
-                  {recordState === "recording" && (
-                    <motion.div key="recording" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full flex flex-col items-center gap-4 py-2">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-                        <span className="text-2xl font-black text-slate-900 tabular-nums">{formatTime(recordSeconds)}</span>
-                        <span className="text-xs text-slate-400 font-semibold">{sp.voiceRecording}</span>
-                      </div>
-                      <div className="flex items-center gap-1 h-10">
-                        {WAVE_CONFIG.map((cfg, i) => (
-                          <div key={i} className="w-1 bg-violet-500 rounded-full origin-center animate-wave-bar"
-                            style={{ height: "100%", animationDuration: cfg.dur, animationDelay: cfg.delay }} />
-                        ))}
-                      </div>
-                      <button type="button" onClick={stopRecording}
-                        className="flex items-center gap-1.5 px-5 py-2 bg-rose-50 border border-rose-200 text-rose-600 font-bold rounded-xl text-xs hover:bg-rose-100 transition-all">
-                        <Square size={12} fill="currentColor" />{sp.voiceStop}
-                      </button>
-                    </motion.div>
-                  )}
-
-                  {recordState === "recorded" && (
-                    <motion.div key="recorded" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full flex flex-col items-center gap-3 py-2">
-                      <div className="flex items-center gap-2 text-emerald-600">
-                        <CheckCircle2 size={18} />
-                        <span className="font-extrabold text-sm">{sp.voiceRecorded} — {formatTime(recordSeconds)}</span>
-                      </div>
-                      {audioUrl && <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} className="hidden" />}
-                      <div className="flex items-center gap-2">
-                        <button type="button" onClick={togglePlay}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-violet-50 border border-violet-200 text-violet-700 font-bold rounded-xl text-xs hover:bg-violet-100 transition-all">
-                          {isPlaying ? <><Pause size={12} />{sp.voicePause}</> : <><Play size={12} />{sp.voicePlay}</>}
+                {/* Optional voice */}
+                <div className="border-t border-slate-100 pt-3">
+                  <AnimatePresence mode="wait">
+                    {!showVoice && recordState === "idle" && (
+                      <motion.div key="voice-toggle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+                        <button type="button" onClick={() => setShowVoice(true)}
+                          className="flex items-center gap-1.5 text-xs text-violet-500 hover:text-violet-700 font-semibold transition-colors">
+                          <Mic size={12} />{sp.voiceAddNote}
                         </button>
-                        <button type="button" onClick={reRecord}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-xl text-xs hover:bg-slate-100 transition-all">
-                          <RotateCcw size={12} />{sp.voiceRerecord}
+                      </motion.div>
+                    )}
+
+                    {showVoice && recordState === "idle" && (
+                      <motion.div key="idle-compact" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }}
+                        className="flex items-center justify-between gap-2">
+                        <button type="button" onClick={startRecording}
+                          className="flex items-center gap-1.5 px-3 py-2 bg-violet-50 border border-violet-200 text-violet-700 font-bold rounded-xl text-xs hover:bg-violet-100 transition-all">
+                          <Mic size={13} />{sp.voiceTitle}
                         </button>
-                      </div>
-                      <button type="button" onClick={() => setShowText(v => !v)} className="text-xs text-violet-400 hover:text-violet-600 font-semibold underline underline-offset-2">
-                        {sp.voiceOrType}
-                      </button>
-                      <AnimatePresence>
-                        {showText && (
-                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="w-full overflow-hidden">
-                            <textarea value={textMessage} onChange={e => setTextMessage(e.target.value)} rows={3}
-                              placeholder={sp.textPlaceholder} className="field w-full rounded-xl px-4 py-3 text-sm resize-none" />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                        <button type="button" onClick={removeVoice}
+                          className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-semibold transition-colors">
+                          <X size={11} />{sp.voiceRemoveNote}
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {recordState === "requesting" && (
+                      <motion.div key="requesting" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="flex items-center gap-2 py-1">
+                        <div className="w-4 h-4 border-2 border-violet-200 border-t-violet-600 rounded-full animate-spin shrink-0" />
+                        <p className="text-xs text-slate-500">{sp.voiceRequesting}</p>
+                      </motion.div>
+                    )}
+
+                    {recordState === "recording" && (
+                      <motion.div key="recording" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse shrink-0" />
+                          <span className="text-lg font-black text-slate-900 tabular-nums">{formatTime(recordSeconds)}</span>
+                          <span className="text-xs text-slate-400 font-semibold">{sp.voiceRecording}</span>
+                        </div>
+                        <div className="flex items-center gap-1 h-8">
+                          {WAVE_CONFIG.map((cfg, i) => (
+                            <div key={i} className="w-1 bg-violet-500 rounded-full origin-center animate-wave-bar"
+                              style={{ height: "100%", animationDuration: cfg.dur, animationDelay: cfg.delay }} />
+                          ))}
+                        </div>
+                        <button type="button" onClick={stopRecording}
+                          className="flex items-center gap-1.5 px-4 py-2 bg-rose-50 border border-rose-200 text-rose-600 font-bold rounded-xl text-xs hover:bg-rose-100 transition-all self-start">
+                          <Square size={11} fill="currentColor" />{sp.voiceStop}
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {recordState === "recorded" && (
+                      <motion.div key="recorded" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="flex items-center gap-2 flex-wrap">
+                        {audioUrl && <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} className="hidden" />}
+                        <div className="flex items-center gap-1.5 text-emerald-600">
+                          <CheckCircle2 size={14} />
+                          <span className="font-bold text-xs">{sp.voiceRecorded} — {formatTime(recordSeconds)}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 ml-auto">
+                          <button type="button" onClick={togglePlay}
+                            className="flex items-center gap-1 px-2.5 py-1.5 bg-violet-50 border border-violet-200 text-violet-700 font-bold rounded-lg text-xs hover:bg-violet-100 transition-all">
+                            {isPlaying ? <><Pause size={11} />{sp.voicePause}</> : <><Play size={11} />{sp.voicePlay}</>}
+                          </button>
+                          <button type="button" onClick={reRecord}
+                            className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-lg text-xs hover:bg-slate-100 transition-all">
+                            <RotateCcw size={11} />{sp.voiceRerecord}
+                          </button>
+                          <button type="button" onClick={removeVoice}
+                            className="p-1.5 text-slate-400 hover:text-rose-500 transition-colors">
+                            <X size={13} />
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
 
               {/* Contact */}

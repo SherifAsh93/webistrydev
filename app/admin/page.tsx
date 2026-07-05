@@ -388,7 +388,7 @@ export default function AdminPage() {
                     {/* Status controls */}
                     <div>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">Status</p>
-                      <div className="flex gap-1.5 flex-wrap">
+                      <div className="flex gap-2 flex-wrap">
                         {(["new", "contacted", "archived"] as Status[]).map((s) => {
                           const cfg = STATUS_CONFIG[s];
                           const isActive = lead.status === s;
@@ -397,7 +397,7 @@ export default function AdminPage() {
                               key={s}
                               onClick={() => handleStatusChange(lead.id, s)}
                               disabled={updating === lead.id || isActive}
-                              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                              className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold border transition-all ${
                                 isActive
                                   ? `${cfg.color} cursor-default`
                                   : "bg-white text-slate-500 border-slate-200 hover:border-slate-400"
@@ -415,21 +415,21 @@ export default function AdminPage() {
                     </div>
 
                     {/* Action buttons */}
-                    <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-100">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 pt-1 border-t border-slate-100">
                       {lead.phone && (
-                        <a href={`https://wa.me/${lead.phone.replace(/\D/g, "")}`} target="_blank" className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-[#25D366] rounded-xl hover:bg-[#1eb85a] transition">
+                        <a href={`https://wa.me/${lead.phone.replace(/\D/g, "")}`} target="_blank" className="flex items-center justify-center gap-1.5 px-3 py-3 text-xs font-bold text-white bg-[#25D366] rounded-xl hover:bg-[#1eb85a] transition">
                           💬 WhatsApp
                         </a>
                       )}
                       {lead.email && (
-                        <a href={`mailto:${lead.email}?subject=Re: Your project request`} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-violet-700 bg-violet-100 border border-violet-200 rounded-xl hover:bg-violet-200 transition">
+                        <a href={`mailto:${lead.email}?subject=Re: Your project request`} className="flex items-center justify-center gap-1.5 px-3 py-3 text-xs font-bold text-violet-700 bg-violet-100 border border-violet-200 rounded-xl hover:bg-violet-200 transition">
                           ✉️ Email
                         </a>
                       )}
                       <button
                         onClick={() => handleDelete(lead.id)}
                         disabled={deleting === lead.id}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl hover:bg-rose-100 transition ml-auto disabled:opacity-50"
+                        className="flex items-center justify-center gap-1.5 px-3 py-3 text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl hover:bg-rose-100 transition sm:ml-auto disabled:opacity-50"
                       >
                         <Trash2 size={11} />
                         {deleting === lead.id ? "Deleting…" : "Delete"}
@@ -486,17 +486,17 @@ export default function AdminPage() {
                           onChange={(e) => setChatInput((prev) => ({ ...prev, [lead.id]: e.target.value }))}
                           onKeyDown={(e) => e.key === "Enter" && handleAdminReply(lead.id)}
                           placeholder="Type a reply..."
-                          className="field flex-1 rounded-xl px-3 py-2 text-xs"
+                          className="field flex-1 rounded-xl px-3 py-3 text-sm"
                           disabled={chatSending === lead.id}
                         />
                         <button
                           onClick={() => handleAdminReply(lead.id)}
                           disabled={chatSending === lead.id || !(chatInput[lead.id] || "").trim()}
-                          className="btn-primary px-3 py-2 rounded-xl flex items-center gap-1 text-xs disabled:opacity-50"
+                          className="btn-primary px-4 py-3 rounded-xl flex items-center gap-1 text-sm disabled:opacity-50 shrink-0"
                         >
                           {chatSending === lead.id
-                            ? <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            : <><Send size={11} /> Send</>
+                            ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            : <><Send size={14} /> <span className="hidden sm:inline">Send</span></>
                           }
                         </button>
                       </div>
