@@ -108,6 +108,19 @@ export const projects: Project[] = [
     screenshot: "/projects/elghaly-vr.png",
     featured: false,
   },
+  {
+    id: "qoya-furniture",
+    name: "QOYA Furniture",
+    description:
+      "Ultra-luxury furniture brand website for one of Cairo's premium showrooms. Fullscreen editorial design, auto-cycling hero slider, 90+ product images, contact inquiry system, and two-branch store locator.",
+    category: "corporate",
+    categoryLabel: "Luxury Brand",
+    categoryColor: "from-amber-700 to-yellow-800",
+    tags: ["Next.js", "Tailwind CSS", "Neon DB", "Editorial Design"],
+    url: "https://qoya-furniture.vercel.app",
+    screenshot: "/projects/qoya-furniture.png",
+    featured: true,
+  },
 ];
 
 export const services: ServiceItem[] = [

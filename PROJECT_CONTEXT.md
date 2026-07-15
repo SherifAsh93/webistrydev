@@ -198,3 +198,24 @@ pm2 restart webistrydev
 | Admin panel + chat thread | ✓ | — | — |
 | Footer | ✓ | ✓ | ✓ |
 | WhatsApp button | ✓ | ✓ | ✓ |
+
+---
+
+## Update — 2026-07-15
+
+### QOYA Furniture project added to portfolio
+- Screenshot saved to `/public/projects/qoya-furniture.png`
+- Added to `lib/data.ts` as category `"corporate"`, tags: Next.js, Tailwind CSS, Neon DB, Editorial Design
+- Arabic description in `lib/translations.ts` → `projectDescs["qoya-furniture"]`
+- Added to `Portfolio.tsx` carousel + desktop bento grid (row 2 alongside Zahrtelkhlig)
+- Added Furniture Studio as horizontal card in new row 4
+- Hero stats updated to 7+
+
+### StartProject form — full UX overhaul
+1. **Trust badges bar** — 3 pill badges above heading (same-day reply, free consult, private)
+2. **Project type quick-picker** — 6 tap buttons (متجر / موقع براند / برنامج / صفحة / عيادة / تاني), updates textarea placeholder dynamically
+3. **Submit button glow** — animated ring pulse when all 3 fields are filled
+4. **"What happens next" card** — 3 numbered steps below submit button
+5. **WhatsApp direct fallback** — link at bottom for users who prefer to skip the form
+6. **Arabic copy** — new heading "فكرتك في بالك؟ قولهالي دلوقتي.", trust badges in Egyptian dialect, type-specific placeholders per project type
+7. Both AR and EN translations updated with all new keys

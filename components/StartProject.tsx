@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { CheckCircle2, Mic, Square, RotateCcw, Send, Play, Pause, X } from "lucide-react";
+import { CheckCircle2, Mic, Square, RotateCcw, Send, Play, Pause, X, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { useLang } from "@/lib/language-context";
@@ -27,6 +27,8 @@ const WAVE_CONFIG = [
   { dur: "0.5s", delay: "0.24s" },
 ];
 
+const WHATSAPP_NUMBER = "201101997525";
+
 export default function StartProject() {
   const { t } = useLang();
   const sp = t.startProject;
@@ -34,6 +36,7 @@ export default function StartProject() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [textMessage, setTextMessage] = useState("");
+  const [projectType, setProjectType] = useState<string | null>(null);
   const [showVoice, setShowVoice] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
 
@@ -58,6 +61,10 @@ export default function StartProject() {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [audioUrl]);
+
+  const activePlaceholder = projectType
+    ? (sp as any).typePlaceholders?.[projectType] ?? sp.textPlaceholder
+    : sp.textPlaceholder;
 
   async function startRecording() {
     setRecordState("requesting");
@@ -239,6 +246,7 @@ export default function StartProject() {
                 setRecordState("idle"); setRecordSeconds(0);
                 setShowVoice(false);
                 setChatToken(null); setChatLinkCopied(false);
+                setProjectType(null);
               }}
               className="text-sm font-bold text-violet-600 hover:text-violet-800 underline"
             >
@@ -250,11 +258,36 @@ export default function StartProject() {
     );
   }
 
+  const projectTypes: { key: string; label: string }[] = (sp as any).projectTypes ?? [];
+  const trustBadges: string[] = (sp as any).trustBadges ?? [];
+  const nextSteps: string[] = (sp as any).nextSteps ?? [];
+
   return (
     <section id="start-project" className="py-16 px-4 md:px-6 bg-white">
       <div className="max-w-lg mx-auto">
-        {/* Header */}
-        <div className="text-center mb-10">
+
+        {/* ── Trust badges ─────────────────────────────────── */}
+        {trustBadges.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="flex flex-wrap justify-center gap-2 mb-8"
+          >
+            {trustBadges.map((badge) => (
+              <span
+                key={badge}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-violet-50 border border-violet-100 text-violet-700"
+              >
+                {badge}
+              </span>
+            ))}
+          </motion.div>
+        )}
+
+        {/* ── Header ───────────────────────────────────────── */}
+        <div className="text-center mb-8">
           <p className="section-label justify-center mb-4">{sp.sectionLabel}</p>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
             {sp.title1}
@@ -264,8 +297,39 @@ export default function StartProject() {
           <p className="text-slate-500 text-lg max-w-md mx-auto leading-relaxed">{sp.desc}</p>
         </div>
 
+        {/* ── Project type picker ───────────────────────────── */}
+        {projectTypes.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="mb-6"
+          >
+            <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 text-center mb-3">
+              {(sp as any).typePickerLabel}
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {projectTypes.map((pt) => (
+                <button
+                  key={pt.key}
+                  type="button"
+                  onClick={() => setProjectType(projectType === pt.key ? null : pt.key)}
+                  className={`py-2.5 px-2 rounded-2xl text-xs font-bold border transition-all text-center leading-snug ${
+                    projectType === pt.key
+                      ? "bg-violet-600 border-violet-600 text-white shadow-lg shadow-violet-200"
+                      : "bg-white border-slate-200 text-slate-600 hover:border-violet-300 hover:bg-violet-50"
+                  }`}
+                >
+                  {pt.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {/* Message card — text is primary */}
+          {/* ── Message card ─────────────────────────────────── */}
           <div className="card rounded-3xl p-6 flex flex-col gap-4">
             <div>
               <label className="text-xs font-bold text-slate-500 block mb-2">
@@ -276,23 +340,16 @@ export default function StartProject() {
                 onChange={(e) => setTextMessage(e.target.value)}
                 rows={5}
                 required
-                placeholder={sp.textPlaceholder}
+                placeholder={activePlaceholder}
                 className="field w-full rounded-2xl px-4 py-3 text-sm resize-none"
               />
             </div>
 
-            {/* Optional voice note section */}
+            {/* Optional voice note */}
             <div className="border-t border-slate-100 pt-4">
               <AnimatePresence mode="wait">
-                {/* Voice add toggle — shown when voice is not active */}
                 {!showVoice && recordState === "idle" && (
-                  <motion.div
-                    key="voice-toggle"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
+                  <motion.div key="voice-toggle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
                     <button
                       type="button"
                       onClick={() => setShowVoice(true)}
@@ -304,16 +361,8 @@ export default function StartProject() {
                   </motion.div>
                 )}
 
-                {/* IDLE — show compact recorder start */}
                 {showVoice && recordState === "idle" && (
-                  <motion.div
-                    key="idle-compact"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="flex items-center justify-between gap-3"
-                  >
+                  <motion.div key="idle-compact" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25 }} className="flex items-center justify-between gap-3">
                     <button
                       type="button"
                       onClick={startRecording}
@@ -333,52 +382,25 @@ export default function StartProject() {
                   </motion.div>
                 )}
 
-                {/* REQUESTING */}
                 {recordState === "requesting" && (
-                  <motion.div
-                    key="requesting"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center gap-3 py-2"
-                  >
+                  <motion.div key="requesting" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-3 py-2">
                     <div className="w-5 h-5 border-2 border-violet-200 border-t-violet-600 rounded-full animate-spin shrink-0" />
                     <p className="text-sm text-slate-500 font-medium">{sp.voiceRequesting}</p>
                   </motion.div>
                 )}
 
-                {/* RECORDING */}
                 {recordState === "recording" && (
-                  <motion.div
-                    key="recording"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex flex-col gap-4"
-                  >
+                  <motion.div key="recording" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }} className="flex flex-col gap-4">
                     <div className="flex items-center gap-3">
                       <span className="w-3 h-3 rounded-full bg-rose-500 animate-pulse shrink-0" />
-                      <span className="text-xl font-black text-slate-900 tabular-nums">
-                        {formatTime(recordSeconds)}
-                      </span>
+                      <span className="text-xl font-black text-slate-900 tabular-nums">{formatTime(recordSeconds)}</span>
                       <span className="text-xs text-slate-400 font-semibold">{sp.voiceRecording}</span>
                     </div>
-
                     <div className="flex items-center gap-1.5 h-8">
                       {WAVE_CONFIG.map((cfg, i) => (
-                        <div
-                          key={i}
-                          className="w-1.5 bg-violet-500 rounded-full origin-center animate-wave-bar"
-                          style={{
-                            height: "100%",
-                            animationDuration: cfg.dur,
-                            animationDelay: cfg.delay,
-                          }}
-                        />
+                        <div key={i} className="w-1.5 bg-violet-500 rounded-full origin-center animate-wave-bar" style={{ height: "100%", animationDuration: cfg.dur, animationDelay: cfg.delay }} />
                       ))}
                     </div>
-
                     <button
                       type="button"
                       onClick={stopRecording}
@@ -390,53 +412,25 @@ export default function StartProject() {
                   </motion.div>
                 )}
 
-                {/* RECORDED */}
                 {recordState === "recorded" && (
-                  <motion.div
-                    key="recorded"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex flex-col gap-3"
-                  >
+                  <motion.div key="recorded" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }} className="flex flex-col gap-3">
                     {audioUrl && (
-                      <audio
-                        ref={audioRef}
-                        src={audioUrl}
-                        onEnded={() => setIsPlaying(false)}
-                        className="hidden"
-                      />
+                      <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} className="hidden" />
                     )}
-
                     <div className="flex items-center gap-2 flex-wrap">
                       <div className="flex items-center gap-1.5 text-emerald-600">
                         <CheckCircle2 size={16} />
-                        <span className="font-bold text-sm">
-                          {sp.voiceRecorded} — {formatTime(recordSeconds)}
-                        </span>
+                        <span className="font-bold text-sm">{sp.voiceRecorded} — {formatTime(recordSeconds)}</span>
                       </div>
                       <div className="flex items-center gap-2 ml-auto">
-                        <button
-                          type="button"
-                          onClick={togglePlay}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-violet-50 border border-violet-200 text-violet-700 font-bold rounded-xl hover:bg-violet-100 transition-all text-xs"
-                        >
+                        <button type="button" onClick={togglePlay} className="flex items-center gap-1.5 px-3 py-2 bg-violet-50 border border-violet-200 text-violet-700 font-bold rounded-xl hover:bg-violet-100 transition-all text-xs">
                           {isPlaying ? <><Pause size={12} /> {sp.voicePause}</> : <><Play size={12} /> {sp.voicePlay}</>}
                         </button>
-                        <button
-                          type="button"
-                          onClick={reRecord}
-                          className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-100 transition-all text-xs"
-                        >
+                        <button type="button" onClick={reRecord} className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-100 transition-all text-xs">
                           <RotateCcw size={12} />
                           {sp.voiceRerecord}
                         </button>
-                        <button
-                          type="button"
-                          onClick={removeVoice}
-                          className="flex items-center gap-1 px-2 py-2 text-slate-400 hover:text-rose-500 transition-colors"
-                        >
+                        <button type="button" onClick={removeVoice} className="flex items-center gap-1 px-2 py-2 text-slate-400 hover:text-rose-500 transition-colors">
                           <X size={14} />
                         </button>
                       </div>
@@ -447,7 +441,7 @@ export default function StartProject() {
             </div>
           </div>
 
-          {/* Contact card */}
+          {/* ── Contact card ─────────────────────────────────── */}
           <div className="card rounded-3xl p-6">
             <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-4">
               {t.lang === "ar" ? "إزاي أوصلك؟" : "How to reach you"}
@@ -484,24 +478,68 @@ export default function StartProject() {
             <p className="text-[11px] text-slate-400 mt-3">{sp.contactNote}</p>
           </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={!canSubmit}
-            className="btn-primary flex items-center justify-center gap-2.5 py-4 text-base w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-          >
-            {formStatus === "sending" ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                {sp.sending}
-              </>
-            ) : (
-              <>
-                <Send size={18} />
-                {sp.submit}
-              </>
+          {/* ── Submit button ─────────────────────────────────── */}
+          <div className="relative">
+            {canSubmit && (
+              <span className="absolute inset-0 rounded-2xl bg-violet-500 opacity-30 animate-ping pointer-events-none" />
             )}
-          </button>
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              className="relative btn-primary flex items-center justify-center gap-2.5 py-4 text-base w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+            >
+              {formStatus === "sending" ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  {sp.sending}
+                </>
+              ) : (
+                <>
+                  <Send size={18} />
+                  {sp.submit}
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* ── What happens next ────────────────────────────── */}
+          {nextSteps.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="card rounded-2xl p-5"
+              style={{ background: "linear-gradient(135deg, #faf8ff 0%, #f3f0ff 100%)", borderColor: "rgba(124,58,237,0.12)" }}
+            >
+              <p className="text-xs font-extrabold uppercase tracking-widest text-violet-500 mb-3 text-center">
+                {(sp as any).nextStepsTitle}
+              </p>
+              <ol className="flex flex-col gap-2">
+                {nextSteps.map((step, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                    <span className="w-5 h-5 rounded-full bg-violet-100 text-violet-600 text-[10px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </motion.div>
+          )}
+
+          {/* ── WhatsApp direct fallback ─────────────────────── */}
+          <div className="text-center pt-1">
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-emerald-600 transition-colors"
+            >
+              <MessageCircle size={15} />
+              {(sp as any).whatsappDirect}
+            </a>
+          </div>
         </form>
       </div>
     </section>
