@@ -135,6 +135,19 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: "mr-mohammed",
+    name: "Mr. Mohammed",
+    description:
+      "Full-stack teacher website — educational materials by grade, weekly schedule, student results search, and a hidden admin panel (logo ×3 → password). Full CRUD admin for materials, grades, and schedule.",
+    category: "web-app",
+    categoryLabel: "Web App",
+    categoryColor: "from-indigo-500 to-blue-700",
+    tags: ["Next.js", "PostgreSQL", "Arabic RTL", "Admin Panel"],
+    url: "https://mr-mohammed-gamma.vercel.app",
+    screenshot: "/projects/mr-mohammed.png",
+    featured: false,
+  },
+  {
     id: "olympia-beach-club",
     name: "Olympia Beach Club",
     description:
