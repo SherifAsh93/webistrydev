@@ -20,7 +20,7 @@ export const translations = {
       cta1: "ابدأ مشروعك",
       cta2: "شوف شغلي",
       stats: [
-        { number: "7+", label: "فكرة اتبنت" },
+        { number: "9+", label: "فكرة اتبنت" },
         { number: "3+", label: "سنين خبرة" },
         { number: "⚡", label: "سرعة خرافية" },
         { number: "100%", label: "في الموعد دايمًا" },
@@ -221,6 +221,8 @@ export const translations = {
       "ameer-dental": "عيادة أسنان اونلاين — حجز مواعيد وملفات مرضى وتتبع العلاجات بكل سهولة.",
       "elghaly-vr": "برنامج ذكي بيلتقط الألوان من الكاميرا ويريك إزاي هتبان في أوضتك قبل ما تصبغها.",
       "qoya-furniture": "موقع براند فاخر لشوروم أثاث في القاهرة — تصميم تحريري كامل الشاشة، 90+ صورة احترافية، ونظام استفسار مع لوكيتور الفروع.",
+      "montelle-couture": "متجر عرائس فاخر — طرح وروب وكورسيهات وإكسسوارات بنظام أوردرات كامل وحجز مواعيد ولوحة تحكم للإدارة.",
+      "olympia-beach-club": "تطبيق موبايل لنادي شاطئ في دمياط الجديدة — حجز مرافق، فعاليات، اشتراكات، وتجربة شبه أبليكيشن على الموبايل.",
     } as Record<string, string>,
     categoryLabels: {
       fashion: "براند أزياء",
@@ -250,7 +252,7 @@ export const translations = {
       cta1: "Start Your Project",
       cta2: "See My Work",
       stats: [
-        { number: "7+", label: "Projects Built" },
+        { number: "9+", label: "Projects Built" },
         { number: "3+", label: "Years Experience" },
         { number: "⚡", label: "Lightning Fast" },
         { number: "100%", label: "On-Time Delivery" },
@@ -451,6 +453,8 @@ export const translations = {
       "ameer-dental": "Dental clinic online — easy appointment booking, patient files, and treatment tracking.",
       "elghaly-vr": "Smart app that captures room colors through your camera and shows how they'll look before you paint.",
       "qoya-furniture": "Ultra-luxury brand website for a Cairo furniture showroom — fullscreen editorial design, 90+ professional photos, inquiry system, and dual-branch store locator.",
+      "montelle-couture": "Luxury bridal store — veils, robes, corsets and accessories with full order management, appointment booking, and admin dashboard.",
+      "olympia-beach-club": "Mobile-first beach club app for New Damietta — facility booking, events, membership plans, and a native app feel on any phone.",
     } as Record<string, string>,
     categoryLabels: {} as Record<string, string>,
   },

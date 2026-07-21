@@ -121,6 +121,32 @@ export const projects: Project[] = [
     screenshot: "/projects/qoya-furniture.png",
     featured: true,
   },
+  {
+    id: "montelle-couture",
+    name: "Montelle Couture",
+    description:
+      "Luxury bridal fashion e-commerce store — veils, robes, corsets, and bridal sets with full product management, cart, checkout, appointment booking, and an admin dashboard.",
+    category: "ecommerce",
+    categoryLabel: "E-Commerce",
+    categoryColor: "from-amber-500 to-orange-600",
+    tags: ["Next.js", "Prisma", "Neon DB", "Luxury Bridal"],
+    url: "https://montelle-couture.vercel.app",
+    screenshot: "/projects/montelle-couture.png",
+    featured: true,
+  },
+  {
+    id: "olympia-beach-club",
+    name: "Olympia Beach Club",
+    description:
+      "Mobile-first beach club app — facility booking, event registration, membership plans, and a smooth native-app feel. Built as a pitch demo for a New Damietta beach club.",
+    category: "web-app",
+    categoryLabel: "Web App",
+    categoryColor: "from-sky-500 to-cyan-600",
+    tags: ["Next.js", "Framer Motion", "Mobile-First", "Arabic/English"],
+    url: "https://olympia-club-sherifs-projects-75c57a99.vercel.app",
+    screenshot: "/projects/olympia-beach-club.png",
+    featured: false,
+  },
 ];
 
 export const services: ServiceItem[] = [

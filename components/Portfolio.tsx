@@ -84,7 +84,9 @@ export default function Portfolio() {
   const ameer     = localize("ameer-dental");
   const elghaly   = localize("elghaly-vr");
   const qoya      = localize("qoya-furniture");
-  const allProjects = [ahmed, qoya, zahret, furniture, batrawy, ameer, elghaly];
+  const montelle  = localize("montelle-couture");
+  const olympia   = localize("olympia-beach-club");
+  const allProjects = [ahmed, qoya, zahret, montelle, furniture, olympia, batrawy, ameer, elghaly];
   const total = allProjects.length + 1;
 
   function slide(dir: 1 | -1) {
@@ -232,9 +234,9 @@ export default function Portfolio() {
             </div>
           </motion.div>
 
-          {/* 2. QOYA + Zahret */}
-          <div className="grid grid-cols-2 gap-5">
-            {[qoya, zahret].map((project) => (
+          {/* 2. QOYA + Zahret + Montelle */}
+          <div className="grid grid-cols-3 gap-5">
+            {[qoya, zahret, montelle].map((project) => (
               <motion.div key={project.id} variants={item} className="group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer">
                 <div className="relative h-64 md:h-72 overflow-hidden bg-slate-50">
                   <Image src={project.screenshot} alt={project.name} fill sizes="50vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
@@ -299,25 +301,29 @@ export default function Portfolio() {
             </div>
           </motion.div>
 
-          {/* 4. Furniture Studio (standalone card) */}
-          <motion.div variants={item} className="group card card-hover rounded-2xl overflow-hidden flex flex-col md:flex-row cursor-pointer">
-            <div className="relative md:w-2/5 h-52 md:h-auto overflow-hidden bg-slate-50 shrink-0">
-              <Image src={furniture.screenshot} alt={furniture.name} fill sizes="40vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/30 via-transparent to-transparent" />
-              <div className="absolute top-4 left-4"><CategoryBadge label={furniture.categoryLabel} color={furniture.categoryColor} /></div>
-              <div className="absolute top-4 right-4"><LiveBadge label={p.live} /></div>
-            </div>
-            <div className="p-6 md:p-8 flex flex-col justify-center flex-1">
-              <h3 className="text-xl font-extrabold text-slate-900 mb-2">{furniture.name}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed mb-5">{furniture.description}</p>
-              <div className="flex gap-2">
-                <a href={furniture.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 transition">
-                  <ExternalLink size={12} />{p.liveSite}
-                </a>
-                <BookButton label={p.buildLike} onClick={() => openModal(furniture, furniture.name)} />
-              </div>
-            </div>
-          </motion.div>
+          {/* 4. Furniture Studio + Olympia Beach Club */}
+          <div className="grid grid-cols-2 gap-5">
+            {[furniture, olympia].map((project) => (
+              <motion.div key={project.id} variants={item} className="group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer">
+                <div className="relative h-64 md:h-72 overflow-hidden bg-slate-50">
+                  <Image src={project.screenshot} alt={project.name} fill sizes="50vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/50 via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4"><CategoryBadge label={project.categoryLabel} color={project.categoryColor} /></div>
+                  <div className="absolute top-4 right-4"><LiveBadge label={p.live} /></div>
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-lg font-extrabold text-slate-900 mb-2">{project.name}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-5 flex-1">{project.description}</p>
+                  <div className="flex gap-2">
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 transition">
+                      <ExternalLink size={12} />{p.liveSite}
+                    </a>
+                    <BookButton label={p.buildLike} onClick={() => openModal(project, project.name)} />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
           {/* 5. Elghaly VR + CTA */}
           <div className="grid grid-cols-2 gap-5">
