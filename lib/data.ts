@@ -122,19 +122,6 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "montelle-couture",
-    name: "Montelle Couture",
-    description:
-      "Luxury bridal fashion e-commerce store — veils, robes, corsets, and bridal sets with full product management, cart, checkout, appointment booking, and an admin dashboard.",
-    category: "ecommerce",
-    categoryLabel: "E-Commerce",
-    categoryColor: "from-amber-500 to-orange-600",
-    tags: ["Next.js", "Prisma", "Neon DB", "Luxury Bridal"],
-    url: "https://montelle-couture.vercel.app",
-    screenshot: "/projects/montelle-couture.png",
-    featured: true,
-  },
-  {
     id: "mr-mohammed",
     name: "Mr. Mohammed",
     description:

@@ -84,10 +84,9 @@ export default function Portfolio() {
   const ameer     = localize("ameer-dental");
   const elghaly   = localize("elghaly-vr");
   const qoya      = localize("qoya-furniture");
-  const montelle  = localize("montelle-couture");
   const olympia   = localize("olympia-beach-club");
   const mrMohammed = localize("mr-mohammed");
-  const allProjects = [ahmed, qoya, zahret, montelle, furniture, olympia, mrMohammed, batrawy, ameer, elghaly];
+  const allProjects = [ahmed, qoya, zahret, furniture, olympia, mrMohammed, batrawy, ameer, elghaly];
   const total = allProjects.length + 1;
 
   function slide(dir: 1 | -1) {
@@ -235,9 +234,9 @@ export default function Portfolio() {
             </div>
           </motion.div>
 
-          {/* 2. QOYA + Zahret + Montelle */}
+          {/* 2. QOYA + Zahret + Mr. Mohammed */}
           <div className="grid grid-cols-3 gap-5">
-            {[qoya, zahret, montelle].map((project) => (
+            {[qoya, zahret, mrMohammed].map((project) => (
               <motion.div key={project.id} variants={item} className="group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer">
                 <div className="relative h-64 md:h-72 overflow-hidden bg-slate-50">
                   <Image src={project.screenshot} alt={project.name} fill sizes="50vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
