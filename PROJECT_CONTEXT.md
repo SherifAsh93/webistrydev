@@ -201,6 +201,19 @@ pm2 restart webistrydev
 
 ---
 
+## Update — 2026-07-21
+
+### Mr. Mohammed project added to portfolio
+- Screenshot saved to `/public/projects/mr-mohammed.png`
+- Added to `lib/data.ts` as category `"web-app"`, tags: Next.js, PostgreSQL, Mobile-First, Arabic RTL
+- Arabic description in `lib/translations.ts` → `projectDescs["mr-mohammed"]`
+- Added to `Portfolio.tsx` `allProjects` array via `localize("mr-mohammed")`
+- URL: https://mohammedcourses.vercel.app
+- Hero stats updated to 8+
+- Facebook POST 6 published to `facebook.com/WebistryDev`
+
+---
+
 ## Update — 2026-07-15
 
 ### QOYA Furniture project added to portfolio
