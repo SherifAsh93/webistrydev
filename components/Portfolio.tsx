@@ -86,7 +86,8 @@ export default function Portfolio() {
   const qoya      = localize("qoya-furniture");
   const montelle  = localize("montelle-couture");
   const olympia   = localize("olympia-beach-club");
-  const allProjects = [ahmed, qoya, zahret, montelle, furniture, olympia, batrawy, ameer, elghaly];
+  const mrMohammed = localize("mr-mohammed");
+  const allProjects = [ahmed, qoya, zahret, montelle, furniture, olympia, mrMohammed, batrawy, ameer, elghaly];
   const total = allProjects.length + 1;
 
   function slide(dir: 1 | -1) {
