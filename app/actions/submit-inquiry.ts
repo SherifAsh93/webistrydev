@@ -77,14 +77,36 @@ export async function submitInquiry(formData: {
     }
   }
 
-  if (process.env.CALLMEBOT_API_KEY) {
+  if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
     try {
-      const msg = `🔔 رسالة جديدة على webistrydev.com\n👤 ${formData.name}\n📞 ${formData.phone || "—"}\n💬 ${(formData.message || "").slice(0, 150)}`;
-      await fetch(
-        `https://api.callmebot.com/whatsapp.php?phone=201007526882&text=${encodeURIComponent(msg)}&apikey=${process.env.CALLMEBOT_API_KEY}`
-      );
-    } catch (waErr) {
-      console.error("[leads] WhatsApp notification failed:", waErr);
+      const chatUrl = `https://webistrydev.com/m/${chatToken}`;
+      const text = [
+        `🔔 <b>رسالة جديدة — Webistry</b>`,
+        ``,
+        `👤 <b>الاسم:</b> ${formData.name}`,
+        `📞 <b>الهاتف:</b> ${formData.phone || "—"}`,
+        formData.reference ? `📁 <b>المشروع:</b> ${formData.reference}` : null,
+        `💬 <b>الرسالة:</b>`,
+        (formData.message || "—").slice(0, 300),
+        formData.voiceNote ? `🎙️ <i>أرسل رسالة صوتية</i>` : null,
+        ``,
+        `<a href="${chatUrl}">💬 فتح المحادثة</a>  |  <a href="https://webistrydev.com/admin">🛠 لوحة التحكم</a>`,
+      ]
+        .filter((l) => l !== null)
+        .join("\n");
+
+      await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: process.env.TELEGRAM_CHAT_ID,
+          text,
+          parse_mode: "HTML",
+          disable_web_page_preview: true,
+        }),
+      });
+    } catch (tgErr) {
+      console.error("[leads] Telegram notification failed:", tgErr);
     }
   }
 
