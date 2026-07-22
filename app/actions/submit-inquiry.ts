@@ -72,7 +72,7 @@ export async function submitInquiry(formData: {
           </div>
         `,
       });
-    } catch (emailErr) {
+} catch (emailErr) {
       console.error("[leads] Email notification failed:", emailErr);
     }
   }
