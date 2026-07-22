@@ -77,5 +77,16 @@ export async function submitInquiry(formData: {
     }
   }
 
+  if (process.env.CALLMEBOT_API_KEY) {
+    try {
+      const msg = `🔔 رسالة جديدة على webistrydev.com\n👤 ${formData.name}\n📞 ${formData.phone || "—"}\n💬 ${(formData.message || "").slice(0, 150)}`;
+      await fetch(
+        `https://api.callmebot.com/whatsapp.php?phone=201007526882&text=${encodeURIComponent(msg)}&apikey=${process.env.CALLMEBOT_API_KEY}`
+      );
+    } catch (waErr) {
+      console.error("[leads] WhatsApp notification failed:", waErr);
+    }
+  }
+
   return { success: true, chatToken };
 }

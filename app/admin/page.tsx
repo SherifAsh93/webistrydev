@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Logo from "@/components/Logo";
 import { getLeads } from "@/app/actions/get-leads";
@@ -80,11 +80,14 @@ export default function AdminPage() {
   const [chatSending, setChatSending] = useState<number | null>(null);
   const [copiedToken, setCopiedToken] = useState<number | null>(null);
   const router = useRouter();
+  const prevNewCount = useRef<number | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
     const data = await getLeads();
-    setLeads(data as Lead[]);
+    const fresh = data as Lead[];
+    setLeads(fresh);
+    prevNewCount.current = fresh.filter((l) => l.status === "new").length;
     setLoading(false);
   }, []);
 
@@ -94,6 +97,35 @@ export default function AdminPage() {
       load();
     }
   }, [load]);
+
+  useEffect(() => {
+    if (!authed) return;
+
+    if (typeof Notification !== "undefined" && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
+
+    const interval = setInterval(async () => {
+      const data = await getLeads();
+      const fresh = data as Lead[];
+      const newCount = fresh.filter((l) => l.status === "new").length;
+
+      if (prevNewCount.current !== null && newCount > prevNewCount.current) {
+        const newest = fresh.find((l) => l.status === "new");
+        if (typeof Notification !== "undefined" && Notification.permission === "granted" && newest) {
+          new Notification("رسالة جديدة! 🔔", {
+            body: `${newest.name}${newest.phone ? " — " + newest.phone : ""}`,
+            icon: "/icon.svg",
+          });
+        }
+      }
+
+      prevNewCount.current = newCount;
+      setLeads(fresh);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [authed]);
 
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
