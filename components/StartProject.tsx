@@ -35,6 +35,7 @@ export default function StartProject() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [textMessage, setTextMessage] = useState("");
   const [projectType, setProjectType] = useState<string | null>(null);
   const [showVoice, setShowVoice] = useState(false);
@@ -152,9 +153,27 @@ export default function StartProject() {
     });
   }
 
+  function validatePhone(value: string): string {
+    const digits = value.replace(/\D/g, "");
+    const normalized = digits.startsWith("20") ? "0" + digits.slice(2) : digits;
+    if (!normalized) return t.lang === "ar" ? "رقم الموبايل مطلوب" : "Phone number is required";
+    if (!/^(010|011|012|015)\d{8}$/.test(normalized))
+      return t.lang === "ar"
+        ? "رقم غير صحيح — لازم يبدأ بـ 010 أو 011 أو 012 أو 015"
+        : "Invalid number — must start with 010, 011, 012, or 015";
+    return "";
+  }
+
+  function handlePhoneChange(value: string) {
+    setPhone(value);
+    if (phoneError) setPhoneError(validatePhone(value));
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !phone.trim() || !textMessage.trim()) return;
+    const err = validatePhone(phone);
+    if (err) { setPhoneError(err); return; }
+    if (!name.trim() || !textMessage.trim()) return;
 
     setFormStatus("sending");
 
@@ -172,6 +191,7 @@ export default function StartProject() {
     formStatus !== "sending" &&
     name.trim() !== "" &&
     phone.trim() !== "" &&
+    !validatePhone(phone) &&
     textMessage.trim() !== "";
 
   if (formStatus === "success") {
@@ -241,7 +261,7 @@ export default function StartProject() {
             <button
               onClick={() => {
                 setFormStatus("idle");
-                setName(""); setPhone(""); setTextMessage("");
+                setName(""); setPhone(""); setPhoneError(""); setTextMessage("");
                 setAudioBlob(null); setAudioUrl(null);
                 setRecordState("idle"); setRecordSeconds(0);
                 setShowVoice(false);
@@ -468,11 +488,15 @@ export default function StartProject() {
                   type="tel"
                   dir="ltr"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
+                  onBlur={() => setPhoneError(validatePhone(phone))}
                   required
                   placeholder={sp.phonePlaceholder}
-                  className="field w-full rounded-xl px-4 py-3 text-sm"
+                  className={`field w-full rounded-xl px-4 py-3 text-sm ${phoneError ? "border-rose-400 focus:ring-rose-300" : ""}`}
                 />
+                {phoneError && (
+                  <p className="text-xs text-rose-500 font-semibold mt-1.5">{phoneError}</p>
+                )}
               </div>
             </div>
             <p className="text-[11px] text-slate-400 mt-3">{sp.contactNote}</p>
