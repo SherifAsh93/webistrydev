@@ -1,0 +1,648 @@
+<title>من فكرة لموقع شغال — ستوري بورد الفيديو</title>
+<style>
+  :root {
+    --page-bg: #f5f3ef;
+    --page-bg-soft: #ffffff;
+    --page-text: #1c1a24;
+    --page-muted: #6b6478;
+    --page-border: #e6e1da;
+    --accent: #6d28d9;
+    --accent-soft: #efe9fb;
+    --code-bg: #efeae1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page-bg: #16141c;
+      --page-bg-soft: #1d1a25;
+      --page-text: #ece8f5;
+      --page-muted: #a49bb8;
+      --page-border: #322c3d;
+      --accent: #a78bfa;
+      --accent-soft: #2a2338;
+      --code-bg: #221d2c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page-bg: #16141c;
+    --page-bg-soft: #1d1a25;
+    --page-text: #ece8f5;
+    --page-muted: #a49bb8;
+    --page-border: #322c3d;
+    --accent: #a78bfa;
+    --accent-soft: #2a2338;
+    --code-bg: #221d2c;
+  }
+  :root[data-theme="light"] {
+    --page-bg: #f5f3ef;
+    --page-bg-soft: #ffffff;
+    --page-text: #1c1a24;
+    --page-muted: #6b6478;
+    --page-border: #e6e1da;
+    --accent: #6d28d9;
+    --accent-soft: #efe9fb;
+    --code-bg: #efeae1;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--page-text);
+    font-family: "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { overflow-x: hidden; }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 40px 20px 90px;
+  }
+
+  header.page-head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  header.page-head .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  header.page-head h1 {
+    font-size: clamp(22px, 4vw, 32px);
+    margin: 0 0 8px;
+    text-wrap: balance;
+    font-weight: 800;
+  }
+  header.page-head p {
+    color: var(--page-muted);
+    margin: 0;
+    font-size: 15px;
+  }
+
+  /* ============ THE VIDEO STAGE (fixed dark cinematic world, no theming) ============ */
+  .stage-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px -20px rgba(30, 12, 60, 0.35);
+    border: 1px solid var(--page-border);
+  }
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background:
+      radial-gradient(60% 55% at 24% 20%, rgba(124, 58, 237, 0.35), transparent 60%),
+      radial-gradient(55% 50% at 82% 78%, rgba(34, 211, 238, 0.22), transparent 60%),
+      #0b0a12;
+    color: #f1eefc;
+    overflow: hidden;
+    direction: rtl;
+  }
+  .stage .grain {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* --- central canvas that evolves through the story --- */
+  .canvas-zone {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1400px;
+  }
+
+  /* paper (idea) */
+  .paper {
+    position: absolute;
+    width: 46%;
+    aspect-ratio: 4 / 5;
+    background: #f6f1e4;
+    color: #2c2716;
+    border-radius: 3px;
+    clip-path: polygon(0 1%, 3% 0, 97% 0, 100% 2%, 100% 98%, 97% 100%, 3% 100%, 0 99%);
+    box-shadow: 0 24px 50px -12px rgba(0,0,0,0.55);
+    transform: rotate(-3deg) rotateY(0deg);
+    opacity: 0;
+    transition: opacity 900ms ease, transform 900ms cubic-bezier(.4,0,.2,1);
+    backface-visibility: hidden;
+    padding: 9% 10%;
+  }
+  .stage[data-scene="hook"] .paper,
+  .stage[data-scene="empathy"] .paper {
+    opacity: 1;
+    transform: rotate(-3deg) rotateY(0deg);
+  }
+  .stage[data-scene="intro"] .paper,
+  .stage[data-scene="process"] .paper,
+  .stage[data-scene="trust"] .paper,
+  .stage[data-scene="cta"] .paper {
+    opacity: 0;
+    transform: rotate(-3deg) rotateY(-120deg);
+  }
+  .paper .bulb {
+    width: 30%;
+    margin: 0 auto 10%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3.5px solid #b08a2e;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 700ms ease 200ms, transform 700ms cubic-bezier(.34,1.56,.64,1) 200ms;
+  }
+  .stage[data-scene="hook"] .paper .bulb,
+  .stage[data-scene="empathy"] .paper .bulb { opacity: 1; transform: scale(1); }
+  .paper .bulb::after {
+    content: "";
+    position: absolute; left: 50%; bottom: -22%;
+    width: 26%; height: 16%;
+    background: #b08a2e; transform: translateX(-50%);
+  }
+  .paper .scribble { height: 6%; background: #cfc6a4; border-radius: 3px; margin-bottom: 9%; opacity: 0; transition: opacity 500ms ease, width 500ms ease; width: 0%; }
+  .stage[data-scene="hook"] .paper .scribble.s1 { opacity: 1; width: 88%; transition-delay: 700ms; }
+  .stage[data-scene="hook"] .paper .scribble.s2 { opacity: 1; width: 62%; transition-delay: 900ms; }
+  .stage[data-scene="hook"] .paper .scribble.s3,
+  .stage[data-scene="empathy"] .paper .scribble.s3 { opacity: 1; width: 74%; transition-delay: 1100ms; }
+
+  .paper .chips { position: absolute; bottom: 9%; right: 10%; left: 10%; display: flex; gap: 6%; }
+  .paper .chip {
+    flex: 1; text-align: center; font-size: 11px; font-weight: 700;
+    padding: 6% 2%; border-radius: 8px; background: #efe4c4; color: #6b5a24;
+    position: relative; opacity: 0; transform: translateY(6px);
+    transition: opacity 450ms ease, transform 450ms ease;
+  }
+  .stage[data-scene="empathy"] .paper .chip { opacity: 1; transform: translateY(0); }
+  .stage[data-scene="empathy"] .paper .chip.c1 { transition-delay: 150ms; }
+  .stage[data-scene="empathy"] .paper .chip.c2 { transition-delay: 500ms; }
+  .paper .chip::after {
+    content: ""; position: absolute; left: 6%; right: 6%; top: 50%; height: 2px;
+    background: #a3401f; transform: scaleX(0); transform-origin: right; transition: transform 450ms ease 550ms;
+  }
+  .stage[data-scene="empathy"] .paper .chip::after { transform: scaleX(1); }
+  .stage[data-scene="empathy"] .paper .chip.c2::after { transition-delay: 900ms; }
+
+  /* browser frame (build) */
+  .frame {
+    position: absolute;
+    width: 66%;
+    aspect-ratio: 16 / 10.5;
+    background: #17151f;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.08);
+    opacity: 0;
+    transform: scale(0.92) rotateY(60deg);
+    transition: opacity 800ms ease, transform 800ms cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+    backface-visibility: hidden;
+  }
+  .stage[data-scene="intro"] .frame,
+  .stage[data-scene="process"] .frame,
+  .stage[data-scene="trust"] .frame,
+  .stage[data-scene="cta"] .frame {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+  .frame .chrome {
+    height: 13%;
+    background: #1f1c29;
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 4%;
+    direction: ltr;
+  }
+  .frame .chrome i { width: 8px; height: 8px; border-radius: 50%; background: #423a54; display: block; }
+  .frame .chrome .url {
+    margin-inline-start: 10px;
+    font-size: 10px;
+    color: #7d7392;
+    background: #14121b;
+    border-radius: 20px;
+    padding: 3px 12px;
+    letter-spacing: 0.02em;
+  }
+  .frame .body { position: relative; height: 87%; padding: 6% 7%; direction: rtl; }
+
+  .block { position: absolute; border-radius: 6px; background: #2a2536; opacity: 0; transform: translateY(10px); transition: opacity 550ms ease, transform 550ms ease, background 500ms ease; }
+  .block.header { top: 6%; right: 7%; left: 7%; height: 10%; }
+  .block.hero { top: 20%; right: 7%; left: 7%; height: 30%; }
+  .block.line1 { top: 55%; right: 7%; width: 70%; height: 6%; }
+  .block.line2 { top: 64%; right: 7%; width: 45%; height: 6%; }
+  .block.button { top: 76%; right: 7%; width: 26%; height: 11%; border-radius: 20px; }
+
+  .stage[data-scene="process"][data-step="1"] .block.header,
+  .stage[data-scene="process"][data-step="2"] .block.header,
+  .stage[data-scene="process"][data-step="3"] .block.header,
+  .stage[data-scene="process"][data-step="4"] .block.header,
+  .stage[data-scene="trust"] .block.header,
+  .stage[data-scene="cta"] .block.header { opacity: 1; transform: translateY(0); }
+
+  .stage[data-scene="process"][data-step="2"] .block.hero,
+  .stage[data-scene="process"][data-step="3"] .block.hero,
+  .stage[data-scene="process"][data-step="4"] .block.hero,
+  .stage[data-scene="trust"] .block.hero,
+  .stage[data-scene="cta"] .block.hero { opacity: 1; transform: translateY(0); }
+
+  .stage[data-scene="process"][data-step="3"] .block.line1,
+  .stage[data-scene="process"][data-step="4"] .block.line1,
+  .stage[data-scene="trust"] .block.line1,
+  .stage[data-scene="cta"] .block.line1,
+  .stage[data-scene="process"][data-step="3"] .block.line2,
+  .stage[data-scene="process"][data-step="4"] .block.line2,
+  .stage[data-scene="trust"] .block.line2,
+  .stage[data-scene="cta"] .block.line2 { opacity: 1; transform: translateY(0); }
+
+  .stage[data-scene="process"][data-step="4"] .block.button,
+  .stage[data-scene="trust"] .block.button,
+  .stage[data-scene="cta"] .block.button { opacity: 1; transform: translateY(0); }
+
+  /* trust: blocks go from grey wireframe to brand-colored */
+  .stage[data-scene="trust"] .block.header,
+  .stage[data-scene="cta"] .block.header { background: linear-gradient(135deg, #7c3aed, #22d3ee); }
+  .stage[data-scene="trust"] .block.hero,
+  .stage[data-scene="cta"] .block.hero { background: #241f30; box-shadow: inset 0 0 0 1px rgba(124,58,237,0.4); }
+  .stage[data-scene="trust"] .block.line1,
+  .stage[data-scene="trust"] .block.line2,
+  .stage[data-scene="cta"] .block.line1,
+  .stage[data-scene="cta"] .block.line2 { background: #3a3348; }
+  .stage[data-scene="trust"] .block.button,
+  .stage[data-scene="cta"] .block.button { background: linear-gradient(135deg, #f59e0b, #f97316); }
+
+  .checkpulse {
+    position: absolute; top: 6%; left: 6%; width: 11%; aspect-ratio: 1;
+    border-radius: 50%; background: #22c55e; opacity: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 400ms ease, transform 400ms ease;
+    transform: scale(0.5);
+    box-shadow: 0 0 0 0 rgba(34,197,94,0.5);
+  }
+  .stage[data-scene="trust"] .checkpulse { opacity: 1; transform: scale(1); animation: pulse-ring 1.8s ease-out infinite; }
+  .checkpulse svg { width: 55%; height: 55%; }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.45); }
+    70% { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+
+  /* cta overlay: cursor + burst + url */
+  .cta-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 500ms ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4%; background: rgba(11,10,18,0.72); backdrop-filter: blur(2px); }
+  .stage[data-scene="cta"] .cta-layer { opacity: 1; }
+  .cta-layer .pill {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    color: #fff; font-weight: 800; font-size: clamp(13px, 2.4vw, 18px);
+    padding: 3.2% 7%; border-radius: 999px;
+    box-shadow: 0 14px 30px -8px rgba(124,58,237,0.7);
+    transform: scale(0.85); opacity: 0;
+    transition: transform 550ms cubic-bezier(.34,1.56,.64,1) 200ms, opacity 400ms ease 200ms;
+  }
+  .stage[data-scene="cta"] .cta-layer .pill { transform: scale(1); opacity: 1; }
+  .cta-layer .url {
+    direction: ltr; font-weight: 800; letter-spacing: 0.01em;
+    font-size: clamp(14px, 2.8vw, 20px);
+    color: #f1eefc; opacity: 0; transform: translateY(8px);
+    transition: opacity 450ms ease 550ms, transform 450ms ease 550ms;
+  }
+  .stage[data-scene="cta"] .cta-layer .url { opacity: 1; transform: translateY(0); }
+  .burst { position: absolute; width: 40%; aspect-ratio: 1; border-radius: 50%; border: 2px solid rgba(245,158,11,0.6); opacity: 0; }
+  .stage[data-scene="cta"] .burst { animation: burst-out 1600ms ease-out 250ms infinite; }
+  @keyframes burst-out { 0% { opacity: 0.7; transform: scale(0.3);} 100% { opacity: 0; transform: scale(1.6);} }
+
+  /* wordmark (intro) */
+  .wordmark {
+    position: absolute; text-align: center; opacity: 0; transform: translateY(10px);
+    transition: opacity 600ms ease 350ms, transform 600ms ease 350ms;
+    direction: ltr;
+  }
+  .stage[data-scene="intro"] .wordmark { opacity: 1; transform: translateY(0); }
+  .wordmark .logo { font-size: clamp(20px, 4vw, 30px); font-weight: 800; letter-spacing: -0.01em; }
+  .wordmark .logo b { color: #a78bfa; font-weight: 800; }
+  .wordmark .tag { direction: rtl; font-size: 12px; color: #a49bb8; margin-top: 6px; }
+
+  /* process step badge */
+  .step-badge {
+    position: absolute; top: 6%; right: 7%;
+    font-size: clamp(10px, 1.6vw, 13px); font-weight: 800;
+    background: rgba(124,58,237,0.16); color: #d8ccfb;
+    border: 1px solid rgba(124,58,237,0.4);
+    padding: 5px 14px; border-radius: 999px;
+    opacity: 0; transform: translateY(-6px);
+    transition: opacity 350ms ease, transform 350ms ease;
+  }
+  .stage[data-scene="process"] .step-badge { opacity: 1; transform: translateY(0); }
+
+  /* caption */
+  .caption-zone {
+    position: absolute; left: 0; right: 0; bottom: 9%;
+    display: flex; justify-content: center; padding: 0 6%;
+    pointer-events: none;
+  }
+  .caption {
+    text-align: center; font-weight: 700;
+    font-size: clamp(13px, 2.6vw, 19px);
+    line-height: 1.55;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+    white-space: pre-line;
+    max-width: 34ch;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+  .caption.show { opacity: 1; transform: translateY(0); }
+
+  /* progress + controls (part of the recordable stage, thin & unobtrusive) */
+  .scrub {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+    background: rgba(255,255,255,0.08);
+  }
+  .scrub-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #22d3ee); width: 0%; }
+
+  .stage-controls {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 10px; background: var(--page-bg-soft);
+    border-top: 1px solid var(--page-border);
+  }
+  .stage-controls button {
+    font-family: inherit; font-weight: 700; font-size: 13px;
+    border: 1px solid var(--page-border);
+    background: transparent; color: var(--page-text);
+    padding: 9px 18px; border-radius: 999px; cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+  }
+  .stage-controls button:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .stage-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .stage-controls button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .stage-controls .time {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px; color: var(--page-muted); min-width: 74px; text-align: center;
+  }
+
+  /* ============ instructions + script (page chrome, themed) ============ */
+  section.panel {
+    max-width: 900px; margin: 26px auto 0;
+    background: var(--page-bg-soft);
+    border: 1px solid var(--page-border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    direction: rtl;
+  }
+  section.panel h2 {
+    margin: 0 0 12px; font-size: 15px; font-weight: 800;
+    display: flex; align-items: center; gap: 8px;
+  }
+  section.panel h2 .n {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+    font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  section.panel ol, section.panel ul { margin: 0; padding-inline-start: 20px; color: var(--page-muted); font-size: 14px; line-height: 1.9; }
+  section.panel + section.panel { margin-top: 14px; }
+
+  .script-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .script-row { display: grid; grid-template-columns: 66px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-top: 1px solid var(--page-border); }
+  .script-row:first-child { border-top: none; }
+  .script-row .t { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--page-muted); direction: ltr; text-align: left; }
+  .script-row .line { font-size: 14.5px; line-height: 1.75; }
+  .script-row .label { display: inline-block; font-size: 11px; font-weight: 800; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 1px 7px; margin-inline-start: 8px; }
+
+  footer.note { text-align: center; color: var(--page-muted); font-size: 12.5px; margin-top: 28px; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 24px 14px 70px; }
+    .script-row { grid-template-columns: 50px 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage * { transition-duration: 1ms !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="page-head">
+    <p class="eyebrow">Webistrydev — ستوري بورد فيديو تسويقي</p>
+    <h1>من فكرة... لموقع شغال</h1>
+    <p>فيديو قصير جاهز تسجّله بصوتك. شغّل، سجّل شاشتك، واتكلم مع كل كابشن.</p>
+  </header>
+
+  <div class="stage-shell">
+    <div class="stage" data-scene="hook" data-step="0" id="stage">
+      <div class="grain"></div>
+
+      <div class="canvas-zone">
+        <!-- paper / idea -->
+        <div class="paper">
+          <div class="bulb"></div>
+          <div class="scribble s1"></div>
+          <div class="scribble s2"></div>
+          <div class="scribble s3"></div>
+          <div class="chips">
+            <div class="chip c1">كود معقد</div>
+            <div class="chip c2">ميزانية ضخمة</div>
+          </div>
+        </div>
+
+        <!-- browser frame / build -->
+        <div class="frame">
+          <div class="chrome">
+            <i></i><i></i><i></i>
+            <span class="url">webistrydev.com</span>
+          </div>
+          <div class="body">
+            <div class="block header"></div>
+            <div class="block hero"></div>
+            <div class="block line1"></div>
+            <div class="block line2"></div>
+            <div class="block button"></div>
+            <div class="checkpulse">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0b0a12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div class="cta-layer">
+            <div class="burst"></div>
+            <div class="pill">ابعتلي فكرتك</div>
+            <div class="url">www.webistrydev.com</div>
+          </div>
+        </div>
+
+        <div class="wordmark">
+          <div class="logo"><b>Webistry</b>dev</div>
+          <div class="tag">بنبني اللي بتتخيله</div>
+        </div>
+
+        <div class="step-badge" id="stepBadge">بنتكلم</div>
+      </div>
+
+      <div class="caption-zone"><div class="caption" id="caption"></div></div>
+      <div class="scrub"><div class="scrub-fill" id="scrubFill"></div></div>
+    </div>
+
+    <div class="stage-controls">
+      <button id="playBtn" class="primary" type="button">تشغيل ▶</button>
+      <button id="replayBtn" type="button">إعادة ⟲</button>
+      <span class="time" id="timeLabel">00:00 / 00:56</span>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2><span class="n">1</span> إزاي تستخدم الصفحة دي</h2>
+    <ol>
+      <li>افتح تسجيل الشاشة (مثلاً QuickTime على ماك، أو Xbox Game Bar على ويندوز) وحدد الإطار اللي فيه الفيديو بس.</li>
+      <li>دوس "تشغيل" وابدأ تسجيل الشاشة في نفس اللحظة.</li>
+      <li>اتكلم بصوتك واقرأ كل كابشن وهو ظاهر قدامك — التوقيت متظبط عشان تلحق تقول الجملة وهي على الشاشة.</li>
+      <li>لو غلطت، دوس "إعادة" وسجّل تاني — الفيديو بيرجع من الأول في ثانية.</li>
+      <li>هتلاقي نفس السكريبت مكتوب تحت كامل لو عايز تتمرن عليه قبل التسجيل.</li>
+    </ol>
+  </section>
+
+  <section class="panel">
+    <h2><span class="n">2</span> السكريبت كامل (بالتوقيت)</h2>
+    <div class="script-list" id="scriptList"></div>
+  </section>
+
+  <footer class="note">مدة الفيديو تقريبًا 56 ثانية — طول مناسب لفيديو تسويقي على السوشيال ميديا.</footer>
+</div>
+
+<script>
+(function () {
+  var scenes = [
+    { scene: "hook", step: 0, start: 0, dur: 6000, caption: "عندك فكرة من فترة...\nبس لسه ما اتنفذتش؟", label: "" },
+    { scene: "empathy", step: 0, start: 6000, dur: 6000, caption: "مش لازم تعرف حاجة في التكنولوجيا،\nوميزانيتك مش لازم تكون ضخمة.", label: "" },
+    { scene: "intro", step: 0, start: 12000, dur: 6000, caption: "أنا شريف، من Webistrydev —\nبحوّل الأفكار لمواقع شغالة فعلاً.", label: "" },
+    { scene: "process", step: 1, start: 18000, dur: 5000, caption: "بنتكلم — تحكيلي فكرتك زي ما هي، حتى لو مش واضحة.", label: "بنتكلم" },
+    { scene: "process", step: 2, start: 23000, dur: 5000, caption: "بنصمم ونوافق — تشوف التصميم وتوافق عليه الأول.", label: "بنصمم ونوافق" },
+    { scene: "process", step: 3, start: 28000, dur: 5000, caption: "بنبني ونختبر — وانت في الصورة أول بأول.", label: "بنبني ونختبر" },
+    { scene: "process", step: 4, start: 33000, dur: 5000, caption: "بنطلق ونكمّل — موقعك يشتغل، وأنا لسه معاك.", label: "بنطلق ونكمّل" },
+    { scene: "trust", step: 4, start: 38000, dur: 8000, caption: "مفيش مفاجآت، مفيش تأخير —\nشغلي بالنتايج مش بالكلام.", label: "" },
+    { scene: "cta", step: 4, start: 46000, dur: 10000, caption: "فكرتك تستاهل تتنفذ.\nابعتلي رسالة دلوقتي.", label: "" }
+  ];
+  var TOTAL = scenes[scenes.length - 1].start + scenes[scenes.length - 1].dur;
+
+  var stage = document.getElementById("stage");
+  var caption = document.getElementById("caption");
+  var stepBadge = document.getElementById("stepBadge");
+  var scrubFill = document.getElementById("scrubFill");
+  var timeLabel = document.getElementById("timeLabel");
+  var playBtn = document.getElementById("playBtn");
+  var replayBtn = document.getElementById("replayBtn");
+
+  var playing = false;
+  var startedAt = 0;
+  var elapsedAtPause = 0;
+  var rafId = null;
+  var currentSceneIdx = -1;
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    var m = Math.floor(s / 60);
+    var r = s % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r;
+  }
+
+  function applyScene(idx) {
+    if (idx === currentSceneIdx) return;
+    currentSceneIdx = idx;
+    var sc = scenes[idx];
+    stage.setAttribute("data-scene", sc.scene);
+    stage.setAttribute("data-step", String(sc.step));
+    if (sc.label) stepBadge.textContent = sc.label;
+    caption.textContent = sc.caption;
+    caption.classList.remove("show");
+    void caption.offsetWidth;
+    caption.classList.add("show");
+  }
+
+  function tick(now) {
+    var elapsed = elapsedAtPause + (playing ? now - startedAt : 0);
+    if (elapsed >= TOTAL) {
+      elapsed = TOTAL;
+      finish(elapsed);
+      return;
+    }
+    var idx = 0;
+    for (var i = 0; i < scenes.length; i++) {
+      if (elapsed >= scenes[i].start) idx = i;
+    }
+    applyScene(idx);
+    scrubFill.style.width = (elapsed / TOTAL * 100) + "%";
+    timeLabel.textContent = fmt(elapsed) + " / " + fmt(TOTAL);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function finish(elapsed) {
+    playing = false;
+    elapsedAtPause = elapsed;
+    scrubFill.style.width = "100%";
+    timeLabel.textContent = fmt(TOTAL) + " / " + fmt(TOTAL);
+    playBtn.textContent = "تشغيل ▶";
+    if (rafId) cancelAnimationFrame(rafId);
+  }
+
+  function play() {
+    if (playing) return;
+    if (elapsedAtPause >= TOTAL) { elapsedAtPause = 0; currentSceneIdx = -1; }
+    playing = true;
+    startedAt = performance.now();
+    playBtn.textContent = "إيقاف ⏸";
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function pause() {
+    if (!playing) return;
+    elapsedAtPause += performance.now() - startedAt;
+    playing = false;
+    playBtn.textContent = "تشغيل ▶";
+    if (rafId) cancelAnimationFrame(rafId);
+  }
+
+  function replay() {
+    pause();
+    elapsedAtPause = 0;
+    currentSceneIdx = -1;
+    applyScene(0);
+    scrubFill.style.width = "0%";
+    timeLabel.textContent = "00:00 / " + fmt(TOTAL);
+    play();
+  }
+
+  playBtn.addEventListener("click", function () { playing ? pause() : play(); });
+  replayBtn.addEventListener("click", replay);
+  document.addEventListener("keydown", function (e) {
+    if (e.code === "Space" && (e.target === document.body || e.target === playBtn)) {
+      e.preventDefault();
+      playing ? pause() : play();
+    }
+  });
+
+  applyScene(0);
+  timeLabel.textContent = "00:00 / " + fmt(TOTAL);
+
+  // build script list
+  var list = document.getElementById("scriptList");
+  scenes.forEach(function (sc) {
+    var row = document.createElement("div");
+    row.className = "script-row";
+    var t = document.createElement("div");
+    t.className = "t";
+    t.textContent = fmt(sc.start) + "–" + fmt(sc.start + sc.dur);
+    var line = document.createElement("div");
+    line.className = "line";
+    line.textContent = sc.caption.replace("\n", " ");
+    if (sc.label) {
+      var lab = document.createElement("span");
+      lab.className = "label";
+      lab.textContent = sc.label;
+      line.appendChild(lab);
+    }
+    row.appendChild(t);
+    row.appendChild(line);
+    list.appendChild(row);
+  });
+})();
+</script>
