@@ -1,4 +1,4 @@
-<title>من فكرة لموقع شغال — ستوري بورد الفيديو</title>
+<title>من مشكلتك... للحل بتاعك — ستوري بورد الفيديو</title>
 <style>
   :root {
     --page-bg: #f5f3ef;
@@ -97,8 +97,8 @@
     width: 100%;
     aspect-ratio: 16 / 9;
     background:
-      radial-gradient(60% 55% at 24% 20%, rgba(124, 58, 237, 0.35), transparent 60%),
-      radial-gradient(55% 50% at 82% 78%, rgba(34, 211, 238, 0.22), transparent 60%),
+      radial-gradient(60% 55% at 24% 20%, rgba(124, 58, 237, 0.32), transparent 60%),
+      radial-gradient(55% 50% at 82% 78%, rgba(34, 211, 238, 0.20), transparent 60%),
       #0b0a12;
     color: #f1eefc;
     overflow: hidden;
@@ -112,191 +112,90 @@
     opacity: 0.5;
   }
 
-  /* --- central canvas that evolves through the story --- */
   .canvas-zone {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    perspective: 1400px;
   }
 
-  /* paper (idea) */
-  .paper {
-    position: absolute;
-    width: 46%;
-    aspect-ratio: 4 / 5;
-    background: #f6f1e4;
-    color: #2c2716;
-    border-radius: 3px;
-    clip-path: polygon(0 1%, 3% 0, 97% 0, 100% 2%, 100% 98%, 97% 100%, 3% 100%, 0 99%);
-    box-shadow: 0 24px 50px -12px rgba(0,0,0,0.55);
-    transform: rotate(-3deg) rotateY(0deg);
-    opacity: 0;
-    transition: opacity 900ms ease, transform 900ms cubic-bezier(.4,0,.2,1);
-    backface-visibility: hidden;
-    padding: 9% 10%;
-  }
-  .stage[data-scene="hook"] .paper,
-  .stage[data-scene="empathy"] .paper {
-    opacity: 1;
-    transform: rotate(-3deg) rotateY(0deg);
-  }
-  .stage[data-scene="intro"] .paper,
-  .stage[data-scene="process"] .paper,
-  .stage[data-scene="trust"] .paper,
-  .stage[data-scene="cta"] .paper {
-    opacity: 0;
-    transform: rotate(-3deg) rotateY(-120deg);
-  }
-  .paper .bulb {
-    width: 30%;
-    margin: 0 auto 10%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 3.5px solid #b08a2e;
-    position: relative;
-    opacity: 0;
-    transform: scale(0.6);
-    transition: opacity 700ms ease 200ms, transform 700ms cubic-bezier(.34,1.56,.64,1) 200ms;
-  }
-  .stage[data-scene="hook"] .paper .bulb,
-  .stage[data-scene="empathy"] .paper .bulb { opacity: 1; transform: scale(1); }
-  .paper .bulb::after {
-    content: "";
-    position: absolute; left: 50%; bottom: -22%;
-    width: 26%; height: 16%;
-    background: #b08a2e; transform: translateX(-50%);
-  }
-  .paper .scribble { height: 6%; background: #cfc6a4; border-radius: 3px; margin-bottom: 9%; opacity: 0; transition: opacity 500ms ease, width 500ms ease; width: 0%; }
-  .stage[data-scene="hook"] .paper .scribble.s1 { opacity: 1; width: 88%; transition-delay: 700ms; }
-  .stage[data-scene="hook"] .paper .scribble.s2 { opacity: 1; width: 62%; transition-delay: 900ms; }
-  .stage[data-scene="hook"] .paper .scribble.s3,
-  .stage[data-scene="empathy"] .paper .scribble.s3 { opacity: 1; width: 74%; transition-delay: 1100ms; }
+  /* ---------- Act 1: overwhelm (eye + orbiting concerns) ---------- */
+  .overwhelm { position: absolute; top: -6%; width: 40%; aspect-ratio: 1; opacity: 0; transition: opacity 700ms ease; }
+  .stage[data-act="overwhelm"] .overwhelm { opacity: 1; }
 
-  .paper .chips { position: absolute; bottom: 9%; right: 10%; left: 10%; display: flex; gap: 6%; }
-  .paper .chip {
-    flex: 1; text-align: center; font-size: 11px; font-weight: 700;
-    padding: 6% 2%; border-radius: 8px; background: #efe4c4; color: #6b5a24;
-    position: relative; opacity: 0; transform: translateY(6px);
-    transition: opacity 450ms ease, transform 450ms ease;
-  }
-  .stage[data-scene="empathy"] .paper .chip { opacity: 1; transform: translateY(0); }
-  .stage[data-scene="empathy"] .paper .chip.c1 { transition-delay: 150ms; }
-  .stage[data-scene="empathy"] .paper .chip.c2 { transition-delay: 500ms; }
-  .paper .chip::after {
-    content: ""; position: absolute; left: 6%; right: 6%; top: 50%; height: 2px;
-    background: #a3401f; transform: scaleX(0); transform-origin: right; transition: transform 450ms ease 550ms;
-  }
-  .stage[data-scene="empathy"] .paper .chip::after { transform: scaleX(1); }
-  .stage[data-scene="empathy"] .paper .chip.c2::after { transition-delay: 900ms; }
+  .eye-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 600ms ease, transform 600ms ease; }
+  .stage[data-scene="pain2"] .eye-wrap { opacity: 0; transform: scale(0.85); }
+  .eye-wrap svg { width: 42%; }
+  .eye-wrap svg path, .eye-wrap svg circle { stroke: #d8ccfb; stroke-width: 2.4; fill: none; stroke-linecap: round; }
+  .eye-wrap svg circle.pupil { fill: #a78bfa; stroke: none; }
 
-  /* browser frame (build) */
-  .frame {
-    position: absolute;
-    width: 66%;
-    aspect-ratio: 16 / 10.5;
+  .chip { position: absolute; width: 15%; aspect-ratio: 1; border-radius: 10px; background: #201c2b; border: 1.5px solid rgba(216,204,251,0.35); opacity: 0; transition: opacity 500ms ease, transform 700ms cubic-bezier(.4,0,.2,1); }
+  .chip svg { width: 100%; height: 100%; padding: 24%; box-sizing: border-box; }
+  .chip svg * { stroke: #cabdf0; stroke-width: 2; fill: none; stroke-linecap: round; }
+  .chip.c1 { top: -4%; right: 2%;  transform: translateY(10px) rotate(-6deg); animation: drift1 7s ease-in-out infinite; }
+  .chip.c2 { top: -2%; left: -2%;  transform: translateY(10px) rotate(6deg);  animation: drift2 8s ease-in-out infinite; }
+  .chip.c3 { bottom: 22%; right: -6%; transform: translateY(10px) rotate(5deg); animation: drift1 9s ease-in-out infinite reverse; }
+  .chip.c4 { bottom: 24%; left: -2%;  transform: translateY(10px) rotate(-5deg); animation: drift2 6.5s ease-in-out infinite reverse; }
+  .stage[data-act="overwhelm"] .chip { opacity: 1; }
+  .stage[data-scene="pain2"] .chip { opacity: 0; transform: translateY(-8px) rotate(0deg) scale(0.7); }
+  @keyframes drift1 { 0%,100% { margin-top: 0; } 50% { margin-top: -8px; } }
+  @keyframes drift2 { 0%,100% { margin-top: 0; } 50% { margin-top: 8px; } }
+
+  /* scale (profit vs effort) */
+  .scale { position: absolute; top: 50%; left: 50%; width: 62%; opacity: 0; transform: translate(-50%, -50%) scale(0.8); transition: opacity 550ms ease 150ms, transform 550ms cubic-bezier(.34,1.56,.64,1) 150ms; }
+  .stage[data-scene="pain2"] .scale { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .scale svg { width: 100%; overflow: visible; }
+  .scale svg .stand { stroke: #7d7392; stroke-width: 2; }
+  .scale svg .bar { stroke: #d8ccfb; stroke-width: 2.4; stroke-linecap: round; transform-origin: 100px 40px; transition: transform 900ms cubic-bezier(.4,0,.2,1) 400ms; transform: rotate(0deg); }
+  .stage[data-scene="pain2"] .scale svg .bar { transform: rotate(-9deg); }
+  .scale svg .weight { fill: none; stroke: #cabdf0; stroke-width: 2; }
+  .scale svg .weight.coin { stroke: #f0c869; }
+
+  /* ---------- Act 2: identity (wordmark persists, captions carry it) ---------- */
+  .wordmark { position: absolute; top: 8%; text-align: center; opacity: 0; transform: translateY(-6px); transition: opacity 550ms ease, transform 550ms ease; direction: ltr; }
+  .stage[data-act="identity"] .wordmark,
+  .stage[data-act="solution"] .wordmark,
+  .stage[data-act="cta"] .wordmark { opacity: 1; transform: translateY(0); }
+  .wordmark .logo { font-size: clamp(15px, 2.6vw, 20px); font-weight: 800; letter-spacing: -0.01em; }
+  .wordmark .logo b { color: #a78bfa; font-weight: 800; }
+  .wordmark .role { direction: rtl; font-size: 11px; color: #a49bb8; margin-top: 4px; letter-spacing: 0.01em; }
+
+  .ambient-orb { position: absolute; width: 30%; aspect-ratio: 1; border-radius: 50%; opacity: 0; filter: blur(2px); background: radial-gradient(circle at 35% 30%, rgba(167,139,250,0.35), rgba(34,211,238,0.08) 60%, transparent 75%); transition: opacity 900ms ease, transform 6s ease-in-out; transform: scale(1); }
+  .stage[data-act="identity"] .ambient-orb { opacity: 1; animation: breathe 6s ease-in-out infinite; }
+  @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+  /* ---------- Act 3: solution (device-morphing panel) ---------- */
+  .panel-wrap { position: absolute; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 700ms ease; }
+  .stage[data-act="solution"] .panel-wrap,
+  .stage[data-act="cta"] .panel-wrap { opacity: 1; }
+
+  .panel {
     background: #17151f;
-    border-radius: 12px;
+    border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.08);
-    opacity: 0;
-    transform: scale(0.92) rotateY(60deg);
-    transition: opacity 800ms ease, transform 800ms cubic-bezier(.4,0,.2,1);
     overflow: hidden;
-    backface-visibility: hidden;
+    width: 40%;
+    aspect-ratio: 4 / 3;
+    transition: width 900ms cubic-bezier(.4,0,.2,1), aspect-ratio 900ms cubic-bezier(.4,0,.2,1);
   }
-  .stage[data-scene="intro"] .frame,
-  .stage[data-scene="process"] .frame,
-  .stage[data-scene="trust"] .frame,
-  .stage[data-scene="cta"] .frame {
-    opacity: 1;
-    transform: scale(1) rotateY(0deg);
-  }
-  .frame .chrome {
-    height: 13%;
-    background: #1f1c29;
-    display: flex; align-items: center; gap: 6px;
-    padding: 0 4%;
-    direction: ltr;
-  }
-  .frame .chrome i { width: 8px; height: 8px; border-radius: 50%; background: #423a54; display: block; }
-  .frame .chrome .url {
-    margin-inline-start: 10px;
-    font-size: 10px;
-    color: #7d7392;
-    background: #14121b;
-    border-radius: 20px;
-    padding: 3px 12px;
-    letter-spacing: 0.02em;
-  }
-  .frame .body { position: relative; height: 87%; padding: 6% 7%; direction: rtl; }
+  .panel[data-device="phone"]  { width: 20%; aspect-ratio: 9 / 16; }
+  .panel[data-device="tablet"] { width: 38%; aspect-ratio: 4 / 3; }
+  .panel[data-device="laptop"] { width: 62%; aspect-ratio: 16 / 10; }
 
-  .block { position: absolute; border-radius: 6px; background: #2a2536; opacity: 0; transform: translateY(10px); transition: opacity 550ms ease, transform 550ms ease, background 500ms ease; }
-  .block.header { top: 6%; right: 7%; left: 7%; height: 10%; }
-  .block.hero { top: 20%; right: 7%; left: 7%; height: 30%; }
-  .block.line1 { top: 55%; right: 7%; width: 70%; height: 6%; }
-  .block.line2 { top: 64%; right: 7%; width: 45%; height: 6%; }
-  .block.button { top: 76%; right: 7%; width: 26%; height: 11%; border-radius: 20px; }
+  .panel .head { height: 16%; background: linear-gradient(135deg, #7c3aed, #22d3ee); }
+  .panel .content { padding: 9%; direction: rtl; }
+  .panel .stat-num { font-weight: 800; font-size: clamp(14px, 3vw, 26px); color: #f1eefc; line-height: 1; }
+  .panel .stat-label { font-size: clamp(7px, 1.3vw, 11px); color: #a49bb8; margin-top: 4%; }
+  .panel .row { display: flex; align-items: center; gap: 6%; margin-top: 10%; }
+  .panel .row .dot { width: 10%; aspect-ratio: 1; border-radius: 50%; background: #3a3348; flex-shrink: 0; }
+  .panel .row .bar { flex: 1; height: 14%; border-radius: 4px; background: #2a2536; }
+  .panel[data-device="phone"] .row:nth-child(3) { display: none; }
 
-  .stage[data-scene="process"][data-step="1"] .block.header,
-  .stage[data-scene="process"][data-step="2"] .block.header,
-  .stage[data-scene="process"][data-step="3"] .block.header,
-  .stage[data-scene="process"][data-step="4"] .block.header,
-  .stage[data-scene="trust"] .block.header,
-  .stage[data-scene="cta"] .block.header { opacity: 1; transform: translateY(0); }
-
-  .stage[data-scene="process"][data-step="2"] .block.hero,
-  .stage[data-scene="process"][data-step="3"] .block.hero,
-  .stage[data-scene="process"][data-step="4"] .block.hero,
-  .stage[data-scene="trust"] .block.hero,
-  .stage[data-scene="cta"] .block.hero { opacity: 1; transform: translateY(0); }
-
-  .stage[data-scene="process"][data-step="3"] .block.line1,
-  .stage[data-scene="process"][data-step="4"] .block.line1,
-  .stage[data-scene="trust"] .block.line1,
-  .stage[data-scene="cta"] .block.line1,
-  .stage[data-scene="process"][data-step="3"] .block.line2,
-  .stage[data-scene="process"][data-step="4"] .block.line2,
-  .stage[data-scene="trust"] .block.line2,
-  .stage[data-scene="cta"] .block.line2 { opacity: 1; transform: translateY(0); }
-
-  .stage[data-scene="process"][data-step="4"] .block.button,
-  .stage[data-scene="trust"] .block.button,
-  .stage[data-scene="cta"] .block.button { opacity: 1; transform: translateY(0); }
-
-  /* trust: blocks go from grey wireframe to brand-colored */
-  .stage[data-scene="trust"] .block.header,
-  .stage[data-scene="cta"] .block.header { background: linear-gradient(135deg, #7c3aed, #22d3ee); }
-  .stage[data-scene="trust"] .block.hero,
-  .stage[data-scene="cta"] .block.hero { background: #241f30; box-shadow: inset 0 0 0 1px rgba(124,58,237,0.4); }
-  .stage[data-scene="trust"] .block.line1,
-  .stage[data-scene="trust"] .block.line2,
-  .stage[data-scene="cta"] .block.line1,
-  .stage[data-scene="cta"] .block.line2 { background: #3a3348; }
-  .stage[data-scene="trust"] .block.button,
-  .stage[data-scene="cta"] .block.button { background: linear-gradient(135deg, #f59e0b, #f97316); }
-
-  .checkpulse {
-    position: absolute; top: 6%; left: 6%; width: 11%; aspect-ratio: 1;
-    border-radius: 50%; background: #22c55e; opacity: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: opacity 400ms ease, transform 400ms ease;
-    transform: scale(0.5);
-    box-shadow: 0 0 0 0 rgba(34,197,94,0.5);
-  }
-  .stage[data-scene="trust"] .checkpulse { opacity: 1; transform: scale(1); animation: pulse-ring 1.8s ease-out infinite; }
-  .checkpulse svg { width: 55%; height: 55%; }
-  @keyframes pulse-ring {
-    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.45); }
-    70% { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
-    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
-  }
-
-  /* cta overlay: cursor + burst + url */
-  .cta-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 500ms ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4%; background: rgba(11,10,18,0.72); backdrop-filter: blur(2px); }
-  .stage[data-scene="cta"] .cta-layer { opacity: 1; }
+  /* ---------- Act 4: CTA (portfolio + url) ---------- */
+  .cta-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 500ms ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4%; background: rgba(11,10,18,0.78); backdrop-filter: blur(2px); }
+  .stage[data-act="cta"] .cta-layer { opacity: 1; }
   .cta-layer .pill {
     background: linear-gradient(135deg, #7c3aed, #6d28d9);
     color: #fff; font-weight: 800; font-size: clamp(13px, 2.4vw, 18px);
@@ -305,64 +204,37 @@
     transform: scale(0.85); opacity: 0;
     transition: transform 550ms cubic-bezier(.34,1.56,.64,1) 200ms, opacity 400ms ease 200ms;
   }
-  .stage[data-scene="cta"] .cta-layer .pill { transform: scale(1); opacity: 1; }
+  .stage[data-act="cta"] .cta-layer .pill { transform: scale(1); opacity: 1; }
   .cta-layer .url {
     direction: ltr; font-weight: 800; letter-spacing: 0.01em;
     font-size: clamp(14px, 2.8vw, 20px);
     color: #f1eefc; opacity: 0; transform: translateY(8px);
     transition: opacity 450ms ease 550ms, transform 450ms ease 550ms;
   }
-  .stage[data-scene="cta"] .cta-layer .url { opacity: 1; transform: translateY(0); }
-  .burst { position: absolute; width: 40%; aspect-ratio: 1; border-radius: 50%; border: 2px solid rgba(245,158,11,0.6); opacity: 0; }
-  .stage[data-scene="cta"] .burst { animation: burst-out 1600ms ease-out 250ms infinite; }
-  @keyframes burst-out { 0% { opacity: 0.7; transform: scale(0.3);} 100% { opacity: 0; transform: scale(1.6);} }
-
-  /* wordmark (intro) */
-  .wordmark {
-    position: absolute; text-align: center; opacity: 0; transform: translateY(10px);
-    transition: opacity 600ms ease 350ms, transform 600ms ease 350ms;
-    direction: ltr;
-  }
-  .stage[data-scene="intro"] .wordmark { opacity: 1; transform: translateY(0); }
-  .wordmark .logo { font-size: clamp(20px, 4vw, 30px); font-weight: 800; letter-spacing: -0.01em; }
-  .wordmark .logo b { color: #a78bfa; font-weight: 800; }
-  .wordmark .tag { direction: rtl; font-size: 12px; color: #a49bb8; margin-top: 6px; }
-
-  /* process step badge */
-  .step-badge {
-    position: absolute; top: 6%; right: 7%;
-    font-size: clamp(10px, 1.6vw, 13px); font-weight: 800;
-    background: rgba(124,58,237,0.16); color: #d8ccfb;
-    border: 1px solid rgba(124,58,237,0.4);
-    padding: 5px 14px; border-radius: 999px;
-    opacity: 0; transform: translateY(-6px);
-    transition: opacity 350ms ease, transform 350ms ease;
-  }
-  .stage[data-scene="process"] .step-badge { opacity: 1; transform: translateY(0); }
+  .stage[data-act="cta"] .cta-layer .url { opacity: 1; transform: translateY(0); }
+  .burst { position: absolute; width: 44%; aspect-ratio: 1; border-radius: 50%; border: 2px solid rgba(245,158,11,0.55); opacity: 0; }
+  .stage[data-act="cta"] .burst { animation: burst-out 1600ms ease-out 250ms infinite; }
+  @keyframes burst-out { 0% { opacity: 0.7; transform: scale(0.3);} 100% { opacity: 0; transform: scale(1.5);} }
 
   /* caption */
   .caption-zone {
-    position: absolute; left: 0; right: 0; bottom: 9%;
+    position: absolute; left: 0; right: 0; bottom: 8%;
     display: flex; justify-content: center; padding: 0 6%;
     pointer-events: none;
   }
   .caption {
     text-align: center; font-weight: 700;
-    font-size: clamp(13px, 2.6vw, 19px);
+    font-size: clamp(13px, 2.5vw, 18px);
     line-height: 1.55;
     text-shadow: 0 2px 16px rgba(0,0,0,0.7);
     white-space: pre-line;
-    max-width: 34ch;
+    max-width: 38ch;
     opacity: 0; transform: translateY(6px);
     transition: opacity 400ms ease, transform 400ms ease;
   }
   .caption.show { opacity: 1; transform: translateY(0); }
 
-  /* progress + controls (part of the recordable stage, thin & unobtrusive) */
-  .scrub {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
-    background: rgba(255,255,255,0.08);
-  }
+  .scrub { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,0.08); }
   .scrub-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #22d3ee); width: 0%; }
 
   .stage-controls {
@@ -380,13 +252,10 @@
   .stage-controls button:hover { border-color: var(--accent); transform: translateY(-1px); }
   .stage-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .stage-controls button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .stage-controls .time {
-    font-variant-numeric: tabular-nums;
-    font-size: 12px; color: var(--page-muted); min-width: 74px; text-align: center;
-  }
+  .stage-controls .time { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--page-muted); min-width: 74px; text-align: center; }
 
   /* ============ instructions + script (page chrome, themed) ============ */
-  section.panel {
+  section.panel-doc {
     max-width: 900px; margin: 26px auto 0;
     background: var(--page-bg-soft);
     border: 1px solid var(--page-border);
@@ -394,23 +263,18 @@
     padding: 22px 24px;
     direction: rtl;
   }
-  section.panel h2 {
-    margin: 0 0 12px; font-size: 15px; font-weight: 800;
-    display: flex; align-items: center; gap: 8px;
-  }
-  section.panel h2 .n {
-    width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
-    font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  section.panel ol, section.panel ul { margin: 0; padding-inline-start: 20px; color: var(--page-muted); font-size: 14px; line-height: 1.9; }
-  section.panel + section.panel { margin-top: 14px; }
+  section.panel-doc h2 { margin: 0 0 12px; font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  section.panel-doc h2 .n { width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  section.panel-doc ol, section.panel-doc ul { margin: 0; padding-inline-start: 20px; color: var(--page-muted); font-size: 14px; line-height: 1.9; }
+  section.panel-doc + section.panel-doc { margin-top: 14px; }
 
   .script-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
   .script-row { display: grid; grid-template-columns: 66px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-top: 1px solid var(--page-border); }
   .script-row:first-child { border-top: none; }
   .script-row .t { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--page-muted); direction: ltr; text-align: left; }
   .script-row .line { font-size: 14.5px; line-height: 1.75; }
-  .script-row .label { display: inline-block; font-size: 11px; font-weight: 800; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 1px 7px; margin-inline-start: 8px; }
+
+  .note-box { background: var(--accent-soft); border-radius: 10px; padding: 12px 16px; font-size: 13.5px; color: var(--page-text); margin-top: 14px; line-height: 1.8; }
 
   footer.note { text-align: center; color: var(--page-muted); font-size: 12.5px; margin-top: 28px; }
 
@@ -427,56 +291,69 @@
 <div class="wrap">
   <header class="page-head">
     <p class="eyebrow">Webistrydev — ستوري بورد فيديو تسويقي</p>
-    <h1>من فكرة... لموقع شغال</h1>
+    <h1>من مشكلتك... للحل بتاعك</h1>
     <p>فيديو قصير جاهز تسجّله بصوتك. شغّل، سجّل شاشتك، واتكلم مع كل كابشن.</p>
   </header>
 
   <div class="stage-shell">
-    <div class="stage" data-scene="hook" data-step="0" id="stage">
+    <div class="stage" data-scene="hook" data-act="overwhelm" id="stage">
       <div class="grain"></div>
 
       <div class="canvas-zone">
-        <!-- paper / idea -->
-        <div class="paper">
-          <div class="bulb"></div>
-          <div class="scribble s1"></div>
-          <div class="scribble s2"></div>
-          <div class="scribble s3"></div>
-          <div class="chips">
-            <div class="chip c1">كود معقد</div>
-            <div class="chip c2">ميزانية ضخمة</div>
+        <!-- Act 1: overwhelm -->
+        <div class="overwhelm">
+          <div class="eye-wrap">
+            <svg viewBox="0 0 100 60">
+              <path d="M2 30 Q50 -8 98 30 Q50 68 2 30 Z" />
+              <circle cx="50" cy="30" r="12" />
+              <circle class="pupil" cx="50" cy="30" r="5" />
+            </svg>
+          </div>
+          <div class="chip c1"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="17" y2="13"/></svg></div>
+          <div class="chip c2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><line x1="12" y1="12" x2="12" y2="7"/><line x1="12" y1="12" x2="15" y2="14"/></svg></div>
+          <div class="chip c3"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><line x1="5" y1="10" x2="19" y2="10"/></svg></div>
+          <div class="chip c4"><svg viewBox="0 0 24 24"><path d="M12 4c-3 0-5 2-5 6v4l-2 3h14l-2-3v-4c0-4-2-6-5-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></div>
+
+          <div class="scale">
+            <svg viewBox="0 0 200 80">
+              <line class="stand" x1="100" y1="12" x2="100" y2="66" />
+              <line class="stand" x1="82" y1="66" x2="118" y2="66" />
+              <g class="bar">
+                <line x1="20" y1="40" x2="180" y2="40" />
+                <line class="stand" x1="20" y1="40" x2="20" y2="54" />
+                <line class="stand" x1="180" y1="40" x2="180" y2="54" />
+                <circle class="weight coin" cx="20" cy="60" r="9" />
+                <circle class="weight" cx="180" cy="60" r="9" />
+              </g>
+            </svg>
           </div>
         </div>
 
-        <!-- browser frame / build -->
-        <div class="frame">
-          <div class="chrome">
-            <i></i><i></i><i></i>
-            <span class="url">webistrydev.com</span>
-          </div>
-          <div class="body">
-            <div class="block header"></div>
-            <div class="block hero"></div>
-            <div class="block line1"></div>
-            <div class="block line2"></div>
-            <div class="block button"></div>
-            <div class="checkpulse">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0b0a12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-          <div class="cta-layer">
-            <div class="burst"></div>
-            <div class="pill">ابعتلي فكرتك</div>
-            <div class="url">www.webistrydev.com</div>
-          </div>
-        </div>
-
+        <!-- Act 2 ambient -->
+        <div class="ambient-orb"></div>
         <div class="wordmark">
           <div class="logo"><b>Webistry</b>dev</div>
-          <div class="tag">بنبني اللي بتتخيله</div>
+          <div class="role">شريف — Solution Developer &amp; Software Engineer</div>
         </div>
 
-        <div class="step-badge" id="stepBadge">بنتكلم</div>
+        <!-- Act 3 / 4: solution panel -->
+        <div class="panel-wrap">
+          <div class="panel" id="panel" data-device="tablet">
+            <div class="head"></div>
+            <div class="content">
+              <div class="stat-num">١٤٢</div>
+              <div class="stat-label">عميل نشط</div>
+              <div class="row"><div class="dot"></div><div class="bar"></div></div>
+              <div class="row"><div class="dot"></div><div class="bar"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-layer">
+          <div class="burst"></div>
+          <div class="pill">شوف مشاريعي</div>
+          <div class="url">www.webistrydev.com</div>
+        </div>
       </div>
 
       <div class="caption-zone"><div class="caption" id="caption"></div></div>
@@ -486,47 +363,53 @@
     <div class="stage-controls">
       <button id="playBtn" class="primary" type="button">تشغيل ▶</button>
       <button id="replayBtn" type="button">إعادة ⟲</button>
-      <span class="time" id="timeLabel">00:00 / 00:56</span>
+      <span class="time" id="timeLabel">00:00 / 01:00</span>
     </div>
   </div>
 
-  <section class="panel">
+  <section class="panel-doc">
     <h2><span class="n">1</span> إزاي تستخدم الصفحة دي</h2>
     <ol>
       <li>افتح تسجيل الشاشة (مثلاً QuickTime على ماك، أو Xbox Game Bar على ويندوز) وحدد الإطار اللي فيه الفيديو بس.</li>
       <li>دوس "تشغيل" وابدأ تسجيل الشاشة في نفس اللحظة.</li>
       <li>اتكلم بصوتك واقرأ كل كابشن وهو ظاهر قدامك — التوقيت متظبط عشان تلحق تقول الجملة وهي على الشاشة.</li>
       <li>لو غلطت، دوس "إعادة" وسجّل تاني — الفيديو بيرجع من الأول في ثانية.</li>
-      <li>هتلاقي نفس السكريبت مكتوب تحت كامل لو عايز تتمرن عليه قبل التسجيل.</li>
     </ol>
+    <div class="note-box">الرسالة هنا مركّزة على إدارة الشغل (متجر / شركة / مصنع) مش على "بناء موقع" — من غير ما نقول للعميل إن التقنية شغّالة عن طريق المتصفح، إحنا بس بنوريه إن الحل بيشتغل من أي جهاز.</div>
   </section>
 
-  <section class="panel">
+  <section class="panel-doc">
     <h2><span class="n">2</span> السكريبت كامل (بالتوقيت)</h2>
     <div class="script-list" id="scriptList"></div>
   </section>
 
-  <footer class="note">مدة الفيديو تقريبًا 56 ثانية — طول مناسب لفيديو تسويقي على السوشيال ميديا.</footer>
+  <footer class="note">مدة الفيديو تقريبًا دقيقة واحدة — طول مناسب لفيديو تسويقي على السوشيال ميديا.</footer>
 </div>
 
 <script>
 (function () {
   var scenes = [
-    { scene: "hook", step: 0, start: 0, dur: 6000, caption: "عندك فكرة من فترة...\nبس لسه ما اتنفذتش؟", label: "" },
-    { scene: "empathy", step: 0, start: 6000, dur: 6000, caption: "مش لازم تعرف حاجة في التكنولوجيا،\nوميزانيتك مش لازم تكون ضخمة.", label: "" },
-    { scene: "intro", step: 0, start: 12000, dur: 6000, caption: "أنا شريف، من Webistrydev —\nبحوّل الأفكار لمواقع شغالة فعلاً.", label: "" },
-    { scene: "process", step: 1, start: 18000, dur: 5000, caption: "بنتكلم — تحكيلي فكرتك زي ما هي، حتى لو مش واضحة.", label: "بنتكلم" },
-    { scene: "process", step: 2, start: 23000, dur: 5000, caption: "بنصمم ونوافق — تشوف التصميم وتوافق عليه الأول.", label: "بنصمم ونوافق" },
-    { scene: "process", step: 3, start: 28000, dur: 5000, caption: "بنبني ونختبر — وانت في الصورة أول بأول.", label: "بنبني ونختبر" },
-    { scene: "process", step: 4, start: 33000, dur: 5000, caption: "بنطلق ونكمّل — موقعك يشتغل، وأنا لسه معاك.", label: "بنطلق ونكمّل" },
-    { scene: "trust", step: 4, start: 38000, dur: 8000, caption: "مفيش مفاجآت، مفيش تأخير —\nشغلي بالنتايج مش بالكلام.", label: "" },
-    { scene: "cta", step: 4, start: 46000, dur: 10000, caption: "فكرتك تستاهل تتنفذ.\nابعتلي رسالة دلوقتي.", label: "" }
+    { scene: "hook",   act: "overwhelm", start: 0,     dur: 6500, caption: "قاعد في شغلك... شركتك، أو المتجر بتاعك، أو مصنعك،\nومش حاسس إنك متابع كل حاجة من الأول لآخر؟" },
+    { scene: "pain1",  act: "overwhelm", start: 6500,  dur: 6000, caption: "طبيعي — إنت واحد بعين واحدة،\nأكيد مش هتقدر تشوف كل حاجة." },
+    { scene: "pain2",  act: "overwhelm", start: 12500, dur: 6500, caption: "ولا حاسس إن الربح مش مناسب،\nمقارنة بالمجهود اللي بتبذله في الشغل؟" },
+    { scene: "invite", act: "identity",  start: 19000, dur: 5500, caption: "إيه رأيك لو قعدنا مع بعض،\nوحكيتلي عن مشكلتك؟" },
+    { scene: "who",    act: "identity",  start: 24500, dur: 6000, caption: "أنا شريف — Solution Developer و Software Engineer،\nودي دراستي." },
+    { scene: "trust1", act: "identity",  start: 30500, dur: 7500, caption: "وأطمّنك: مش هفارقك بالأسعار،\nولا هسيبك من غير ما نوصل للحل المناسب ليك — فكرة وسعر." },
+    { scene: "trust2", act: "identity",  start: 38000, dur: 7500, caption: "مش هاسيبك غير لما كل حاجة تكون خلصانة —\nوأنا اللي هكون معاك، مش موظف ولا سكرتير." },
+    { scene: "device", act: "solution",  start: 45500, dur: 5000, caption: "الحل بيبقى في إيدك، من أي جهاز." },
+    { scene: "cta",    act: "cta",       start: 50500, dur: 9000, caption: "ادخل شوف المشاريع اللي خلصتها،\nعشان تعرف إني بجد هعرف أساعدك." }
   ];
   var TOTAL = scenes[scenes.length - 1].start + scenes[scenes.length - 1].dur;
 
+  var deviceKeyframes = [
+    { t: 45500, val: "phone" },
+    { t: 47200, val: "tablet" },
+    { t: 48900, val: "laptop" }
+  ];
+
   var stage = document.getElementById("stage");
   var caption = document.getElementById("caption");
-  var stepBadge = document.getElementById("stepBadge");
+  var panel = document.getElementById("panel");
   var scrubFill = document.getElementById("scrubFill");
   var timeLabel = document.getElementById("timeLabel");
   var playBtn = document.getElementById("playBtn");
@@ -537,6 +420,7 @@
   var elapsedAtPause = 0;
   var rafId = null;
   var currentSceneIdx = -1;
+  var currentDevice = "tablet";
 
   function fmt(ms) {
     var s = Math.floor(ms / 1000);
@@ -550,19 +434,28 @@
     currentSceneIdx = idx;
     var sc = scenes[idx];
     stage.setAttribute("data-scene", sc.scene);
-    stage.setAttribute("data-step", String(sc.step));
-    if (sc.label) stepBadge.textContent = sc.label;
+    stage.setAttribute("data-act", sc.act);
     caption.textContent = sc.caption;
     caption.classList.remove("show");
     void caption.offsetWidth;
     caption.classList.add("show");
   }
 
+  function applyDevice(elapsed) {
+    var val = "tablet";
+    for (var i = 0; i < deviceKeyframes.length; i++) {
+      if (elapsed >= deviceKeyframes[i].t) val = deviceKeyframes[i].val;
+    }
+    if (val !== currentDevice) {
+      currentDevice = val;
+      panel.setAttribute("data-device", val);
+    }
+  }
+
   function tick(now) {
     var elapsed = elapsedAtPause + (playing ? now - startedAt : 0);
     if (elapsed >= TOTAL) {
-      elapsed = TOTAL;
-      finish(elapsed);
+      finish();
       return;
     }
     var idx = 0;
@@ -570,14 +463,15 @@
       if (elapsed >= scenes[i].start) idx = i;
     }
     applyScene(idx);
+    applyDevice(elapsed);
     scrubFill.style.width = (elapsed / TOTAL * 100) + "%";
     timeLabel.textContent = fmt(elapsed) + " / " + fmt(TOTAL);
     rafId = requestAnimationFrame(tick);
   }
 
-  function finish(elapsed) {
+  function finish() {
     playing = false;
-    elapsedAtPause = elapsed;
+    elapsedAtPause = TOTAL;
     scrubFill.style.width = "100%";
     timeLabel.textContent = fmt(TOTAL) + " / " + fmt(TOTAL);
     playBtn.textContent = "تشغيل ▶";
@@ -586,7 +480,7 @@
 
   function play() {
     if (playing) return;
-    if (elapsedAtPause >= TOTAL) { elapsedAtPause = 0; currentSceneIdx = -1; }
+    if (elapsedAtPause >= TOTAL) { elapsedAtPause = 0; currentSceneIdx = -1; currentDevice = "__reset__"; }
     playing = true;
     startedAt = performance.now();
     playBtn.textContent = "إيقاف ⏸";
@@ -605,7 +499,9 @@
     pause();
     elapsedAtPause = 0;
     currentSceneIdx = -1;
+    currentDevice = "__reset__";
     applyScene(0);
+    applyDevice(0);
     scrubFill.style.width = "0%";
     timeLabel.textContent = "00:00 / " + fmt(TOTAL);
     play();
@@ -621,9 +517,9 @@
   });
 
   applyScene(0);
+  panel.setAttribute("data-device", "tablet");
   timeLabel.textContent = "00:00 / " + fmt(TOTAL);
 
-  // build script list
   var list = document.getElementById("scriptList");
   scenes.forEach(function (sc) {
     var row = document.createElement("div");
@@ -634,12 +530,6 @@
     var line = document.createElement("div");
     line.className = "line";
     line.textContent = sc.caption.replace("\n", " ");
-    if (sc.label) {
-      var lab = document.createElement("span");
-      lab.className = "label";
-      lab.textContent = sc.label;
-      line.appendChild(lab);
-    }
     row.appendChild(t);
     row.appendChild(line);
     list.appendChild(row);
