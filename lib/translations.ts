@@ -21,8 +21,6 @@ export const translations = {
       cta2: "شوف شغلي",
       stats: [
         { number: "9+", label: "فكرة اتبنت" },
-        { number: "3+", label: "سنين خبرة" },
-        { number: "⚡", label: "سرعة خرافية" },
         { number: "100%", label: "في الموعد دايمًا" },
       ],
       scroll: "اسحب للأسفل",
@@ -253,8 +251,6 @@ export const translations = {
       cta2: "See My Work",
       stats: [
         { number: "9+", label: "Projects Built" },
-        { number: "3+", label: "Years Experience" },
-        { number: "⚡", label: "Lightning Fast" },
         { number: "100%", label: "On-Time Delivery" },
       ],
       scroll: "Scroll",

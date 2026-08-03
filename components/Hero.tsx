@@ -112,11 +112,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto"
+          className="grid grid-cols-2 gap-4 max-w-md mx-auto"
         >
           {t.hero.stats.map((s, i) => (
-            <div key={i} className="card rounded-2xl py-4 px-3 text-center">
-              <div className="text-xl md:text-2xl font-extrabold text-violet-700 mb-1">{s.number}</div>
+            <div key={i} className="card rounded-2xl py-5 px-3 text-center">
+              <div className="text-2xl md:text-3xl font-extrabold text-violet-700 mb-1">{s.number}</div>
               <div className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">{s.label}</div>
             </div>
           ))}
