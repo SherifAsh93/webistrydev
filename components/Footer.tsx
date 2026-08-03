@@ -28,7 +28,10 @@ export default function Footer() {
                 <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.18em]">Full-Stack Developer</span>
               </div>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed">{t.footer.desc}</p>
+            <p className="text-sm text-slate-400 leading-relaxed mb-5">{t.footer.desc}</p>
+            <a href="#start-project" className="btn-primary inline-flex items-center gap-2 px-6 py-3 text-sm">
+              {t.footer.cta}
+            </a>
           </div>
 
           {/* Contact icons row */}
