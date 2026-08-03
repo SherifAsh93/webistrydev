@@ -1,3 +1,5 @@
+import projectsData from "./projects-data.json";
+
 export type Project = {
   id: string;
   name: string;
@@ -29,125 +31,7 @@ export type PricingTier = {
   color: string;
 };
 
-export const projects: Project[] = [
-  {
-    id: "ahmed-elakad",
-    name: "Ahmed El Akad",
-    description:
-      "Luxury couture brand website for Cairo's premier fashion designer. Custom gallery, collection management, and appointment booking system.",
-    category: "fashion",
-    categoryLabel: "Fashion Brand",
-    categoryColor: "from-rose-500 to-pink-600",
-    tags: ["Next.js", "Cloudinary", "VPS", "Full-Stack"],
-    url: "https://ahmedelakad.com",
-    screenshot: "/projects/ahmed-elakad.png",
-    featured: true,
-  },
-  {
-    id: "furniture-studio",
-    name: "Furniture Studio",
-    description:
-      "Premium architectural furniture marketplace with full e-commerce: product management, cart, orders, and a powerful admin dashboard.",
-    category: "ecommerce",
-    categoryLabel: "E-Commerce",
-    categoryColor: "from-amber-500 to-orange-600",
-    tags: ["Next.js", "Neon DB", "Admin Panel", "Full-Stack"],
-    url: "https://furniture-studio-fs.vercel.app/",
-    screenshot: "/projects/furniture-studio.png",
-    featured: true,
-  },
-  {
-    id: "zahrtelkhlig",
-    name: "Zahrtelkhlig",
-    description:
-      "Full-featured hijab fashion e-commerce — product catalog, size picker, wishlist, cart, checkout, order tracking, POS system, and a complete admin panel. Built mobile-first so it feels like a native app.",
-    category: "ecommerce",
-    categoryLabel: "E-Commerce",
-    categoryColor: "from-amber-500 to-orange-600",
-    tags: ["Next.js", "PostgreSQL", "Mobile-First", "POS System"],
-    url: "https://zahrtelkhlig.vercel.app/",
-    screenshot: "/projects/zahrtelkhlig.png",
-    featured: true,
-  },
-  {
-    id: "batrawy-clinic",
-    name: "Al-Batrawy Clinic",
-    description:
-      "Full clinic management system — patient records, appointment scheduling, billing, and doctor dashboard. Accessible from any mobile device like a native app.",
-    category: "clinic",
-    categoryLabel: "Web App",
-    categoryColor: "from-teal-500 to-emerald-600",
-    tags: ["Next.js", "Drizzle ORM", "Web App", "Healthcare"],
-    url: "https://batrawy-clinic.vercel.app",
-    screenshot: "/projects/batrawy-clinic.png",
-    featured: false,
-  },
-  {
-    id: "ameer-dental",
-    name: "Ameer Dental",
-    description:
-      "Dental clinic platform with smart appointment booking, patient management, and treatment tracking — runs seamlessly on any phone browser.",
-    category: "clinic",
-    categoryLabel: "Web App",
-    categoryColor: "from-teal-500 to-emerald-600",
-    tags: ["Next.js", "Tailwind", "Mobile-First", "Clinic"],
-    url: "https://ameer-dental-clinic.vercel.app",
-    screenshot: "/projects/ameer-dental.png",
-    featured: false,
-  },
-  {
-    id: "elghaly-vr",
-    name: "Elghaly VR",
-    description:
-      "Innovative AR room visualizer — captures real-world colors from your mobile camera and paints virtual rooms in real-time.",
-    category: "web-app",
-    categoryLabel: "Web App",
-    categoryColor: "from-violet-500 to-purple-600",
-    tags: ["Next.js", "Camera API", "WebRTC", "AR/VR"],
-    url: "https://elghaly-vr.vercel.app/",
-    screenshot: "/projects/elghaly-vr.png",
-    featured: false,
-  },
-  {
-    id: "qoya-furniture",
-    name: "QOYA Furniture",
-    description:
-      "Ultra-luxury furniture brand website for one of Cairo's premium showrooms. Fullscreen editorial design, auto-cycling hero slider, 90+ product images, contact inquiry system, and two-branch store locator.",
-    category: "corporate",
-    categoryLabel: "Luxury Brand",
-    categoryColor: "from-amber-700 to-yellow-800",
-    tags: ["Next.js", "Tailwind CSS", "Neon DB", "Editorial Design"],
-    url: "https://qoya-furniture.vercel.app",
-    screenshot: "/projects/qoya-furniture.png",
-    featured: true,
-  },
-  {
-    id: "mr-mohammed",
-    name: "Mr. Mohammed",
-    description:
-      "Mobile-first Arabic & Islamic Studies teacher platform — students browse and enroll in live online courses, with Vodafone Cash payment integration. Includes a hidden admin panel for managing courses, enrollments, materials, and student results.",
-    category: "web-app",
-    categoryLabel: "Web App",
-    categoryColor: "from-indigo-500 to-blue-700",
-    tags: ["Next.js", "PostgreSQL", "Mobile-First", "Arabic RTL"],
-    url: "https://mohammedcourses.vercel.app",
-    screenshot: "/projects/mr-mohammed.png",
-    featured: false,
-  },
-  {
-    id: "olympia-beach-club",
-    name: "Olympia Beach Club",
-    description:
-      "Mobile-first beach club app — facility booking, event registration, membership plans, and a smooth native-app feel. Built as a pitch demo for a New Damietta beach club.",
-    category: "web-app",
-    categoryLabel: "Web App",
-    categoryColor: "from-sky-500 to-cyan-600",
-    tags: ["Next.js", "Framer Motion", "Mobile-First", "Arabic/English"],
-    url: "https://olympia-club-sherifs-projects-75c57a99.vercel.app",
-    screenshot: "/projects/olympia-beach-club.png",
-    featured: false,
-  },
-];
+export const projects: Project[] = projectsData as Project[];
 
 export const services: ServiceItem[] = [
   {

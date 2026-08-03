@@ -194,6 +194,7 @@ export const translations = {
     },
     footer: {
       desc: "بنبني مواقع وبرامج سريعة وعصرية للشركات ورواد الأعمال في كل حتة.",
+      cta: "ابدأ مشروعك ←",
       navTitle: "روابط",
       navLinks: [
         { label: "شغلي", href: "#portfolio" },
@@ -426,6 +427,7 @@ export const translations = {
     },
     footer: {
       desc: "Full-stack web developer building fast, modern websites and apps for businesses and entrepreneurs worldwide.",
+      cta: "Start a Project →",
       navTitle: "Navigation",
       navLinks: [
         { label: "Portfolio", href: "#portfolio" },
