@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import TechStack from "@/components/TechStack";
+import TrustSignals from "@/components/TrustSignals";
+import WhyChooseMe from "@/components/WhyChooseMe";
 import Portfolio from "@/components/Portfolio";
 import HireCTA from "@/components/HireCTA";
 import Services from "@/components/Services";
@@ -18,6 +20,8 @@ export default function Page() {
       <main className="pb-16 md:pb-0">
         <Hero />
         <TechStack />
+        <TrustSignals />
+        <WhyChooseMe />
         <Portfolio />
         <HireCTA />
         <Services />

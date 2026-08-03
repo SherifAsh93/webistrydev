@@ -54,6 +54,7 @@ export default function StartProject() {
   const streamRef = useRef<MediaStream | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const messageRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     return () => {
@@ -315,6 +316,16 @@ export default function StartProject() {
             <span className="text-gradient">{sp.title2}</span>
           </h2>
           <p className="text-slate-500 text-lg max-w-md mx-auto leading-relaxed">{sp.desc}</p>
+          <button
+            type="button"
+            onClick={() => {
+              messageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+              messageRef.current?.focus();
+            }}
+            className="mt-5 inline-flex items-center gap-2 px-6 py-3 rounded-2xl border-2 border-violet-200 text-violet-700 font-bold text-sm hover:bg-violet-50 transition-all"
+          >
+            📅 {sp.bookConsultation}
+          </button>
         </div>
 
         {/* ── Project type picker ───────────────────────────── */}
@@ -356,6 +367,7 @@ export default function StartProject() {
                 {sp.textLabel} <span className="text-rose-400">*</span>
               </label>
               <textarea
+                ref={messageRef}
                 value={textMessage}
                 onChange={(e) => setTextMessage(e.target.value)}
                 rows={5}

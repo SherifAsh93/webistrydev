@@ -1,21 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLang } from "@/lib/language-context";
 
 export default function Hero() {
-  const [wordIdx, setWordIdx] = useState(0);
   const { t } = useLang();
-  const words = t.hero.rotating;
-
-  useEffect(() => {
-    setWordIdx(0);
-  }, [words]);
-
-  useEffect(() => {
-    const timer = setInterval(() => setWordIdx((i) => (i + 1) % words.length), 2800);
-    return () => clearInterval(timer);
-  }, [words]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 pt-28 pb-10">
@@ -59,23 +47,9 @@ export default function Hero() {
           className="mb-8"
         >
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[1.3] text-slate-900">
-            {t.hero.titlePre}{" "}
-            <span className="inline-block overflow-visible">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={wordIdx}
-                  initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
-                  transition={{ duration: 0.45 }}
-                  className="text-gradient inline-block"
-                >
-                  {words[wordIdx]}
-                </motion.span>
-              </AnimatePresence>
-            </span>
+            {t.hero.title1}
             <br />
-            <span className="text-gradient-gold">{t.hero.titlePost}</span>
+            <span className="text-gradient-gold">{t.hero.title2}</span>
           </h1>
         </motion.div>
 
@@ -96,7 +70,7 @@ export default function Hero() {
           transition={{ delay: 0.55, duration: 0.5 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
         >
-          <a href="#start-project" className="btn-primary flex items-center justify-center gap-2 px-9 py-4 text-base">
+          <a href="#start-project" className="btn-primary flex items-center justify-center gap-2 px-12 py-5 text-lg">
             {t.hero.cta1} →
           </a>
           <a
