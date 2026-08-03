@@ -13,11 +13,10 @@ export const translations = {
     },
     hero: {
       badge: "تطوير ويب متكامل — مواقع وبرامج وتجارة إلكترونية",
-      rotating: ["مواقع", "برامج", "متاجر اونلاين", "منتجات رقمية"],
-      titlePre: "بنبني",
-      titlePost: "بتكسب.",
-      desc: "أي فكرة في بالك — قولهالي وأنا هحولها لمنتج حقيقي، سريع، وجميل.",
-      cta1: "ابدأ مشروعك",
+      title1: "أنظمة مواقع وكاشير (POS)",
+      title2: "لبيزنسك العصري.",
+      desc: "مصمم خصيصًا ليك، سريع، وسعره مناسب.",
+      cta1: "احصل على عرض سعر مجاني",
       cta2: "شوف شغلي",
       stats: [
         { number: "9+", label: "فكرة اتبنت" },
@@ -26,6 +25,20 @@ export const translations = {
         { number: "100%", label: "في الموعد دايمًا" },
       ],
       scroll: "اسحب للأسفل",
+    },
+    trustSignals: {
+      items: ["100% كود مخصوص بالكامل", "9+ مشروع اتسلم فعلًا", "دعم 24/7"],
+    },
+    whyChooseMe: {
+      sectionLabel: "ليه تختارني",
+      title1: "ليه تختار",
+      title2: "Webistrydev؟",
+      desc: "كل مشروع بيتعمل بنفس الاهتمام — كود يعيش طويل، ودعم مايختفيش بعد التسليم.",
+      items: [
+        { title: "كود عالي الجودة", description: "كود نضيف وسهل التطوير ومبني بأحدث الطرق — من غير حلول سريعة أو ديون تقنية." },
+        { title: "دعم عربي كامل (RTL)", description: "دعم كامل للعربي (من اليمين لليسار) والإنجليزي من أول يوم — مش إضافة لاحقة." },
+        { title: "سنة صيانة مجانية", description: "إصلاح الأعطال والتحديثات البسيطة عليا لمدة سنة كاملة بعد الإطلاق، من غير أي تكلفة إضافية." },
+      ],
     },
     portfolio: {
       sectionLabel: "شغلي",
@@ -84,6 +97,8 @@ export const translations = {
       popular: "الأكثر طلبًا",
       egpLabel: "ج.م.",
       usdLabel: "دولار",
+      startingBadge: "يبدأ من 499$",
+      startingNote: "أسعار خاصة متاحة للمشاريع المعقدة.",
       cta: "احكيلي فكرتك ←",
       footerNote: "الأسعار نقطة بداية وبتتغير حسب الشغل. مش عارف أي باقة تناسبك؟",
       footerLink: "احكيلي وهشوفلك ←",
@@ -137,6 +152,7 @@ export const translations = {
       title1: "فكرتك في بالك؟",
       title2: "قولهالي دلوقتي.",
       desc: "مش محتاج تعرف أي حاجة تقنية — بس احكيلي عايز إيه وأنا اللي هتكفل بالباقي خالص.",
+      bookConsultation: "احجز مكالمة مجانية 15 دقيقة",
       trustBadges: ["⚡ هرد عليك في نفس اليوم", "💬 استشارة مجانية 100%", "🔐 بيننا بس"],
       typePickerLabel: "إيه اللي عايزه؟",
       projectTypes: [
@@ -246,11 +262,10 @@ export const translations = {
     },
     hero: {
       badge: "Full-Stack Web Development — Websites, Apps & Stores",
-      rotating: ["Websites", "Web Apps", "Online Stores", "Digital Products"],
-      titlePre: "I Build",
-      titlePost: "That Win.",
-      desc: "Whatever you can imagine or need — I can build it. Just tell me what's on your mind and I'll turn your idea into a real, fast, beautiful product.",
-      cta1: "Start Your Project",
+      title1: "Web & POS Systems",
+      title2: "for Modern Businesses.",
+      desc: "Custom-built, fast, and affordable.",
+      cta1: "Get a Free Quote",
       cta2: "See My Work",
       stats: [
         { number: "9+", label: "Projects Built" },
@@ -259,6 +274,20 @@ export const translations = {
         { number: "100%", label: "On-Time Delivery" },
       ],
       scroll: "Scroll",
+    },
+    trustSignals: {
+      items: ["100% Custom Code", "9+ Projects Delivered", "24/7 Support"],
+    },
+    whyChooseMe: {
+      sectionLabel: "Why Choose Me",
+      title1: "Why Choose",
+      title2: "Webistrydev?",
+      desc: "Every project is built with the same care — code that lasts, and support that doesn't disappear after launch.",
+      items: [
+        { title: "High-Quality Code", description: "Clean, maintainable code built with modern best practices — no shortcuts, no technical debt." },
+        { title: "RTL / Arabic Support", description: "Full bilingual Arabic (RTL) and English support built in from day one — not bolted on later." },
+        { title: "1-Year Free Maintenance", description: "Bug fixes and minor updates are on me for a full year after launch, at no extra cost." },
+      ],
     },
     portfolio: {
       sectionLabel: "Portfolio",
@@ -317,6 +346,8 @@ export const translations = {
       popular: "Most Popular",
       egpLabel: "EGP",
       usdLabel: "USD",
+      startingBadge: "Starting at $499 USD",
+      startingNote: "Custom quotes available for complex projects.",
       cta: "Tell Me Your Idea →",
       footerNote: "Prices are starting points and vary based on scope. Not sure which fits?",
       footerLink: "Tell me and I'll guide you →",
@@ -370,6 +401,7 @@ export const translations = {
       title1: "Have an idea?",
       title2: "Tell me now.",
       desc: "No technical knowledge needed — just describe what you want and I'll take it from there.",
+      bookConsultation: "Book a Free 15-min Consultation",
       trustBadges: ["⚡ I reply same day", "💬 Free consultation", "🔐 Just between us"],
       typePickerLabel: "What are you looking for?",
       projectTypes: [
