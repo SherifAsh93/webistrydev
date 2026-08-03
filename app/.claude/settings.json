@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch origin *)",
+      "Bash(npx tsc --noEmit *)",
+      "Bash(npx eslint *)",
+      "Bash(npm run build *)",
+      "Bash(git rev-list --count *)",
+      "mcp__claude-in-chrome__find",
+      "mcp__claude-in-chrome__tabs_context_mcp"
+    ]
+  }
+}
