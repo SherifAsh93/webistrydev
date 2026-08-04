@@ -6,7 +6,7 @@ import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { useLang } from "@/lib/language-context";
 
 type RecordState = "idle" | "requesting" | "recording" | "recorded";
-type FormStatus = "idle" | "sending" | "success";
+type FormStatus = "idle" | "sending" | "success" | "error";
 
 function formatTime(s: number) {
   const m = Math.floor(s / 60).toString().padStart(2, "0");
@@ -177,14 +177,23 @@ export default function StartProject() {
 
     setFormStatus("sending");
 
-    let voiceNote: string | null = null;
-    if (audioBlob) {
-      voiceNote = await blobToDataUrl(audioBlob);
-    }
+    try {
+      let voiceNote: string | null = null;
+      if (audioBlob) {
+        voiceNote = await blobToDataUrl(audioBlob);
+      }
 
-    const result = await submitInquiry({ name, phone, message: textMessage, voiceNote });
-    if (result.chatToken) setChatToken(result.chatToken);
-    setFormStatus("success");
+      const result = await submitInquiry({ name, phone, message: textMessage, voiceNote });
+      if (!result.success) {
+        setFormStatus("error");
+        return;
+      }
+      if (result.chatToken) setChatToken(result.chatToken);
+      setFormStatus("success");
+    } catch (error) {
+      console.error("[StartProject] submission failed:", error);
+      setFormStatus("error");
+    }
   }
 
   const canSubmit =
@@ -524,6 +533,9 @@ export default function StartProject() {
                 </>
               )}
             </button>
+            {formStatus === "error" && (
+              <p className="text-xs text-rose-500 font-semibold mt-2 text-center">{sp.sendError}</p>
+            )}
           </div>
 
           {/* ── What happens next ────────────────────────────── */}

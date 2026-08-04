@@ -173,6 +173,7 @@ export const translations = {
       contactNote: "* بس اسمك ورقم تليفونك وأنا هوصلك.",
       submit: "ابعت فكرتي ←",
       sending: "بيتبعت...",
+      sendError: "حصلت مشكلة والرسالة ماتبعتش. جرب تاني أو كلمني على واتساب.",
       whatsappDirect: "أو كلمني مباشرة على واتساب",
       nextStepsTitle: "إيه اللي بيحصل بعد ما تبعت؟",
       nextSteps: [
@@ -403,6 +404,7 @@ export const translations = {
       contactNote: "* Just your name and phone number — I'll reach out to you.",
       submit: "Send My Idea →",
       sending: "Sending...",
+      sendError: "Something went wrong and your message wasn't sent. Please try again or message me on WhatsApp.",
       whatsappDirect: "Or message me directly on WhatsApp",
       nextStepsTitle: "What happens after you send?",
       nextSteps: [
