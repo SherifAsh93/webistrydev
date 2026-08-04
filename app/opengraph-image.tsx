@@ -122,7 +122,7 @@ export default function OGImage() {
                 textTransform: "uppercase",
               }}
             >
-              Full-Stack Web Developer
+              Developer & Programmer
             </span>
           </div>
         </div>

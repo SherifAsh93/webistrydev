@@ -17,20 +17,20 @@ const cairo = Cairo({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://webistrydev.com"),
-  title: "Webistrydev — Full-Stack Web Developer",
+  title: "Webistrydev — Developer & Programmer",
   description:
     "I build fast, elegant websites and web applications for businesses worldwide. E-commerce, brand sites, clinic apps, and custom web platforms.",
   keywords: ["web developer", "freelance", "Next.js", "React", "full-stack", "e-commerce"],
   appleWebApp: { capable: true, statusBarStyle: "default", title: "Webistrydev" },
   openGraph: {
-    title: "Webistrydev — Full-Stack Web Developer",
+    title: "Webistrydev — Developer & Programmer",
     description: "I build fast, elegant websites and web applications for businesses worldwide.",
     type: "website",
     url: "https://webistrydev.com",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Webistrydev — Full-Stack Web Developer",
+    title: "Webistrydev — Developer & Programmer",
     description: "I build fast, elegant websites and web applications for businesses worldwide.",
   },
 };

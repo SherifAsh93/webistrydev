@@ -25,7 +25,7 @@ export default function Footer() {
                 <span className="font-extrabold text-slate-900 text-base leading-tight tracking-tight">
                   Webistry<span className="text-gradient">dev</span>
                 </span>
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.18em]">Full-Stack Developer</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.18em]">Developer & Programmer</span>
               </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">{t.footer.desc}</p>
