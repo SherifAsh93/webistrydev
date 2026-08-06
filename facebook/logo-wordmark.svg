@@ -35,15 +35,18 @@
   />
 
   <!-- Brand name -->
-  <text x="260" y="170" font-family="'Segoe UI', Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="-2">
+  <text x="260" y="160" font-family="'Segoe UI', Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="-2">
     <tspan fill="white">Webistry</tspan><tspan fill="url(#text-g)">dev</tspan>
   </text>
 
   <!-- Tagline -->
-  <text x="260" y="210" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="600" fill="#64748b" letter-spacing="4">FULL-STACK DEVELOPER</text>
+  <text x="260" y="196" font-family="'Segoe UI', Arial, sans-serif" font-size="19" font-weight="600" fill="#94a3b8" letter-spacing="2">SOFTWARE SOLUTIONS FOR BUSINESS OWNERS</text>
+
+  <!-- Sub-tagline -->
+  <text x="260" y="222" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="500" fill="#64748b" letter-spacing="1">Custom Apps · POS Systems · Websites · Mobile-first · Bilingual</text>
 
   <!-- Website URL -->
-  <text x="260" y="252" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="500" fill="#7c3aed" letter-spacing="1">www.webistrydev.com</text>
+  <text x="260" y="258" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="500" fill="#7c3aed" letter-spacing="1">www.webistrydev.com</text>
 
   <defs>
     <linearGradient id="logo-g" x1="68" y1="92" x2="220" y2="284" gradientUnits="userSpaceOnUse">
