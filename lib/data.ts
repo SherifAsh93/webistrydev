@@ -36,16 +36,16 @@ export const projects: Project[] = projectsData as Project[];
 export const services: ServiceItem[] = [
   {
     icon: "🛍",
-    title: "E-Commerce Stores",
+    title: "E-Commerce App",
     description:
       "Full online stores with product management, cart, secure checkout, orders tracking, and admin dashboard.",
     category: "ecommerce",
   },
   {
     icon: "👗",
-    title: "Brand & Fashion Sites",
+    title: "Brand App",
     description:
-      "Luxury brand websites that showcase collections, manage media, and convert visitors into clients.",
+      "Luxury brand apps that showcase collections, manage media, and convert visitors into clients.",
     category: "fashion",
   },
   {
@@ -64,28 +64,28 @@ export const services: ServiceItem[] = [
   },
   {
     icon: "💼",
-    title: "Corporate Websites",
+    title: "Corporate App",
     description:
-      "Professional multi-page corporate sites that establish credibility and generate business leads.",
+      "Professional multi-platform corporate apps that establish credibility and generate business leads.",
     category: "corporate",
   },
   {
     icon: "🚀",
-    title: "Promotional Pages",
+    title: "Promo App",
     description:
-      "Fast, focused single-page websites built to attract customers, capture leads, and grow your business.",
+      "Fast, focused single-platform apps built to attract customers, capture leads, and grow your business.",
     category: "landing",
   },
 ];
 
 export const pricing: PricingTier[] = [
   {
-    name: "Starter",
+    name: "Basic App",
     egp: "5,000 – 10,000",
     usd: "$110 – $220",
     description: "Perfect for individuals and small businesses needing a fast, clean web presence.",
     features: [
-      "1–3 page website",
+      "1–3 platform app",
       "Mobile-responsive design",
       "Contact form",
       "Basic SEO setup",
@@ -97,12 +97,12 @@ export const pricing: PricingTier[] = [
     color: "from-slate-600 to-slate-700",
   },
   {
-    name: "Business",
+    name: "Business App",
     egp: "15,000 – 30,000",
     usd: "$330 – $660",
-    description: "For growing businesses that need a full professional website with content management.",
+    description: "For growing businesses that need a full professional app with content management.",
     features: [
-      "5–10 page website",
+      "5–10 platform app",
       "Custom design system",
       "CMS / Admin panel",
       "SEO optimized",
@@ -115,7 +115,7 @@ export const pricing: PricingTier[] = [
     color: "from-violet-600 to-purple-700",
   },
   {
-    name: "Online Store",
+    name: "E-Commerce App",
     egp: "28,000 – 55,000",
     usd: "$620 – $1,220",
     description: "A complete online store — sell your products globally with a professional storefront.",
@@ -134,7 +134,7 @@ export const pricing: PricingTier[] = [
     color: "from-amber-600 to-orange-700",
   },
   {
-    name: "Custom App",
+    name: "Enterprise App",
     egp: "38,000+",
     usd: "$840+",
     description: "Complex web applications with advanced features, databases, and business logic.",
