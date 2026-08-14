@@ -116,7 +116,7 @@
     "categoryColor": "from-indigo-500 to-blue-700",
     "tags": ["Next.js", "Vercel", "Real-time Search", "Admin Dashboard"],
     "url": "https://sunset-management.vercel.app/",
-    "screenshot": "/projects/sunset.png",
+    "screenshot": "/projects/sunset.PNG",
     "featured": false
   }
 ]

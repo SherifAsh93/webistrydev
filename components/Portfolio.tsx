@@ -192,7 +192,8 @@ export default function Portfolio() {
           className="group relative rounded-2xl overflow-hidden card card-hover cursor-pointer mb-12"
           style={{ height: "clamp(400px, 52vw, 520px)" }}
         >
-          <Image src={flagship.screenshot} alt={flagship.name} fill sizes="100vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" priority />
+          {/* eslint-disable-next-line @next/next/no-img-element -- .PNG extension trips Next.js Image optimization */}
+          <img src={flagship.screenshot} alt={flagship.name} className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
           <div className="absolute top-5 left-5 flex gap-2">
             <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest text-white bg-gradient-to-r from-emerald-500 to-teal-500 shadow-md">
