@@ -12,10 +12,10 @@ export const translations = {
       hire: "قولّي فكرتك ←",
     },
     hero: {
-      badge: "تطوير ويب متكامل — مواقع وبرامج وتجارة إلكترونية",
-      title1: "أنظمة مواقع وكاشير (POS)",
-      title2: "لبيزنسك العصري.",
-      desc: "مصمم خصيصًا ليك، سريع، وسعره مناسب.",
+      badge: "تطبيقات موبايل، لوحات تحكم لحظية، وأنظمة إدارة",
+      title1: "تطبيقات موبايل وأنظمة إدارة",
+      title2: "مخصوصة لبيزنسك.",
+      desc: "تطبيقات مبنية أول حاجة للموبايل، ولوحات تحكم لحظية تدير شغلك بالكامل — سريعة، وموثوقة، ومصممة خصيصًا ليك.",
       cta1: "احصل على عرض سعر مجاني",
       cta2: "شوف شغلي",
       stats: [
@@ -49,6 +49,12 @@ export const translations = {
       buildLike: "عايز مشروع زيه ←",
       viewLive: "زور الموقع",
       live: "شغّال",
+      flagshipBadge: "أحدث شغل",
+      groups: {
+        mobile: { label: "تطبيقات موبايل", desc: "تطبيقات مبنية أول حاجة للموبايل — سريعة وحاسة إنها آب أصلي." },
+        web: { label: "منصات ولوحات تحكم", desc: "لوحات تحكم لحظية وأنظمة إدارة بتدير البيزنس بالكامل." },
+        ecommerce: { label: "متاجر إلكترونية", desc: "متاجر أونلاين متكاملة — من التصفح للدفع للتوصيل." },
+      },
       bizApps: {
         badge: "برامج البيزنس",
         title1: "دير شغلك كله",
@@ -261,10 +267,10 @@ export const translations = {
       hire: "Share Your Idea →",
     },
     hero: {
-      badge: "Full-Stack Web Development — Websites, Apps & Stores",
-      title1: "Web & POS Systems",
-      title2: "for Modern Businesses.",
-      desc: "Custom-built, fast, and affordable.",
+      badge: "Mobile-First Apps, Real-Time Dashboards & Management Systems",
+      title1: "Custom Mobile Apps &",
+      title2: "Management Systems.",
+      desc: "Mobile-first apps and real-time dashboards built to run your business end-to-end — fast, reliable, and made just for you.",
       cta1: "Get a Free Quote",
       cta2: "See My Work",
       stats: [
@@ -298,6 +304,12 @@ export const translations = {
       buildLike: "I Want Something Like This →",
       viewLive: "View Live Site",
       live: "Live",
+      flagshipBadge: "Latest Build",
+      groups: {
+        mobile: { label: "Mobile Apps", desc: "Apps built mobile-first — fast, native-feeling, and always in your pocket." },
+        web: { label: "Web Platforms", desc: "Real-time dashboards and management systems that run the business." },
+        ecommerce: { label: "E-Commerce", desc: "Full online stores — from browsing to checkout to fulfillment." },
+      },
       bizApps: {
         badge: "Business Apps",
         title1: "Run Your Entire Business",

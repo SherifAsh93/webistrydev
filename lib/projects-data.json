@@ -106,5 +106,17 @@
     "url": "https://olympia-club-sherifs-projects-75c57a99.vercel.app",
     "screenshot": "/projects/olympia-beach-club.png",
     "featured": false
+  },
+  {
+    "id": "sunset-management",
+    "name": "Sunset Management",
+    "description": "Managerial dashboard platform for a private compound — real-time search and a full admin dashboard for day-to-day operations.",
+    "category": "web-app",
+    "categoryLabel": "Web App",
+    "categoryColor": "from-indigo-500 to-blue-700",
+    "tags": ["Next.js", "Vercel", "Real-time Search", "Admin Dashboard"],
+    "url": "https://sunset-management.vercel.app/",
+    "screenshot": "/projects/sunset.png",
+    "featured": false
   }
 ]
