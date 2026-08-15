@@ -231,11 +231,28 @@ export default function LeadPage() {
         {/* Form card */}
         <div className="bg-white border border-teal-100 rounded-3xl shadow-xl shadow-teal-900/5 p-6 flex flex-col gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-2">اكتب لنا فكرة مشروعك أو احتياجك</label>
+            <label className="text-xs font-semibold text-slate-400 block mb-1.5">الاسم</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (nameError) setNameError("");
+              }}
+              placeholder="اكتب اسمك هنا"
+              className={`w-full rounded-xl border px-3.5 py-2.5 text-sm outline-none transition-colors ${
+                nameError ? "border-rose-300 bg-rose-50" : "border-slate-200 bg-slate-50 focus:border-teal-300"
+              }`}
+            />
+            {nameError && <p className="text-xs text-rose-500 font-semibold mt-1.5">{nameError}</p>}
+          </div>
+
+          <div>
+            <label className="text-xs font-bold text-slate-500 block mb-2">اكتب لنا فكرة مشروعك / شغلك</label>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="مثال: عايز موقع لمطعمي، أو تطبيق لإدارة عملائي..."
+              placeholder="مثال: عايز موقع لمحلي، أو تطبيق إدارة لعمارتي"
               rows={4}
               className="w-full rounded-2xl border-2 border-teal-100 bg-teal-50/40 px-4 py-3.5 text-base outline-none transition-colors focus:border-teal-400 resize-none"
             />
@@ -251,28 +268,12 @@ export default function LeadPage() {
                 setPhone(e.target.value);
                 if (phoneError) setPhoneError("");
               }}
+              placeholder="مثال: 01012345678"
               className={`w-full rounded-2xl border-2 px-4 py-3.5 text-base text-right outline-none transition-colors ${
                 phoneError ? "border-rose-300 bg-rose-50" : "border-teal-100 bg-teal-50/40 focus:border-teal-400"
               }`}
             />
             {phoneError && <p className="text-xs text-rose-500 font-semibold mt-1.5">{phoneError}</p>}
-          </div>
-
-          <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1.5">اسمك</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                if (nameError) setNameError("");
-              }}
-              placeholder="اكتب اسمك هنا"
-              className={`w-full rounded-xl border px-3.5 py-2.5 text-sm outline-none transition-colors ${
-                nameError ? "border-rose-300 bg-rose-50" : "border-slate-200 bg-slate-50 focus:border-teal-300"
-              }`}
-            />
-            {nameError && <p className="text-xs text-rose-500 font-semibold mt-1.5">{nameError}</p>}
           </div>
 
           {/* Voice recording flow */}
