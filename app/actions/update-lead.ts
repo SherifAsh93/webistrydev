@@ -4,6 +4,6 @@ import { db } from "@/db";
 import { leads } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export async function updateLeadStatus(id: number, status: "new" | "contacted" | "archived") {
+export async function updateLeadStatus(id: number, status: "new" | "contacted" | "client" | "delivered") {
   await db.update(leads).set({ status }).where(eq(leads.id, id));
 }

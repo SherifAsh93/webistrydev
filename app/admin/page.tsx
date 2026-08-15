@@ -5,11 +5,11 @@ import Logo from "@/components/Logo";
 import { getLeads } from "@/app/actions/get-leads";
 import { updateLeadStatus } from "@/app/actions/update-lead";
 import { deleteLead } from "@/app/actions/delete-lead";
-import { LogOut, RefreshCw, MessageSquare, Phone, Mail, Calendar, Tag, DollarSign, Trash2, CheckCircle, Archive, Bell, Link2, Send, MessageCircle } from "lucide-react";
+import { LogOut, RefreshCw, MessageSquare, Phone, Mail, Calendar, Tag, DollarSign, Trash2, Bell, Link2, Send, MessageCircle, CheckCircle, UserCheck, PackageCheck } from "lucide-react";
 import { getMessagesByLeadId } from "@/app/actions/get-messages";
 import { sendAdminMessage } from "@/app/actions/send-message";
 
-type Status = "new" | "contacted" | "archived";
+type Status = "new" | "contacted" | "client" | "delivered";
 
 type Lead = {
   id: number;
@@ -43,7 +43,7 @@ function formatDate(d: Date | null) {
 const TYPE_COLORS: Record<string, string> = {
   ecommerce: "bg-amber-100 text-amber-700 border-amber-200",
   website:   "bg-pink-100 text-pink-700 border-pink-200",
-  "web-app": "bg-violet-100 text-violet-700 border-violet-200",
+  "web-app": "bg-indigo-100 text-indigo-700 border-indigo-200",
   system:    "bg-teal-100 text-teal-700 border-teal-200",
   landing:   "bg-emerald-100 text-emerald-700 border-emerald-200",
   other:     "bg-slate-100 text-slate-600 border-slate-200",
@@ -52,17 +52,27 @@ const TYPE_COLORS: Record<string, string> = {
   corporate: "bg-sky-100 text-sky-700 border-sky-200",
 };
 
-const STATUS_CONFIG = {
-  new:       { label: "New",       color: "bg-emerald-100 text-emerald-700 border-emerald-300", dot: "bg-emerald-500" },
-  contacted: { label: "Contacted", color: "bg-sky-100 text-sky-700 border-sky-200",            dot: "bg-sky-500" },
-  archived:  { label: "Archived",  color: "bg-slate-100 text-slate-500 border-slate-200",      dot: "bg-slate-400" },
+const STATUS_CONFIG: Record<Status, { label: string; color: string; dot: string; icon: typeof Bell }> = {
+  new:       { label: "New",       color: "bg-emerald-100 text-emerald-700 border-emerald-300", dot: "bg-emerald-500", icon: Bell },
+  contacted: { label: "Contacted", color: "bg-sky-100 text-sky-700 border-sky-200",              dot: "bg-sky-500",     icon: CheckCircle },
+  client:    { label: "Client",    color: "bg-teal-100 text-teal-700 border-teal-300",           dot: "bg-teal-500",    icon: UserCheck },
+  delivered: { label: "Delivered", color: "bg-indigo-100 text-indigo-700 border-indigo-300",      dot: "bg-indigo-500",  icon: PackageCheck },
 };
+
+const FALLBACK_STATUS_CONFIG = { label: "Unknown", color: "bg-slate-100 text-slate-500 border-slate-200", dot: "bg-slate-400", icon: Bell };
+
+function statusConfig(status: string) {
+  return (STATUS_CONFIG as Record<string, typeof STATUS_CONFIG[Status]>)[status] ?? FALLBACK_STATUS_CONFIG;
+}
+
+const STATUS_ORDER: Status[] = ["new", "contacted", "client", "delivered"];
 
 const FILTER_TABS: { key: "all" | Status; label: string }[] = [
   { key: "all",       label: "All" },
   { key: "new",       label: "New" },
   { key: "contacted", label: "Contacted" },
-  { key: "archived",  label: "Archived" },
+  { key: "client",    label: "Client" },
+  { key: "delivered", label: "Delivered" },
 ];
 
 export default function AdminPage() {
@@ -113,7 +123,7 @@ export default function AdminPage() {
       if (prevNewCount.current !== null && newCount > prevNewCount.current) {
         const newest = fresh.find((l) => l.status === "new");
         if (typeof Notification !== "undefined" && Notification.permission === "granted" && newest) {
-          new Notification("رسالة جديدة! 🔔", {
+          new Notification("New lead! 🔔", {
             body: `${newest.name}${newest.phone ? " — " + newest.phone : ""}`,
             icon: "/icon.svg",
           });
@@ -147,7 +157,7 @@ export default function AdminPage() {
   }
 
   async function handleDelete(id: number) {
-    if (!confirm("Delete this message permanently?")) return;
+    if (!confirm("Delete this lead permanently?")) return;
     setDeleting(id);
     await deleteLead(id);
     setLeads((prev) => prev.filter((l) => l.id !== id));
@@ -183,16 +193,16 @@ export default function AdminPage() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-[#f7f6ff] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-teal-50 flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="flex items-center justify-center gap-2.5 mb-8">
             <Logo size={36} />
             <div>
-              <div className="font-extrabold text-slate-900 text-lg leading-tight">Webistry<span className="text-gradient">dev</span></div>
+              <div className="font-extrabold text-slate-900 text-lg leading-tight">Webistry<span className="text-teal-600">dev</span></div>
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admin Panel</div>
             </div>
           </div>
-          <form onSubmit={handleLogin} className="card rounded-2xl p-8 flex flex-col gap-5">
+          <form onSubmit={handleLogin} className="bg-white border border-teal-100 rounded-2xl shadow-xl shadow-teal-900/5 p-8 flex flex-col gap-5">
             <h1 className="text-xl font-extrabold text-slate-900 text-center">Admin Access</h1>
             <div>
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Password</label>
@@ -202,11 +212,11 @@ export default function AdminPage() {
                 onChange={(e) => setPw(e.target.value)}
                 placeholder="Enter password"
                 autoFocus
-                className={`field w-full rounded-xl px-4 py-3 text-sm ${pwError ? "border-rose-400 bg-rose-50" : ""}`}
+                className={`w-full rounded-xl border-2 px-4 py-3 text-sm outline-none transition-colors ${pwError ? "border-rose-400 bg-rose-50" : "border-teal-100 bg-teal-50/40 focus:border-teal-400"}`}
               />
               {pwError && <p className="text-xs text-rose-500 mt-1.5 font-semibold">Wrong password.</p>}
             </div>
-            <button type="submit" className="btn-primary py-3 text-sm">Enter →</button>
+            <button type="submit" className="bg-teal-600 text-white font-bold rounded-xl py-3 text-sm hover:bg-teal-700 transition-all">Enter →</button>
           </form>
         </div>
       </div>
@@ -218,23 +228,19 @@ export default function AdminPage() {
     if (!l.createdAt) return false;
     return new Date(l.createdAt).toDateString() === new Date().toDateString();
   }).length;
-  const weekCount = leads.filter((l) => {
-    if (!l.createdAt) return false;
-    return Date.now() - new Date(l.createdAt).getTime() < 7 * 86400000;
-  }).length;
 
   const filtered = filter === "all" ? leads : leads.filter((l) => l.status === filter);
 
   return (
-    <div className="min-h-screen bg-[#f7f6ff]">
+    <div className="min-h-screen bg-teal-50">
       {/* Header */}
-      <header className="bg-white border-b border-violet-100 sticky top-0 z-20">
+      <header className="bg-white border-b border-teal-100 sticky top-0 z-20">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
             <Logo size={26} />
             <div className="min-w-0">
-              <span className="font-extrabold text-slate-900 text-sm">Webistry<span className="text-gradient">dev</span></span>
-              <span className="ml-2 text-xs font-bold text-violet-600 bg-violet-50 border border-violet-200 px-2 py-0.5 rounded-full">Admin</span>
+              <span className="font-extrabold text-slate-900 text-sm">Webistry<span className="text-teal-600">dev</span></span>
+              <span className="ml-2 text-xs font-bold text-teal-600 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded-full">Admin</span>
             </div>
             {newCount > 0 && (
               <span className="flex items-center gap-1 bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse shrink-0">
@@ -243,7 +249,7 @@ export default function AdminPage() {
             )}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
-            <button onClick={load} disabled={loading} className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-slate-500 hover:text-violet-700 bg-slate-50 border border-slate-200 rounded-xl transition-all">
+            <button onClick={load} disabled={loading} className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-slate-500 hover:text-teal-700 bg-slate-50 border border-slate-200 rounded-xl transition-all">
               <RefreshCw size={12} className={loading ? "animate-spin" : ""} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
@@ -259,11 +265,11 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { label: "Total",   value: leads.length,  icon: MessageSquare, color: "text-violet-600 bg-violet-50 border-violet-200" },
+            { label: "Total",   value: leads.length,  icon: MessageSquare, color: "text-teal-600 bg-teal-50 border-teal-200" },
             { label: "New",     value: newCount,       icon: Bell,          color: "text-emerald-600 bg-emerald-50 border-emerald-200" },
             { label: "Today",   value: todayCount,     icon: Calendar,      color: "text-sky-600 bg-sky-50 border-sky-200" },
           ].map((stat, i) => (
-            <div key={i} className="card rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
+            <div key={i} className="bg-white border border-teal-100 rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 shadow-sm">
               <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center shrink-0 ${stat.color}`}>
                 <stat.icon size={15} />
               </div>
@@ -285,8 +291,8 @@ export default function AdminPage() {
                 onClick={() => setFilter(tab.key)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                   filter === tab.key
-                    ? "bg-violet-600 text-white border-violet-600"
-                    : "bg-white text-slate-500 border-slate-200 hover:border-violet-200"
+                    ? "bg-teal-600 text-white border-teal-600"
+                    : "bg-white text-slate-500 border-slate-200 hover:border-teal-200"
                 }`}
               >
                 {tab.label}
@@ -302,36 +308,36 @@ export default function AdminPage() {
         <div className="flex flex-col gap-2.5">
           {loading && (
             <div className="flex justify-center py-16">
-              <div className="w-8 h-8 border-[3px] border-violet-200 border-t-violet-600 rounded-full animate-spin" />
+              <div className="w-8 h-8 border-[3px] border-teal-200 border-t-teal-600 rounded-full animate-spin" />
             </div>
           )}
 
           {!loading && filtered.length === 0 && (
-            <div className="card rounded-2xl p-12 text-center">
+            <div className="bg-white border border-teal-100 rounded-2xl p-12 text-center">
               <MessageSquare size={28} className="text-slate-200 mx-auto mb-3" />
               <p className="text-slate-400 font-semibold text-sm">
-                {filter === "all" ? "No messages yet." : `No ${filter} messages.`}
+                {filter === "all" ? "No leads yet." : `No ${filter} leads.`}
               </p>
             </div>
           )}
 
           {filtered.map((lead) => {
-            const sc = STATUS_CONFIG[lead.status];
+            const sc = statusConfig(lead.status);
             const isExpanded = expanded === lead.id;
             const isNew = lead.status === "new";
 
             return (
               <div
                 key={lead.id}
-                className={`card rounded-2xl overflow-hidden transition-all ${isNew ? "border-l-4 border-l-emerald-400" : ""}`}
+                className={`bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-sm transition-all ${isNew ? "border-l-4 border-l-emerald-400" : ""}`}
               >
-                {/* Summary row */}
+                {/* Summary row — Name, Phone, Date, Voice indicator */}
                 <button
                   className="w-full text-left p-4 flex items-start gap-3"
                   onClick={() => setExpanded(isExpanded ? null : lead.id)}
                 >
                   {/* Avatar */}
-                  <div className="w-9 h-9 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-sm font-black text-violet-700 shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-sm font-black text-teal-700 shrink-0">
                     {lead.name.charAt(0).toUpperCase()}
                   </div>
 
@@ -345,10 +351,10 @@ export default function AdminPage() {
                         <span className={`w-1.5 h-1.5 rounded-full ${sc.dot}`} />
                         {sc.label}
                       </span>
-                      {/* Voice badge or type badge */}
+                      {/* Voice Note indicator */}
                       {lead.voiceNote && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider bg-violet-100 text-violet-700 border-violet-200">
-                          🎙️ voice
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider bg-teal-100 text-teal-700 border-teal-200">
+                          🎙️ Voice Note
                         </span>
                       )}
                       {lead.projectType && (
@@ -361,7 +367,7 @@ export default function AdminPage() {
                     <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
                       {lead.message || (lead.voiceNote ? "🎙️ Voice message" : "—")}
                     </p>
-                    {/* Meta row */}
+                    {/* Meta row — Phone + Date */}
                     <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                       {lead.phone && (
                         <a href={`tel:${lead.phone.replace(/\s/g, "")}`} className="flex items-center gap-0.5 text-[10px] text-sky-600 font-semibold">
@@ -369,11 +375,13 @@ export default function AdminPage() {
                         </a>
                       )}
                       {lead.email && (
-                        <span className="flex items-center gap-0.5 text-[10px] text-violet-600 font-semibold truncate max-w-[140px]">
+                        <span className="flex items-center gap-0.5 text-[10px] text-teal-600 font-semibold truncate max-w-[140px]">
                           <Mail size={9} />{lead.email}
                         </span>
                       )}
-                      <span className="text-[9px] text-slate-300 ml-auto shrink-0">{formatDate(lead.createdAt)}</span>
+                      <span className="flex items-center gap-0.5 text-[9px] text-slate-300 ml-auto shrink-0">
+                        <Calendar size={9} />{formatDate(lead.createdAt)}
+                      </span>
                     </div>
                   </div>
 
@@ -417,13 +425,14 @@ export default function AdminPage() {
                       </div>
                     )}
 
-                    {/* Status controls */}
+                    {/* Status controls — 4 clickable status buttons */}
                     <div>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2">Status</p>
                       <div className="flex gap-2 flex-wrap">
-                        {(["new", "contacted", "archived"] as Status[]).map((s) => {
+                        {STATUS_ORDER.map((s) => {
                           const cfg = STATUS_CONFIG[s];
                           const isActive = lead.status === s;
+                          const Icon = cfg.icon;
                           return (
                             <button
                               key={s}
@@ -435,9 +444,7 @@ export default function AdminPage() {
                                   : "bg-white text-slate-500 border-slate-200 hover:border-slate-400"
                               } disabled:opacity-60`}
                             >
-                              {s === "new"       && <Bell size={10} />}
-                              {s === "contacted" && <CheckCircle size={10} />}
-                              {s === "archived"  && <Archive size={10} />}
+                              <Icon size={10} />
                               {cfg.label}
                               {isActive && " ✓"}
                             </button>
@@ -454,7 +461,7 @@ export default function AdminPage() {
                         </a>
                       )}
                       {lead.email && (
-                        <a href={`mailto:${lead.email}?subject=Re: Your project request`} className="flex items-center justify-center gap-1.5 px-3 py-3 text-xs font-bold text-violet-700 bg-violet-100 border border-violet-200 rounded-xl hover:bg-violet-200 transition">
+                        <a href={`mailto:${lead.email}?subject=Re: Your project request`} className="flex items-center justify-center gap-1.5 px-3 py-3 text-xs font-bold text-teal-700 bg-teal-100 border border-teal-200 rounded-xl hover:bg-teal-200 transition">
                           ✉️ Email
                         </a>
                       )}
@@ -477,7 +484,7 @@ export default function AdminPage() {
                         {lead.chatToken && (
                           <button
                             onClick={() => copyClientLink(lead)}
-                            className={`flex items-center gap-1 text-[10px] font-bold transition ${copiedToken === lead.id ? "text-emerald-600" : "text-violet-600 hover:text-violet-800"}`}
+                            className={`flex items-center gap-1 text-[10px] font-bold transition ${copiedToken === lead.id ? "text-emerald-600" : "text-teal-600 hover:text-teal-800"}`}
                           >
                             <Link2 size={10} />
                             {copiedToken === lead.id ? "Copied!" : "Copy Client Link"}
@@ -496,12 +503,12 @@ export default function AdminPage() {
                                 msg.sender === "admin"
                                   ? "text-white rounded-br-sm"
                                   : "bg-slate-100 text-slate-700 rounded-bl-sm"
-                              }`} style={msg.sender === "admin" ? { background: "linear-gradient(135deg, #7c3aed, #6d28d9)" } : {}}>
-                                <p className={`text-[9px] font-bold mb-1 ${msg.sender === "admin" ? "text-violet-200" : "text-slate-400"}`}>
+                              }`} style={msg.sender === "admin" ? { background: "linear-gradient(135deg, #0d9488, #0f766e)" } : {}}>
+                                <p className={`text-[9px] font-bold mb-1 ${msg.sender === "admin" ? "text-teal-200" : "text-slate-400"}`}>
                                   {msg.sender === "admin" ? "You" : lead.name}
                                 </p>
                                 <p>{msg.body}</p>
-                                <p className={`text-[9px] mt-1 ${msg.sender === "admin" ? "text-violet-300" : "text-slate-400"}`}>
+                                <p className={`text-[9px] mt-1 ${msg.sender === "admin" ? "text-teal-300" : "text-slate-400"}`}>
                                   {formatDate(msg.createdAt)}
                                 </p>
                               </div>
@@ -518,13 +525,13 @@ export default function AdminPage() {
                           onChange={(e) => setChatInput((prev) => ({ ...prev, [lead.id]: e.target.value }))}
                           onKeyDown={(e) => e.key === "Enter" && handleAdminReply(lead.id)}
                           placeholder="Type a reply..."
-                          className="field flex-1 rounded-xl px-3 py-3 text-sm"
+                          className="flex-1 rounded-xl border-2 border-teal-100 bg-teal-50/40 px-3 py-3 text-sm outline-none focus:border-teal-400 transition-colors"
                           disabled={chatSending === lead.id}
                         />
                         <button
                           onClick={() => handleAdminReply(lead.id)}
                           disabled={chatSending === lead.id || !(chatInput[lead.id] || "").trim()}
-                          className="btn-primary px-4 py-3 rounded-xl flex items-center gap-1 text-sm disabled:opacity-50 shrink-0"
+                          className="bg-teal-600 text-white font-bold px-4 py-3 rounded-xl flex items-center gap-1 text-sm hover:bg-teal-700 disabled:opacity-50 shrink-0 transition-all"
                         >
                           {chatSending === lead.id
                             ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
