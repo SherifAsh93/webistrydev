@@ -221,7 +221,7 @@ export default function LeadPage() {
         {/* Headline */}
         <div className="text-center mb-7">
           <h1 className="text-3xl font-extrabold text-slate-900 mb-3 leading-snug">
-            عايز تطور بزنيسك؟ خليك في السليم.
+            عايز تطور مشروعك / شغلك وتخليه أسهل؟
           </h1>
           <p className="text-slate-500 text-base leading-relaxed">
             مش محتاج تكتب كتير. سيبنا نكلمك ونفهم احتياجاتك.
