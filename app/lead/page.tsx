@@ -208,7 +208,7 @@ export default function LeadPage() {
   }
 
   return (
-    <div dir="rtl" lang="ar" className="min-h-screen bg-gradient-to-b from-teal-50 to-white flex items-center justify-center px-4 py-10">
+    <div dir="rtl" lang="ar" className="min-h-screen bg-gradient-to-b from-teal-50 to-white flex items-start md:items-center justify-center px-4 py-6 md:py-10">
       <div className="w-full max-w-sm">
         {/* Brand */}
         <div className="flex items-center justify-center gap-2 mb-8">
@@ -220,7 +220,7 @@ export default function LeadPage() {
 
         {/* Headline */}
         <div className="text-center mb-7">
-          <h1 className="text-3xl font-extrabold text-slate-900 mb-3 leading-snug">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3 leading-snug">
             عايز تطور مشروعك / شغلك وتخليه أسهل؟
           </h1>
           <p className="text-slate-500 text-base leading-relaxed">
@@ -391,7 +391,8 @@ export default function LeadPage() {
                 ) : (
                   <PhoneCall size={20} />
                 )}
-                سجل واستنى اتصالنا
+                <span className="md:hidden">سجل الآن</span>
+                <span className="hidden md:inline">سجل واستنى اتصالنا</span>
               </button>
 
               <button
