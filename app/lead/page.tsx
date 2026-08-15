@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle2, Mic, Square, RotateCcw, Play, Pause, PhoneCall, X } from "lucide-react";
+import { CheckCircle2, Mic, Square, RotateCcw, Play, Pause, Send, X } from "lucide-react";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import Logo from "@/components/Logo";
 
@@ -248,7 +248,19 @@ export default function LeadPage() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-2">اكتب لنا فكرة مشروعك / شغلك</label>
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <label className="text-xs font-bold text-slate-500">اكتب لنا فكرة مشروعك / شغلك</label>
+              {recordState === "idle" && (
+                <button
+                  type="button"
+                  onClick={startRecording}
+                  className="flex items-center gap-1 shrink-0 px-2.5 py-1 rounded-full text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 hover:bg-teal-100 transition-all"
+                >
+                  <Mic size={12} />
+                  سجل
+                </button>
+              )}
+            </div>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -379,31 +391,20 @@ export default function LeadPage() {
           )}
 
           {recordState === "idle" && (
-            <>
-              <button
-                type="button"
-                onClick={submitText}
-                disabled={formStatus === "sending"}
-                className="flex items-center justify-center gap-2 bg-teal-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-teal-700 active:scale-[0.98] disabled:opacity-60 shadow-lg shadow-teal-600/25 transition-all"
-              >
-                {formStatus === "sending" ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <PhoneCall size={20} />
-                )}
-                <span className="md:hidden">سجل الآن</span>
-                <span className="hidden md:inline">سجل واستنى اتصالنا</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={startRecording}
-                className="flex items-center justify-center gap-2 bg-white border-2 border-teal-200 text-teal-700 py-4 rounded-2xl font-bold text-sm hover:bg-teal-50 transition-all"
-              >
-                <Mic size={16} />
-                سجل رسالة صوتية
-              </button>
-            </>
+            <button
+              type="button"
+              onClick={submitText}
+              disabled={formStatus === "sending"}
+              className="flex items-center justify-center gap-2 bg-teal-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-teal-700 active:scale-[0.98] disabled:opacity-60 shadow-lg shadow-teal-600/25 transition-all"
+            >
+              {formStatus === "sending" ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <Send size={20} />
+              )}
+              <span className="md:hidden">سجل الآن</span>
+              <span className="hidden md:inline">سجل واحنا هنكلمك</span>
+            </button>
           )}
 
           {formStatus === "error" && (
