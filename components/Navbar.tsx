@@ -56,7 +56,7 @@ export default function Navbar() {
               Webistry<span className="text-gradient">dev</span>
             </span>
             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.18em]">
-              Full-Stack Developer
+              Custom Software Solutions for Business Owners
             </span>
           </div>
         </button>
