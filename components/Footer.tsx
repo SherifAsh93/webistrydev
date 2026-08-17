@@ -21,11 +21,11 @@ export default function Footer() {
           <div className="flex-1 max-w-sm">
             <div className="flex items-center gap-2.5 mb-3">
               <Logo size={30} />
-              <div className="flex flex-col -space-y-0.5">
+              <div className="flex min-w-0 flex-col -space-y-0.5">
                 <span className="font-extrabold text-slate-900 text-base leading-tight tracking-tight">
                   Webistry<span className="text-gradient">dev</span>
                 </span>
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.18em]">Custom Software Solutions for Business Owners</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wide sm:tracking-[0.18em] leading-snug">Custom Software Solutions for Business Owners</span>
               </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed mb-5">{t.footer.desc}</p>
