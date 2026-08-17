@@ -8,7 +8,7 @@ Sherif's freelance developer portfolio and lead-generation site (brand: **Webist
 
 - Live: https://www.webistrydev.com
 - Admin panel: `/admin` (password hardcoded as `ADMIN_PW` in `app/admin/page.tsx`, currently `114891`)
-- Deploy target: VPS + PM2 (process `webistrydev`, port 3001) — **not** Vercel, despite some stale docs/config referencing it (`next.config.ts` only has a legacy redirect from the old `webistrydev.vercel.app` URL).
+- Deploy target: Vercel — auto-deploys on every push to `main`. (The project previously ran on a VPS + PM2; that migration is complete. `next.config.ts` still has a legacy redirect from the old `webistrydev.vercel.app` preview URL to the production domain — that redirect is unrelated to the current deploy setup and doesn't need to be removed.)
 
 ## Commands
 
@@ -32,11 +32,7 @@ npx drizzle-kit studio     # Visual DB browser at localhost:4983
 
 `drizzle.config.ts` has a **hardcoded Neon connection string** for CLI use. This is a known/accepted issue — it doesn't affect runtime (which uses the `DATABASE_URL` env var), so don't try to "fix" it by wiring it to env vars in a way that breaks the CLI, and don't paste fresh credentials into it.
 
-Deploy (manual, on the VPS):
-
-```bash
-git pull origin main && npm install && npm run build && pm2 restart webistrydev
-```
+Deploy: automatic — Vercel builds and deploys on every push to `main`. Environment variables (`DATABASE_URL`, `RESEND_API_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `NEXT_PUBLIC_FB_PIXEL_ID`, etc.) are managed in the Vercel dashboard for production, and in `.env.local` (gitignored) for local dev.
 
 ## Architecture
 
@@ -68,4 +64,4 @@ The entire marketing site is **one route** (`app/page.tsx`) that renders section
 
 ## Stale docs, read with caution
 
-The repo root has several older Markdown guides (`PROJECT_GUIDE.md`, `COMPONENTS_GUIDE.md`, `DATABASE_GUIDE.md`, `SETUP_GUIDE.md`) plus a `docs/` folder that predate the current voice-form/chat/Telegram feature set — some describe a single-table schema with no `messages` table or `chat_token`, 6 projects instead of 9+, and Vercel as the deploy target. **`PROJECT_CONTEXT.md`, `AI_AGENT_GUIDE.md`, and `README.md` are up to date** and should be treated as authoritative over the others when they conflict.
+The repo root has several older Markdown guides (`PROJECT_GUIDE.md`, `COMPONENTS_GUIDE.md`, `DATABASE_GUIDE.md`, `SETUP_GUIDE.md`) plus a `docs/` folder that predate the current voice-form/chat/Telegram feature set — some describe a single-table schema with no `messages` table or `chat_token`, and 6 projects instead of 9+. (They also mention Vercel as the deploy target, which is coincidentally accurate again post-migration — don't take that as confirmation the rest of those docs are current.) **`PROJECT_CONTEXT.md`, `AI_AGENT_GUIDE.md`, and `README.md` are up to date** and should be treated as authoritative over the others when they conflict.
