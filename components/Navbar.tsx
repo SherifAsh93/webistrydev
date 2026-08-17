@@ -47,15 +47,15 @@ export default function Navbar() {
         {/* Logo — 3 clicks → /admin */}
         <button
           onClick={handleLogoClick}
-          className="flex items-center gap-2.5 shrink-0 hover:opacity-80 transition-opacity"
+          className="flex min-w-0 items-center gap-2.5 hover:opacity-80 transition-opacity"
           aria-label="Webistrydev home"
         >
           <Logo size={32} />
-          <div className="flex flex-col -space-y-0.5">
+          <div className="flex min-w-0 flex-col -space-y-0.5">
             <span className="font-extrabold text-slate-900 text-base leading-tight tracking-tight">
               Webistry<span className="text-gradient">dev</span>
             </span>
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.18em]">
+            <span className="whitespace-normal text-[7px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wide sm:tracking-[0.18em] leading-snug">
               Custom Software Solutions for Business Owners
             </span>
           </div>
