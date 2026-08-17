@@ -4,6 +4,7 @@ import { CheckCircle2, Mic, Square, RotateCcw, Send, Play, Pause, X, MessageCirc
 import { motion, AnimatePresence } from "framer-motion";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { useLang } from "@/lib/language-context";
+import { trackLead } from "@/lib/fbpixel";
 
 type RecordState = "idle" | "requesting" | "recording" | "recorded";
 type FormStatus = "idle" | "sending" | "success";
@@ -185,6 +186,7 @@ export default function StartProject() {
 
     const result = await submitInquiry({ name, phone, message: textMessage, voiceNote });
     if (result.chatToken) setChatToken(result.chatToken);
+    if (result.success) trackLead();
     setFormStatus("success");
   }
 
