@@ -58,7 +58,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed font-medium"
+          className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mt-8 sm:mt-0 mb-12 leading-relaxed font-medium"
         >
           {t.hero.desc}
         </motion.p>
