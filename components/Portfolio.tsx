@@ -12,9 +12,9 @@ const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } }
 const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } };
 
 const GROUP_IDS = {
-  management: ["ameer-dental", "batrawy-clinic", "sunset-management", "webistrydev"],
-  mobile: ["elghaly-vr", "olympia-beach-club"],
-  ecommerce: ["ahmed-elakad", "qoya-furniture", "furniture-studio", "zahrtelkhlig"],
+  management: ["ameer-dental", "batrawy-clinic", "sunset-management"],
+  ecommerce: ["zahrtelkhlig", "furniture-studio", "qoya-furniture"],
+  mobile: ["ahmed-elakad", "elghaly-vr"],
 } as const;
 
 function CategoryBadge({ label, color }: { label: string; color: string }) {
@@ -107,7 +107,7 @@ function GroupSection({
   return (
     <div className="mb-12 last:mb-0">
       <div className="mb-5">
-        <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 mb-1">{label}</h3>
+        <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-wide text-slate-900 mb-1">{label}</h3>
         <p className="text-sm text-slate-500">{desc}</p>
       </div>
       <motion.div
@@ -151,8 +151,8 @@ export default function Portfolio() {
   };
 
   const managementProjects = GROUP_IDS.management.map(localize);
-  const mobileProjects = GROUP_IDS.mobile.map(localize);
   const ecommerceProjects = GROUP_IDS.ecommerce.map(localize);
+  const mobileProjects = GROUP_IDS.mobile.map(localize);
 
   return (
     <>
@@ -178,7 +178,7 @@ export default function Portfolio() {
           <p className="text-slate-500 text-lg max-w-xl mx-auto">{p.desc}</p>
         </div>
 
-        {/* Grouped: Management Systems → Custom Mobile Apps → E-Commerce Sites */}
+        {/* Grouped: Management Systems → E-Commerce → Mobile-First Web Solutions */}
         <GroupSection
           label={p.groups.management.label}
           desc={p.groups.management.desc}
@@ -189,18 +189,18 @@ export default function Portfolio() {
           onOpen={(project) => openModal(project, project.name)}
         />
         <GroupSection
-          label={p.groups.mobile.label}
-          desc={p.groups.mobile.desc}
-          projects={mobileProjects}
+          label={p.groups.ecommerce.label}
+          desc={p.groups.ecommerce.desc}
+          projects={ecommerceProjects}
           liveLabel={p.live}
           liveSiteLabel={p.liveSite}
           buildLikeLabel={p.buildLike}
           onOpen={(project) => openModal(project, project.name)}
         />
         <GroupSection
-          label={p.groups.ecommerce.label}
-          desc={p.groups.ecommerce.desc}
-          projects={ecommerceProjects}
+          label={p.groups.mobile.label}
+          desc={p.groups.mobile.desc}
+          projects={mobileProjects}
           liveLabel={p.live}
           liveSiteLabel={p.liveSite}
           buildLikeLabel={p.buildLike}

@@ -52,8 +52,8 @@ export const translations = {
       flagshipBadge: "أحدث شغل",
       groups: {
         management: { label: "أنظمة الإدارة", desc: "لوحات تحكم لحظية وأنظمة إدارة بتدير البيزنس بالكامل." },
-        mobile: { label: "تطبيقات موبايل مخصوصة", desc: "تطبيقات مبنية أول حاجة للموبايل — سريعة وحاسة إنها آب أصلي." },
-        ecommerce: { label: "متاجر إلكترونية", desc: "متاجر أونلاين متكاملة — من التصفح للدفع للتوصيل." },
+        ecommerce: { label: "تجارة إلكترونية", desc: "متاجر أونلاين متكاملة — من التصفح للدفع للتوصيل." },
+        mobile: { label: "حلول ويب أول حاجة للموبايل", desc: "تطبيقات مبنية أول حاجة للموبايل — سريعة وحاسة إنها آب أصلي." },
       },
       bizApps: {
         badge: "برامج البيزنس",
@@ -310,8 +310,8 @@ export const translations = {
       flagshipBadge: "Latest Build",
       groups: {
         management: { label: "Management Systems", desc: "Real-time dashboards and management systems that run the business." },
-        mobile: { label: "Custom Mobile Apps", desc: "Apps built mobile-first — fast, native-feeling, and always in your pocket." },
-        ecommerce: { label: "E-Commerce Sites", desc: "Full online stores — from browsing to checkout to fulfillment." },
+        ecommerce: { label: "E-Commerce", desc: "Full online stores — from browsing to checkout to fulfillment." },
+        mobile: { label: "Mobile-First Web Solutions", desc: "Apps built mobile-first — fast, native-feeling, and always in your pocket." },
       },
       bizApps: {
         badge: "Business Apps",
