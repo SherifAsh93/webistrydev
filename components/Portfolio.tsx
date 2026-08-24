@@ -11,12 +11,8 @@ import ProjectInquiryModal from "@/components/ProjectInquiryModal";
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } };
 
-// Most recently added first within each group; Sunset Management is shown separately as the flagship.
-const GROUP_IDS = {
-  mobile: ["olympia-beach-club", "mr-mohammed", "ameer-dental", "batrawy-clinic"],
-  web: ["qoya-furniture", "elghaly-vr", "ahmed-elakad"],
-  ecommerce: ["zahrtelkhlig", "furniture-studio"],
-} as const;
+// Highest-value clients first; Sunset Management is shown separately as the flagship.
+const MAIN_PROJECT_IDS = ["ahmed-elakad", "qoya-furniture", "zahrtelkhlig", "furniture-studio"] as const;
 const FLAGSHIP_ID = "sunset-management";
 
 function CategoryBadge({ label, color }: { label: string; color: string }) {
@@ -89,51 +85,6 @@ function ProjectCard({
   );
 }
 
-function GroupSection({
-  label,
-  desc,
-  projects,
-  liveLabel,
-  liveSiteLabel,
-  buildLikeLabel,
-  onOpen,
-}: {
-  label: string;
-  desc: string;
-  projects: LocalizedProject[];
-  liveLabel: string;
-  liveSiteLabel: string;
-  buildLikeLabel: string;
-  onOpen: (project: LocalizedProject) => void;
-}) {
-  return (
-    <div className="mb-12 last:mb-0">
-      <div className="mb-5">
-        <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 mb-1">{label}</h3>
-        <p className="text-sm text-slate-500">{desc}</p>
-      </div>
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-      >
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            liveLabel={liveLabel}
-            liveSiteLabel={liveSiteLabel}
-            buildLikeLabel={buildLikeLabel}
-            onOpen={() => onOpen(project)}
-          />
-        ))}
-      </motion.div>
-    </div>
-  );
-}
-
 export default function Portfolio() {
   const { t } = useLang();
   const p = t.portfolio;
@@ -155,9 +106,7 @@ export default function Portfolio() {
   const flagship = localize(FLAGSHIP_ID);
   const batrawy = localize("batrawy-clinic");
   const ameer = localize("ameer-dental");
-  const mobileProjects = GROUP_IDS.mobile.map(localize);
-  const webProjects = GROUP_IDS.web.map(localize);
-  const ecommerceProjects = GROUP_IDS.ecommerce.map(localize);
+  const mainProjects = MAIN_PROJECT_IDS.map(localize);
 
   return (
     <>
@@ -218,34 +167,25 @@ export default function Portfolio() {
           </div>
         </motion.div>
 
-        {/* Grouped: Mobile Apps → Web Platforms → E-Commerce */}
-        <GroupSection
-          label={p.groups.mobile.label}
-          desc={p.groups.mobile.desc}
-          projects={mobileProjects}
-          liveLabel={p.live}
-          liveSiteLabel={p.liveSite}
-          buildLikeLabel={p.buildLike}
-          onOpen={(project) => openModal(project, project.name)}
-        />
-        <GroupSection
-          label={p.groups.web.label}
-          desc={p.groups.web.desc}
-          projects={webProjects}
-          liveLabel={p.live}
-          liveSiteLabel={p.liveSite}
-          buildLikeLabel={p.buildLike}
-          onOpen={(project) => openModal(project, project.name)}
-        />
-        <GroupSection
-          label={p.groups.ecommerce.label}
-          desc={p.groups.ecommerce.desc}
-          projects={ecommerceProjects}
-          liveLabel={p.live}
-          liveSiteLabel={p.liveSite}
-          buildLikeLabel={p.buildLike}
-          onOpen={(project) => openModal(project, project.name)}
-        />
+        {/* Main projects, highest-value clients first */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12"
+        >
+          {mainProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              liveLabel={p.live}
+              liveSiteLabel={p.liveSite}
+              buildLikeLabel={p.buildLike}
+              onOpen={() => openModal(project, project.name)}
+            />
+          ))}
+        </motion.div>
 
         {/* Business apps promo */}
         <motion.div
