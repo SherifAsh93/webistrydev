@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { useRef, useState } from "react";
+import { ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/lib/data";
 import type { Project } from "@/lib/data";
@@ -12,8 +12,8 @@ const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } }
 const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } };
 
 const GROUP_IDS = {
-  management: ["ameer-dental", "batrawy-clinic", "sunset-management"],
-  ecommerce: ["ahmed-elakad", "zahrtelkhlig", "furniture-studio", "qoya-furniture"],
+  management: ["ahmed-elakad", "zahrtelkhlig", "qoya-furniture", "ameer-dental", "batrawy-clinic", "sunset-management"],
+  ecommerce: ["ahmed-elakad", "zahrtelkhlig", "qoya-furniture", "furniture-studio"],
   mobile: ["elghaly-vr"],
 } as const;
 
@@ -58,15 +58,17 @@ function ProjectCard({
   liveSiteLabel,
   buildLikeLabel,
   onOpen,
+  className = "",
 }: {
   project: LocalizedProject;
   liveLabel: string;
   liveSiteLabel: string;
   buildLikeLabel: string;
   onOpen: () => void;
+  className?: string;
 }) {
   return (
-    <motion.div variants={item} className="group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer">
+    <motion.div variants={item} className={`group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer ${className}`}>
       <div className="relative h-56 md:h-64 overflow-hidden bg-slate-50">
         <Image src={project.screenshot} alt={project.name} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-white/50 via-transparent to-transparent" />
@@ -104,18 +106,89 @@ function GroupSection({
   buildLikeLabel: string;
   onOpen: (project: LocalizedProject) => void;
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const total = projects.length;
+
+  function slide(dir: 1 | -1) {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.offsetWidth * 0.85, behavior: "smooth" });
+  }
+
+  function onScroll() {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardW = el.scrollWidth / total;
+    setActiveIdx(Math.min(Math.round(el.scrollLeft / cardW), total - 1));
+  }
+
   return (
     <div className="mb-12 last:mb-0">
       <div className="mb-5">
         <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-wide text-slate-900 mb-1">{label}</h3>
         <p className="text-sm text-slate-500">{desc}</p>
       </div>
+
+      {/* Mobile: horizontal scroll */}
+      <div className="md:hidden">
+        <div className="relative">
+          {total > 1 && (
+            <>
+              <button
+                onClick={() => slide(-1)}
+                className="absolute left-1 top-[42%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 border border-violet-100 shadow-md flex items-center justify-center text-violet-600 hover:bg-violet-50 transition"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={() => slide(1)}
+                className="absolute right-1 top-[42%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 border border-violet-100 shadow-md flex items-center justify-center text-violet-600 hover:bg-violet-50 transition"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </>
+          )}
+          <motion.div
+            ref={scrollRef}
+            dir="ltr"
+            onScroll={onScroll}
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar"
+          >
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                liveLabel={liveLabel}
+                liveSiteLabel={liveSiteLabel}
+                buildLikeLabel={buildLikeLabel}
+                onOpen={() => onOpen(project)}
+                className="snap-start shrink-0 w-[80vw] max-w-xs"
+              />
+            ))}
+          </motion.div>
+        </div>
+
+        {total > 1 && (
+          <div className="flex gap-1.5 items-center justify-center mt-1">
+            {[...Array(total)].map((_, i) => (
+              <div key={i} className={`rounded-full transition-all duration-300 ${i === activeIdx ? "w-5 h-1.5 bg-violet-500" : "w-1.5 h-1.5 bg-slate-200"}`} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Desktop: grid */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-80px" }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
       >
         {projects.map((project) => (
           <ProjectCard
