@@ -4,7 +4,7 @@ export type Project = {
   id: string;
   name: string;
   description: string;
-  category: "fashion" | "ecommerce" | "clinic" | "web-app" | "corporate" | "landing";
+  category: "fashion" | "ecommerce" | "clinic" | "web-app" | "corporate" | "landing" | "self";
   categoryLabel: string;
   categoryColor: string;
   tags: string[];

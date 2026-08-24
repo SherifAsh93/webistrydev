@@ -118,5 +118,17 @@
     "url": "https://sunset-management.vercel.app/",
     "screenshot": "/projects/sunset.PNG",
     "featured": false
+  },
+  {
+    "id": "webistrydev",
+    "name": "WebistryDev",
+    "description": "This site — a lead-generation platform with a voice-or-text inquiry form, admin dashboard, live client chat, and bilingual AR/EN support.",
+    "category": "self",
+    "categoryLabel": "Company Site",
+    "categoryColor": "from-violet-600 to-sky-500",
+    "tags": ["Next.js", "Neon DB", "Bilingual AR/EN", "Lead Gen"],
+    "url": "https://www.webistrydev.com",
+    "screenshot": "/projects/webistrydev.jpg",
+    "featured": false
   }
 ]

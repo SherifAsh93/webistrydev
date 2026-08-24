@@ -51,8 +51,8 @@ export const translations = {
       live: "شغّال",
       flagshipBadge: "أحدث شغل",
       groups: {
-        mobile: { label: "تطبيقات موبايل", desc: "تطبيقات مبنية أول حاجة للموبايل — سريعة وحاسة إنها آب أصلي." },
-        web: { label: "منصات ولوحات تحكم", desc: "لوحات تحكم لحظية وأنظمة إدارة بتدير البيزنس بالكامل." },
+        management: { label: "أنظمة الإدارة", desc: "لوحات تحكم لحظية وأنظمة إدارة بتدير البيزنس بالكامل." },
+        mobile: { label: "تطبيقات موبايل مخصوصة", desc: "تطبيقات مبنية أول حاجة للموبايل — سريعة وحاسة إنها آب أصلي." },
         ecommerce: { label: "متاجر إلكترونية", desc: "متاجر أونلاين متكاملة — من التصفح للدفع للتوصيل." },
       },
       bizApps: {
@@ -246,6 +246,8 @@ export const translations = {
       "qoya-furniture": "موقع براند فاخر لشوروم أثاث في القاهرة — تصميم تحريري كامل الشاشة، 90+ صورة احترافية، ونظام استفسار مع لوكيتور الفروع.",
       "olympia-beach-club": "تطبيق موبايل لنادي شاطئ في دمياط الجديدة — حجز مرافق، فعاليات، اشتراكات، وتجربة شبه أبليكيشن على الموبايل.",
       "mr-mohammed": "موقع أستاذ لغة عربية وتربية إسلامية — بيسجّل الطلاب في الدورات أونلاين، بيدفعوا عبر فودافون كاش، ولوحة تحكم سرية للإدارة الكاملة.",
+      "sunset-management": "لوحة تحكم إدارية لكمبوند خاص — بحث لحظي ولوحة تحكم كاملة لتسيير الشغل اليومي.",
+      "webistrydev": "الموقع ده — منصة لجذب العملاء فيها فورم استفسار بالصوت أو الكتابة، لوحة تحكم إدارية، شات مباشر مع العميل، ودعم كامل للعربي والإنجليزي.",
     } as Record<string, string>,
     categoryLabels: {
       fashion: "براند أزياء",
@@ -254,6 +256,7 @@ export const translations = {
       "web-app": "برنامج ويب",
       corporate: "موقع براند فاخر",
       landing: "صفحة ترويجية",
+      self: "موقع الشركة",
     } as Record<string, string>,
   },
   en: {
@@ -306,9 +309,9 @@ export const translations = {
       live: "Live",
       flagshipBadge: "Latest Build",
       groups: {
-        mobile: { label: "Mobile Apps", desc: "Apps built mobile-first — fast, native-feeling, and always in your pocket." },
-        web: { label: "Web Platforms", desc: "Real-time dashboards and management systems that run the business." },
-        ecommerce: { label: "E-Commerce", desc: "Full online stores — from browsing to checkout to fulfillment." },
+        management: { label: "Management Systems", desc: "Real-time dashboards and management systems that run the business." },
+        mobile: { label: "Custom Mobile Apps", desc: "Apps built mobile-first — fast, native-feeling, and always in your pocket." },
+        ecommerce: { label: "E-Commerce Sites", desc: "Full online stores — from browsing to checkout to fulfillment." },
       },
       bizApps: {
         badge: "Business Apps",
@@ -501,6 +504,8 @@ export const translations = {
       "qoya-furniture": "Ultra-luxury brand website for a Cairo furniture showroom — fullscreen editorial design, 90+ professional photos, inquiry system, and dual-branch store locator.",
       "olympia-beach-club": "Mobile-first beach club app for New Damietta — facility booking, events, membership plans, and a native app feel on any phone.",
       "mr-mohammed": "Arabic & Islamic Studies teacher platform — students enroll in live online courses, pay via Vodafone Cash, and the teacher manages everything from a hidden admin panel.",
+      "sunset-management": "Managerial dashboard platform for a private compound — real-time search and a full admin dashboard for day-to-day operations.",
+      "webistrydev": "This site — a lead-generation platform with a voice-or-text inquiry form, admin dashboard, live client chat, and bilingual AR/EN support.",
     } as Record<string, string>,
     categoryLabels: {} as Record<string, string>,
   },
