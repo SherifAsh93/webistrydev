@@ -13,8 +13,8 @@ const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transiti
 
 const GROUP_IDS = {
   management: ["ameer-dental", "batrawy-clinic", "sunset-management"],
-  ecommerce: ["zahrtelkhlig", "furniture-studio", "qoya-furniture"],
-  mobile: ["ahmed-elakad", "elghaly-vr"],
+  ecommerce: ["ahmed-elakad", "zahrtelkhlig", "furniture-studio", "qoya-furniture"],
+  mobile: ["elghaly-vr"],
 } as const;
 
 function CategoryBadge({ label, color }: { label: string; color: string }) {
