@@ -115,14 +115,14 @@ export default function OGImage() {
             </span>
             <span
               style={{
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: 400,
                 color: "rgba(255,255,255,0.45)",
-                letterSpacing: "3px",
+                letterSpacing: "2px",
                 textTransform: "uppercase",
               }}
             >
-              Full-Stack Web Developer
+              Global Software Solutions for Modern Businesses
             </span>
           </div>
         </div>

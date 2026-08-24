@@ -2,7 +2,7 @@
   {
     "id": "ahmed-elakad",
     "name": "Ahmed El Akad",
-    "description": "Luxury couture brand website for Cairo's premier fashion designer. Custom gallery, collection management, and appointment booking system.",
+    "description": "Luxury couture brand website for a premier fashion designer. Custom gallery, collection management, and appointment booking system.",
     "category": "fashion",
     "categoryLabel": "Fashion Brand",
     "categoryColor": "from-rose-500 to-pink-600",
@@ -74,7 +74,7 @@
   {
     "id": "qoya-furniture",
     "name": "QOYA Furniture",
-    "description": "Ultra-luxury furniture brand website for one of Cairo's premium showrooms. Fullscreen editorial design, auto-cycling hero slider, 90+ product images, contact inquiry system, and two-branch store locator.",
+    "description": "Ultra-luxury furniture brand website for a premium showroom. Fullscreen editorial design, auto-cycling hero slider, 90+ product images, contact inquiry system, and two-branch store locator.",
     "category": "corporate",
     "categoryLabel": "Luxury Brand",
     "categoryColor": "from-amber-700 to-yellow-800",
@@ -98,7 +98,7 @@
   {
     "id": "olympia-beach-club",
     "name": "Olympia Beach Club",
-    "description": "Mobile-first beach club app — facility booking, event registration, membership plans, and a smooth native-app feel. Built as a pitch demo for a New Damietta beach club.",
+    "description": "Mobile-first beach club app — facility booking, event registration, membership plans, and a smooth native-app feel. Built as a pitch demo for a beach club.",
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-sky-500 to-cyan-600",
