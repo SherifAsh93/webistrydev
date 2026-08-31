@@ -222,6 +222,7 @@ export const translations = {
       "qoya-furniture": "موقع براند فاخر لشوروم أثاث في القاهرة — تصميم تحريري كامل الشاشة، 90+ صورة احترافية، ونظام استفسار مع لوكيتور الفروع.",
       "olympia-beach-club": "تطبيق موبايل لنادي شاطئ في دمياط الجديدة — حجز مرافق، فعاليات، اشتراكات، وتجربة شبه أبليكيشن على الموبايل.",
       "mr-mohammed": "موقع أستاذ لغة عربية وتربية إسلامية — بيسجّل الطلاب في الدورات أونلاين، بيدفعوا عبر فودافون كاش، ولوحة تحكم سرية للإدارة الكاملة.",
+      "leads": "فورم حجز معاينة عقارية — كل موظف سيلز ليه لينكه الخاص، البيانات بتتسجل أوتوماتيك في جوجل شيت، ولوحة تحكم سرية لمتابعة كل طلب حسب الموظف.",
     } as Record<string, string>,
     categoryLabels: {
       fashion: "براند أزياء",
@@ -453,6 +454,7 @@ export const translations = {
       "qoya-furniture": "Ultra-luxury brand website for a Cairo furniture showroom — fullscreen editorial design, 90+ professional photos, inquiry system, and dual-branch store locator.",
       "olympia-beach-club": "Mobile-first beach club app for New Damietta — facility booking, events, membership plans, and a native app feel on any phone.",
       "mr-mohammed": "Arabic & Islamic Studies teacher platform — students enroll in live online courses, pay via Vodafone Cash, and the teacher manages everything from a hidden admin panel.",
+      "leads": "Real estate visit-booking form — each sales agent gets their own tracked link, submissions save straight to Google Sheets, plus a hidden admin dashboard to review every lead by agent.",
     } as Record<string, string>,
     categoryLabels: {} as Record<string, string>,
   },

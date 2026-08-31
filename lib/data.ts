@@ -147,6 +147,19 @@ export const projects: Project[] = [
     screenshot: "/projects/olympia-beach-club.png",
     featured: false,
   },
+  {
+    id: "leads",
+    name: "Leads",
+    description:
+      "Mobile-first real estate lead capture form — each sales agent gets their own tracked booking link, submissions save straight to a Google Sheet, and a hidden admin dashboard reviews every lead by agent.",
+    category: "web-app",
+    categoryLabel: "Web App",
+    categoryColor: "from-red-500 to-orange-600",
+    tags: ["Next.js", "Google Sheets API", "Mobile-First", "Lead Capture"],
+    url: "https://leads-form-vert.vercel.app",
+    screenshot: "/projects/leads.png",
+    featured: false,
+  },
 ];
 
 export const services: ServiceItem[] = [
