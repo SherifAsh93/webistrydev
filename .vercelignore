@@ -1,0 +1,13 @@
+# Sibling client projects living alongside the main site — never part of
+# this deployment (each has its own repo/deploy). Also excludes their
+# node_modules/.next/.git, which is what blew past Vercel's 100MB file limit.
+/Projects
+
+# Misc large/unrelated local-only folders
+/Archive
+/Experiments
+/Engineering-Knowledge-Base
+/.claude
+/facebook
+facebook_verify.png
+Start-Claude.bat
