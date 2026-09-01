@@ -12,9 +12,9 @@ const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } }
 const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } };
 
 const GROUP_IDS = {
-  management: ["ahmed-elakad", "zahrtelkhlig", "qoya-furniture", "ameer-dental", "batrawy-clinic", "sunset-management"],
+  management: ["mr-mohammed", "batrawy-clinic", "ameer-dental", "sunset-management", "ahmed-elakad", "zahrtelkhlig", "qoya-furniture"],
   ecommerce: ["ahmed-elakad", "zahrtelkhlig", "qoya-furniture", "furniture-studio"],
-  mobile: ["elghaly-vr"],
+  mobile: ["elghaly-vr", "olympia-beach-club"],
 } as const;
 
 function CategoryBadge({ label, color }: { label: string; color: string }) {
@@ -50,7 +50,8 @@ function BookButton({ label, dark = false, onClick }: { label: string; dark?: bo
   );
 }
 
-type LocalizedProject = Project & { description: string; categoryLabel: string };
+type CaseStudy = { problem: string; built: string; outcome: string };
+type LocalizedProject = Project & { description: string; categoryLabel: string; caseStudy?: CaseStudy };
 
 function ProjectCard({
   project,
@@ -67,6 +68,9 @@ function ProjectCard({
   onOpen: () => void;
   className?: string;
 }) {
+  const { t } = useLang();
+  const cl = t.portfolio.caseLabels;
+
   return (
     <motion.div variants={item} className={`group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer ${className}`}>
       <div className="relative h-56 md:h-64 overflow-hidden bg-slate-50">
@@ -77,7 +81,24 @@ function ProjectCard({
       </div>
       <div className="p-6 flex flex-col flex-1">
         <h3 className="text-lg font-extrabold text-slate-900 mb-2">{project.name}</h3>
-        <p className="text-sm text-slate-500 leading-relaxed mb-5 flex-1">{project.description}</p>
+        {project.caseStudy ? (
+          <dl className="flex flex-col gap-2.5 mb-5 flex-1">
+            <div>
+              <dt className="text-[10px] font-extrabold uppercase tracking-wider text-rose-500 mb-0.5">{cl.problem}</dt>
+              <dd className="text-sm text-slate-500 leading-relaxed">{project.caseStudy.problem}</dd>
+            </div>
+            <div>
+              <dt className="text-[10px] font-extrabold uppercase tracking-wider text-violet-600 mb-0.5">{cl.built}</dt>
+              <dd className="text-sm text-slate-500 leading-relaxed">{project.caseStudy.built}</dd>
+            </div>
+            <div>
+              <dt className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 mb-0.5">{cl.outcome}</dt>
+              <dd className="text-sm text-slate-500 leading-relaxed">{project.caseStudy.outcome}</dd>
+            </div>
+          </dl>
+        ) : (
+          <p className="text-sm text-slate-500 leading-relaxed mb-5 flex-1">{project.description}</p>
+        )}
         <div className="flex gap-2">
           <a href={project.url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 transition">
             <ExternalLink size={12} />{liveSiteLabel}
@@ -220,6 +241,7 @@ export default function Portfolio() {
       ...proj,
       description: t.projectDescs[id] || proj.description,
       categoryLabel: t.categoryLabels[proj.category] || proj.categoryLabel,
+      caseStudy: t.caseStudies?.[id],
     };
   };
 

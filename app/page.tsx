@@ -10,6 +10,7 @@ import Pricing from "@/components/Pricing";
 import HowItWorks from "@/components/HowItWorks";
 import StartProject from "@/components/StartProject";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import DesktopFloatingCTA from "@/components/DesktopFloatingCTA";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 
@@ -31,6 +32,7 @@ export default function Page() {
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <DesktopFloatingCTA />
       <BottomNav />
     </>
   );

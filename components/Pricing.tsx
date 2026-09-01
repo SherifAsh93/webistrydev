@@ -100,7 +100,7 @@ export default function Pricing() {
                   href="#start-project"
                   className={`mt-2 flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-bold transition-all ${pricing[i].popular ? "btn-primary" : "bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 text-slate-700 hover:text-violet-700"}`}
                 >
-                  {t.pricing.cta}
+                  {tier.cta}
                 </a>
               </div>
             ))}
@@ -156,7 +156,7 @@ export default function Pricing() {
               ))}
             </ul>
             <a href="#start-project" className={`mt-2 flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-bold transition-all ${pricing[i].popular ? "btn-primary" : "bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 text-slate-700 hover:text-violet-700"}`}>
-              {t.pricing.cta}
+              {tier.cta}
             </a>
           </div>
         ))}

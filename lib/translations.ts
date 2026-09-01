@@ -11,6 +11,9 @@ export const translations = {
       howItWorks: "طريقة شغلي",
       hire: "قولّي فكرتك ←",
     },
+    desktopCta: {
+      label: "قولّي فكرتك ←",
+    },
     hero: {
       badge: "تطبيقات موبايل، لوحات تحكم لحظية، وأنظمة إدارة",
       title1: "تطبيقات موبايل وأنظمة إدارة",
@@ -55,6 +58,7 @@ export const translations = {
         ecommerce: { label: "تجارة إلكترونية", desc: "متاجر أونلاين متكاملة — من التصفح للدفع للتوصيل." },
         mobile: { label: "حلول ويب أول حاجة للموبايل", desc: "تطبيقات مبنية أول حاجة للموبايل — سريعة وحاسة إنها آب أصلي." },
       },
+      caseLabels: { problem: "المشكلة", built: "الحل", outcome: "النتيجة" },
       bizApps: {
         badge: "برامج البيزنس",
         title1: "دير شغلك كله",
@@ -105,7 +109,6 @@ export const translations = {
       usdLabel: "دولار",
       startingBadge: "يبدأ من 499$",
       startingNote: "أسعار خاصة متاحة للمشاريع المعقدة.",
-      cta: "احكيلي فكرتك ←",
       footerNote: "الأسعار نقطة بداية وبتتغير حسب الشغل. مش عارف أي باقة تناسبك؟",
       footerLink: "احكيلي وهشوفلك ←",
       tiers: [
@@ -114,24 +117,28 @@ export const translations = {
           description: "ابدأ بيها — مناسبة للأفراد والمشاريع الصغيرة اللي عايزة حضور اونلاين سريع.",
           timeline: "1 – 2 أسبوع",
           features: ["1–3 صفحات", "شغّالة على كل الموبايلات", "فورم للتواصل", "بتظهر في جوجل", "استضافة سريعة وآمنة", "جولتين تعديل"],
+          cta: "احكيلي فكرتك ←",
         },
         {
           name: "الأعمال",
           description: "للشغلانات اللي محتاجة موقع احترافي كامل تقدر تديره بنفسها.",
           timeline: "3 – 4 أسابيع",
           features: ["5–10 صفحات", "تصميم مخصوص ليك", "لوحة تحكم للمحتوى", "بتظهر في جوجل", "إحصائيات الزوار", "3 جولات تعديل", "30 يوم دعم بعد الإطلاق"],
+          cta: "احكيلي فكرتك ←",
         },
         {
           name: "المتجر الإلكتروني",
           description: "ابيع اونلاين بواجهة احترافية وإدارة كاملة للمنتجات والطلبات.",
           timeline: "5 – 6 أسابيع",
           features: ["كتالوج منتجات كامل", "عربة ودفع آمن", "إدارة الأوردرات", "لوحة تحكم كاملة", "تتبع المخزون", "شغّال على كل الموبايلات", "تعديلات غير محدودة", "60 يوم دعم بعد الإطلاق"],
+          cta: "احكيلي فكرتك ←",
         },
         {
           name: "برنامج خاص",
           description: "فكرة كبيرة أو بيزنس معقد؟ هبنيلك بالظبط اللي محتاجه.",
           timeline: "6+ أسابيع",
           features: ["بنية قوية تتحمل النمو", "دخول لكل مستخدم بصلاحيات", "بيتحدث لحظة بلحظة", "بياناتك محفوظة بأمان", "بيتوصل بأي خدمة تانية", "متحتاجش تقلق من أعطال", "تعديلات غير محدودة", "90 يوم دعم بعد الإطلاق"],
+          cta: "احكيلي فكرتك ←",
         },
       ],
     },
@@ -249,6 +256,7 @@ export const translations = {
       "sunset-management": "لوحة تحكم إدارية لكمبوند خاص — بحث لحظي ولوحة تحكم كاملة لتسيير الشغل اليومي.",
       "webistrydev": "الموقع ده — منصة لجذب العملاء فيها فورم استفسار بالصوت أو الكتابة، لوحة تحكم إدارية، شات مباشر مع العميل، ودعم كامل للعربي والإنجليزي.",
     } as Record<string, string>,
+    caseStudies: {} as Record<string, { problem: string; built: string; outcome: string }>,
     categoryLabels: {
       fashion: "براند أزياء",
       ecommerce: "تجارة إلكترونية",
@@ -267,17 +275,20 @@ export const translations = {
       services: "Services",
       pricing: "Pricing",
       howItWorks: "How It Works",
-      hire: "Share Your Idea →",
+      hire: "Get Free Quote →",
+    },
+    desktopCta: {
+      label: "Get a Free Quote →",
     },
     hero: {
-      badge: "Mobile-First Apps, Real-Time Dashboards & Management Systems",
-      title1: "Custom Mobile Apps &",
-      title2: "Management Systems.",
-      desc: "Mobile-first apps and real-time dashboards built to run your business end-to-end — fast, reliable, and made just for you.",
-      cta1: "Get a Free Quote",
+      badge: "10+ Projects Delivered · Mobile-First · Fast Turnaround",
+      title1: "More Clients. More Sales.",
+      title2: "Run It From Your Phone.",
+      desc: "Custom mobile-first apps for business owners — online stores, booking systems, and management dashboards built to turn visitors into paying customers.",
+      cta1: "Get My Free Quote",
       cta2: "See My Work",
       stats: [
-        { number: "9+", label: "Projects Built" },
+        { number: "10+", label: "Projects Built" },
         { number: "3+", label: "Years Experience" },
         { number: "⚡", label: "Lightning Fast" },
         { number: "100%", label: "On-Time Delivery" },
@@ -285,7 +296,7 @@ export const translations = {
       scroll: "Scroll",
     },
     trustSignals: {
-      items: ["100% Custom Code", "9+ Projects Delivered", "24/7 Support"],
+      items: ["100% Custom Code", "10+ Projects Delivered", "24/7 Support"],
     },
     whyChooseMe: {
       sectionLabel: "Why Choose Me",
@@ -313,6 +324,7 @@ export const translations = {
         ecommerce: { label: "E-Commerce", desc: "Full online stores — from browsing to checkout to fulfillment." },
         mobile: { label: "Mobile-First Web Solutions", desc: "Apps built mobile-first — fast, native-feeling, and always in your pocket." },
       },
+      caseLabels: { problem: "The Problem", built: "What I Built", outcome: "The Outcome" },
       bizApps: {
         badge: "Business Apps",
         title1: "Run Your Entire Business",
@@ -363,33 +375,36 @@ export const translations = {
       usdLabel: "USD",
       startingBadge: "Starting at $499 USD",
       startingNote: "Custom quotes available for complex projects.",
-      cta: "Tell Me Your Idea →",
       footerNote: "Prices are starting points and vary based on scope. Not sure which fits?",
       footerLink: "Tell me and I'll guide you →",
       tiers: [
         {
           name: "Basic App",
-          description: "Perfect for individuals and small businesses who need a clean online presence fast.",
+          description: "A fast, professional site that makes your business look legit online — live in 1–2 weeks.",
           timeline: "1 – 2 weeks",
           features: ["1–3 platform app", "Looks great on any device", "Contact form", "Shows up on Google", "Fast, secure hosting", "2 revision rounds"],
+          cta: "Get a Custom Quote",
         },
         {
           name: "Business App",
-          description: "For businesses that need a full professional app they can manage themselves.",
+          description: "A complete business app with your own admin panel — manage everything from your phone, no developer needed after launch.",
           timeline: "3 – 4 weeks",
           features: ["5–10 platform app", "Custom design just for you", "Admin panel to manage your content", "Shows up on Google", "Visitor stats & performance reports", "3 revision rounds", "30 days post-launch support"],
+          cta: "Get a Custom Quote",
         },
         {
           name: "E-Commerce App",
-          description: "A complete online store — sell your products with a professional storefront.",
+          description: "Sell online with a real store — cart, checkout, and order tracking — without a marketplace's fees or rules.",
           timeline: "5 – 6 weeks",
           features: ["Full product catalog", "Cart & secure checkout", "Order management", "Admin dashboard", "Inventory tracking", "Looks perfect on any phone", "Unlimited revisions during build", "60 days post-launch support"],
+          cta: "Book a Free Consultation",
         },
         {
           name: "Enterprise App",
-          description: "Big, custom-built products with advanced features for any kind of business.",
+          description: "Custom systems built around how your business actually runs — not squeezed into someone else's template.",
           timeline: "6+ weeks",
           features: ["Built to grow with you", "Login system with access levels", "Updates live without refreshing", "Stores all your data securely", "Connects to any service you need", "Tested to work without issues", "Unlimited revisions", "90 days post-launch support"],
+          cta: "Get a Custom Quote",
         },
       ],
     },
@@ -507,6 +522,58 @@ export const translations = {
       "sunset-management": "Managerial dashboard platform for a private compound — real-time search and a full admin dashboard for day-to-day operations.",
       "webistrydev": "This site — a lead-generation platform with a voice-or-text inquiry form, admin dashboard, live client chat, and bilingual AR/EN support.",
     } as Record<string, string>,
+    caseStudies: {
+      "mr-mohammed": {
+        problem: "An Arabic & Islamic Studies teacher had no way to sell or manage live online courses beyond phone calls and WhatsApp — no self-serve enrollment, no automated payment, no student records.",
+        built: "A mobile-first course platform where students browse and enroll themselves, pay by Vodafone Cash, and a hidden admin panel manages courses, enrollments, materials, and results.",
+        outcome: "Enrollment and payment now happen without a phone call — the teacher runs the whole operation from one admin panel instead of scattered chats and spreadsheets.",
+      },
+      "batrawy-clinic": {
+        problem: "The clinic ran on paper records and phone-booked appointments — slow for staff, easy to double-book, no single view of a patient's history or billing.",
+        built: "A full clinic management system: patient records, appointment scheduling, billing, and a doctor dashboard, usable from any phone like a native app.",
+        outcome: "Staff book and manage appointments from a phone in seconds; patient history and billing live in one searchable system instead of a paper ledger.",
+      },
+      "sunset-management": {
+        problem: "Day-to-day operations for a private compound had no central system — staff needed fast lookups across residents and requests, and had none.",
+        built: "A managerial dashboard with real-time search and a full admin panel for daily operations.",
+        outcome: "Staff pull up any record in seconds instead of digging through spreadsheets — one dashboard replaced several disconnected tools.",
+      },
+      "ameer-dental": {
+        problem: "Booking and patient tracking depended entirely on phone calls and manual notes.",
+        built: "Smart appointment booking, patient management, and treatment tracking, mobile-first.",
+        outcome: "Patients book without calling; the clinic tracks each patient's treatment history in one place instead of loose paper files.",
+      },
+      "zahrtelkhlig": {
+        problem: "A hijab fashion brand sold mainly through Instagram DMs and word-of-mouth, with no way to take orders or track inventory at scale.",
+        built: "Full e-commerce — catalog, size picker, wishlist, cart, checkout, order tracking, a POS system, and an admin panel, built mobile-first.",
+        outcome: "Customers buy directly on the site any time of day instead of DM back-and-forth; stock and orders are tracked from one POS-linked admin panel.",
+      },
+      "ahmed-elakad": {
+        problem: "A premium fashion designer needed a digital presence matching the brand's positioning, and a way to take appointment requests beyond Instagram DMs.",
+        built: "A custom gallery, collection management, and an appointment booking system.",
+        outcome: "A permanent, on-brand showcase clients can browse any time, with booking requests landing on the site instead of only in DMs.",
+      },
+      "furniture-studio": {
+        problem: "An architectural furniture marketplace needed to actually sell online — with real order and inventory management, not just a catalog page.",
+        built: "Full e-commerce with product management, cart, orders, and an admin dashboard.",
+        outcome: "Orders and inventory are tracked in one dashboard instead of reconciled by hand across channels.",
+      },
+      "qoya-furniture": {
+        problem: "A luxury furniture showroom needed a web presence with the same impact as walking into the store, plus an easy way to find the nearest branch.",
+        built: "A fullscreen editorial design with an auto-cycling hero slider, 90+ product images, a contact inquiry system, and a two-branch store locator.",
+        outcome: "The site functions as a second showroom that's browsable any time, sending inquiries straight to the business instead of relying on walk-ins.",
+      },
+      "elghaly-vr": {
+        problem: "Customers had to imagine how a paint color would look in their space, or rely on physical swatches.",
+        built: "An AR room visualizer that captures real-world colors from a phone camera and paints a virtual room in real time.",
+        outcome: "Customers preview a color in their actual room before buying — cutting the guesswork that leads to returns.",
+      },
+      "olympia-beach-club": {
+        problem: "The club had no digital booking experience — facility use and memberships were handled manually, with nothing to show what a modern system could look like.",
+        built: "Facility booking, event registration, and membership plans, bilingual AR/EN, built as a pitch demo.",
+        outcome: "A ready-to-launch booking experience the club can evaluate before committing to digitize operations.",
+      },
+    } as Record<string, { problem: string; built: string; outcome: string }>,
     categoryLabels: {} as Record<string, string>,
   },
 };
