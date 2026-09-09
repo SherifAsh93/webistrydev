@@ -9,7 +9,12 @@ const DEVICE_TOKEN_KEY = "attendance_device_token";
 type Employee = { id: string; name: string; phone: string };
 type TeamProject = { id: string; name: string; title: string; lead_count: number };
 
-type IdentityPhase = "resolving" | "needs_login" | "ready" | "identity_error";
+type IdentityPhase =
+  | "resolving"
+  | "needs_login"
+  | "ready"
+  | "manager_blocked"
+  | "identity_error";
 
 type AttendancePhase =
   | "locating"
@@ -137,6 +142,10 @@ export default function AttendanceCheckin() {
           setIdentityPhase("needs_login");
           return;
         }
+        if (data.code === "MANAGER_BLOCKED") {
+          setIdentityPhase("manager_blocked");
+          return;
+        }
         if (data.code === "OK") {
           setEmployee(data.employee);
           setIdentityPhase("ready");
@@ -246,6 +255,28 @@ export default function AttendanceCheckin() {
               </button>
             </form>
           </div>
+        </div>
+      </PageShell>
+    );
+  }
+
+  if (identityPhase === "manager_blocked") {
+    return (
+      <PageShell>
+        <div className="w-full max-w-sm rounded-3xl bg-white p-7 text-center shadow-xl ring-1 ring-stone-100">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent/15 text-3xl">
+            🔑
+          </div>
+          <h1 className="mb-2 text-lg font-bold text-stone-800">لوحة التحكم من هنا</h1>
+          <p className="mb-5 text-sm text-stone-500">
+            هذا الرابط مخصص لتسجيل حضور الموظفين، أما لوحة التحكم فمن الرابط التالي.
+          </p>
+          <a
+            href="/admin"
+            className="block w-full rounded-2xl bg-primary py-3.5 font-bold text-white shadow-md shadow-primary/20 transition active:scale-95"
+          >
+            الذهاب إلى لوحة التحكم
+          </a>
         </div>
       </PageShell>
     );
