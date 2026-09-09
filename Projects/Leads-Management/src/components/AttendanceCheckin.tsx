@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import BrandMark from "@/components/BrandMark";
 import { timeGreeting } from "@/lib/greeting";
 
@@ -267,16 +268,10 @@ export default function AttendanceCheckin() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent/15 text-3xl">
             🔑
           </div>
-          <h1 className="mb-2 text-lg font-bold text-stone-800">لوحة التحكم من هنا</h1>
-          <p className="mb-5 text-sm text-stone-500">
-            هذا الرابط مخصص لتسجيل حضور الموظفين، أما لوحة التحكم فمن الرابط التالي.
+          <h1 className="mb-2 text-lg font-bold text-stone-800">هذه صفحة الموظفين</h1>
+          <p className="text-sm text-stone-500">
+            لوحة التحكم من هنا — اضغطي على الشعار بالأعلى 3 مرات.
           </p>
-          <a
-            href="/admin"
-            className="block w-full rounded-2xl bg-primary py-3.5 font-bold text-white shadow-md shadow-primary/20 transition active:scale-95"
-          >
-            الذهاب إلى لوحة التحكم
-          </a>
         </div>
       </PageShell>
     );
@@ -465,10 +460,36 @@ function PageShell({
   children: React.ReactNode;
   wide?: boolean;
 }) {
+  const router = useRouter();
+  const clickCount = useRef(0);
+  const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handleLogoClick() {
+    clickCount.current += 1;
+    if (clickTimer.current) clearTimeout(clickTimer.current);
+
+    if (clickCount.current >= 3) {
+      clickCount.current = 0;
+      router.push("/admin");
+      return;
+    }
+
+    clickTimer.current = setTimeout(() => {
+      clickCount.current = 0;
+    }, 1200);
+  }
+
   return (
     <div className="safe-top safe-bottom flex min-h-dvh flex-col items-center bg-gradient-to-b from-primary/10 via-background to-background px-4 py-10">
       <div className="mb-6 flex flex-col items-center gap-2">
-        <BrandMark height={wide ? 56 : 72} />
+        <button
+          type="button"
+          onClick={handleLogoClick}
+          aria-label="Leads"
+          className="cursor-default"
+        >
+          <BrandMark height={wide ? 56 : 72} />
+        </button>
         <span className="text-xs font-bold uppercase tracking-wide text-stone-400">
           مساحة عملك
         </span>

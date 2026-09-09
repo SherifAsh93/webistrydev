@@ -549,7 +549,7 @@ function Header({
         </div>
 
         <div className="flex justify-center">
-          <BrandMark height={48} />
+          <BrandMark height={72} />
         </div>
 
         <div className="flex flex-col items-end gap-2">
