@@ -15,14 +15,15 @@ export const translations = {
       label: "قولّي فكرتك ←",
     },
     hero: {
-      badge: "تطبيقات موبايل، لوحات تحكم لحظية، وأنظمة إدارة",
+      badge: "11+ مشروع اتسلم · موبايل أولاً · سرعة خرافية",
       title1: "تطبيقات موبايل وأنظمة إدارة",
       title2: "مخصوصة لبيزنسك.",
       desc: "تطبيقات مبنية أول حاجة للموبايل، ولوحات تحكم لحظية تدير شغلك بالكامل — سريعة، وموثوقة، ومصممة خصيصًا ليك.",
       cta1: "احصل على عرض سعر مجاني",
       cta2: "شوف شغلي",
+      urgency: "🔥 خصم 20% لأول 3 عملاء هذا الشهر",
       stats: [
-        { number: "9+", label: "فكرة اتبنت" },
+        { number: "11+", label: "فكرة اتبنت" },
         { number: "3+", label: "سنين خبرة" },
         { number: "⚡", label: "سرعة خرافية" },
         { number: "100%", label: "في الموعد دايمًا" },
@@ -30,7 +31,7 @@ export const translations = {
       scroll: "اسحب للأسفل",
     },
     trustSignals: {
-      items: ["100% كود مخصوص بالكامل", "9+ مشروع اتسلم فعلًا", "دعم 24/7"],
+      items: ["100% كود مخصوص بالكامل", "11+ مشروع اتسلم فعلًا", "دعم 24/7"],
     },
     whyChooseMe: {
       sectionLabel: "ليه تختارني",
@@ -332,14 +333,15 @@ export const translations = {
       label: "Get a Free Quote →",
     },
     hero: {
-      badge: "10+ Projects Delivered · Mobile-First · Fast Turnaround",
+      badge: "11+ Projects Delivered · Mobile-First · Fast Turnaround",
       title1: "More Clients. More Sales.",
       title2: "Run It From Your Phone.",
       desc: "Custom mobile-first apps for business owners — online stores, booking systems, and management dashboards built to turn visitors into paying customers.",
       cta1: "Get My Free Quote",
       cta2: "See My Work",
+      urgency: "🔥 20% off for the first 3 clients this month",
       stats: [
-        { number: "10+", label: "Projects Built" },
+        { number: "11+", label: "Projects Built" },
         { number: "3+", label: "Years Experience" },
         { number: "⚡", label: "Lightning Fast" },
         { number: "100%", label: "On-Time Delivery" },
@@ -347,7 +349,7 @@ export const translations = {
       scroll: "Scroll",
     },
     trustSignals: {
-      items: ["100% Custom Code", "10+ Projects Delivered", "24/7 Support"],
+      items: ["100% Custom Code", "11+ Projects Delivered", "24/7 Support"],
     },
     whyChooseMe: {
       sectionLabel: "Why Choose Me",

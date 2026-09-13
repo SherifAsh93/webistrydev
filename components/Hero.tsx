@@ -28,6 +28,16 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
+        {/* Urgency badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.05, duration: 0.4 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold mb-6 shadow-lg shadow-amber-200"
+        >
+          {t.hero.urgency}
+        </motion.div>
+
         {/* Available badge */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
