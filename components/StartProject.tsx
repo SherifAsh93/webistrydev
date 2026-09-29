@@ -28,7 +28,7 @@ const WAVE_CONFIG = [
   { dur: "0.5s", delay: "0.24s" },
 ];
 
-const WHATSAPP_NUMBER = "201101997525";
+const WHATSAPP_NUMBER = "201007526882";
 
 export default function StartProject() {
   const { t } = useLang();
