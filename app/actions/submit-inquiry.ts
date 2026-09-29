@@ -4,6 +4,12 @@ import { db } from "@/db";
 import { leads } from "@/db/schema";
 import { randomUUID } from "crypto";
 import { Resend } from "resend";
+import { normalizePhone } from "@/lib/inquiry-validation";
+
+function escapeHtml(value: string) {
+  const entities: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  return value.replace(/[&<>"']/g, (character) => entities[character]);
+}
 
 export async function submitInquiry(formData: {
   name: string;
@@ -11,7 +17,20 @@ export async function submitInquiry(formData: {
   message?: string;
   voiceNote?: string | null;
   reference?: string | null;
+  projectType?: string | null;
 }) {
+  if (!formData || typeof formData.name !== "string" || !formData.name.trim() || formData.name.trim().length > 100 || typeof formData.phone !== "string") {
+    return { success: false, chatToken: null };
+  }
+  const phone = normalizePhone(formData.phone);
+  if (!phone || (formData.message !== undefined && (typeof formData.message !== "string" || formData.message.length > 6000))
+    || (formData.reference != null && (typeof formData.reference !== "string" || formData.reference.length > 100))) {
+    return { success: false, chatToken: null };
+  }
+  formData = { ...formData, name: formData.name.trim(), phone, message: formData.message?.trim() };
+  const safeName = escapeHtml(formData.name);
+  const safeMessage = escapeHtml(formData.message || "—");
+  const safeReference = formData.reference ? escapeHtml(formData.reference) : null;
   const chatToken = randomUUID();
 
   try {
@@ -21,6 +40,7 @@ export async function submitInquiry(formData: {
       message: formData.message || null,
       voiceNote: formData.voiceNote || null,
       reference: formData.reference || null,
+      projectType: ["store", "brand", "app", "landing", "clinic", "other"].includes(formData.projectType ?? "") ? formData.projectType : null,
       chatToken,
     });
   } catch (error) {
@@ -42,7 +62,7 @@ export async function submitInquiry(formData: {
             <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;">
               <tr style="background:#7c3aed;color:#fff;">
                 <td style="padding:12px 16px;font-weight:bold;">الاسم</td>
-                <td style="padding:12px 16px;">${formData.name}</td>
+                 <td style="padding:12px 16px;">${safeName}</td>
               </tr>
               <tr>
                 <td style="padding:12px 16px;background:#f1f0ff;font-weight:bold;color:#4c1d95;">الهاتف</td>
@@ -51,11 +71,11 @@ export async function submitInquiry(formData: {
               ${formData.reference ? `
               <tr style="background:#fff;">
                 <td style="padding:12px 16px;font-weight:bold;color:#4c1d95;">المشروع</td>
-                <td style="padding:12px 16px;">${formData.reference}</td>
+                <td style="padding:12px 16px;">${safeReference}</td>
               </tr>` : ""}
               <tr style="background:#f9f9f9;">
                 <td style="padding:12px 16px;font-weight:bold;color:#4c1d95;vertical-align:top;">الرسالة</td>
-                <td style="padding:12px 16px;">${(formData.message || "—").replace(/\n/g, "<br>")}</td>
+                <td style="padding:12px 16px;">${safeMessage.replace(/\n/g, "<br>")}</td>
               </tr>
               ${formData.voiceNote ? `
               <tr>
@@ -83,11 +103,11 @@ export async function submitInquiry(formData: {
       const text = [
         `🔔 <b>رسالة جديدة — Webistry</b>`,
         ``,
-        `👤 <b>الاسم:</b> ${formData.name}`,
+        `👤 <b>الاسم:</b> ${safeName}`,
         `📞 <b>الهاتف:</b> ${formData.phone || "—"}`,
-        formData.reference ? `📁 <b>المشروع:</b> ${formData.reference}` : null,
+        safeReference ? `📁 <b>المشروع:</b> ${safeReference}` : null,
         `💬 <b>الرسالة:</b>`,
-        (formData.message || "—").slice(0, 300),
+        escapeHtml((formData.message || "—").slice(0, 300)),
         formData.voiceNote ? `🎙️ <i>أرسل رسالة صوتية</i>` : null,
         ``,
         `<a href="${chatUrl}">💬 فتح المحادثة</a>  |  <a href="https://webistrydev.com/admin">🛠 لوحة التحكم</a>`,

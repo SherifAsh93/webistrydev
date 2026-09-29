@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { useLang } from "@/lib/language-context";
 import type { Project } from "@/lib/data";
+import { normalizePhone } from "@/lib/inquiry-validation";
+import { trackLead } from "@/lib/fbpixel";
 
 type RecordState = "idle" | "requesting" | "recording" | "recorded";
 type FormStatus = "idle" | "sending" | "success";
@@ -34,13 +36,13 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
   const { t } = useLang();
   const sp = t.startProject;
   const m = t.projectModal;
-  const isAr = t.lang === "ar";
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [textMessage, setTextMessage] = useState("");
   const [showVoice, setShowVoice] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+  const [formError, setFormError] = useState("");
   const [chatToken, setChatToken] = useState<string | null>(null);
   const [chatLinkCopied, setChatLinkCopied] = useState(false);
   const [recordState, setRecordState] = useState<RecordState>("idle");
@@ -135,22 +137,24 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !phone.trim() || !textMessage.trim()) return;
+    if (!name.trim() || formStatus === "sending") return;
+    if (!normalizePhone(phone)) { setFormError(sp.phoneInvalid); return; }
+    setFormError("");
     setFormStatus("sending");
-    let voiceNote: string | null = null;
-    if (audioBlob) voiceNote = await blobToDataUrl(audioBlob);
-    const result = await submitInquiry({
-      name,
-      phone,
-      message: textMessage,
-      voiceNote,
-      reference: projectDisplayName,
-    });
-    if (result.chatToken) setChatToken(result.chatToken);
-    setFormStatus("success");
+    try {
+      const voiceNote = audioBlob ? await blobToDataUrl(audioBlob) : null;
+      const result = await submitInquiry({ name, phone, message: textMessage, voiceNote, reference: projectDisplayName });
+      if (!result.success || !result.chatToken) throw new Error("Inquiry was not saved");
+      setChatToken(result.chatToken);
+      trackLead();
+      setFormStatus("success");
+    } catch {
+      setFormError(sp.formError);
+      setFormStatus("idle");
+    }
   }
 
-  const canSubmit = formStatus !== "sending" && name.trim() !== "" && phone.trim() !== "" && textMessage.trim() !== "";
+  const canSubmit = formStatus !== "sending" && name.trim() !== "" && phone.trim() !== "";
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -159,6 +163,9 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
 
       {/* Modal */}
       <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label={m.title}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 40 }}
@@ -235,11 +242,11 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
               {/* Message — text is primary */}
               <div className="card rounded-2xl p-4 flex flex-col gap-3">
                 <div>
-                  <label className="text-xs font-bold text-slate-500 block mb-1.5">
-                    {sp.textLabel} <span className="text-rose-400">*</span>
+                    <label htmlFor="inquiry-message" className="text-xs font-bold text-slate-500 block mb-1.5">
+                      {sp.messageOptional}
                   </label>
-                  <textarea value={textMessage} onChange={e => setTextMessage(e.target.value)} rows={4}
-                    required placeholder={sp.textPlaceholder} className="field w-full rounded-xl px-4 py-3 text-sm resize-none" />
+                  <textarea id="inquiry-message" maxLength={6000} value={textMessage} onChange={e => setTextMessage(e.target.value)} rows={4}
+                    placeholder={sp.textPlaceholder} className="field w-full rounded-xl px-4 py-3 text-sm resize-none" />
                 </div>
 
                 {/* Optional voice */}
@@ -328,23 +335,25 @@ export default function ProjectInquiryModal({ project, projectDisplayName, onClo
               {/* Contact */}
               <div className="card rounded-2xl p-4">
                 <p className="text-[10px] font-extrabold uppercase tracking-widest text-violet-600 mb-3">
-                  {isAr ? "إزاي أوصلك؟" : "How to reach you"}
+                  {sp.contactHeading}
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs font-bold text-slate-500 block mb-1.5">{sp.nameLabel} <span className="text-rose-400">*</span></label>
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} required
+                    <input type="text" aria-label={sp.nameLabel} autoComplete="name" maxLength={100} value={name} onChange={e => setName(e.target.value)} required
                       placeholder={sp.namePlaceholder} className="field w-full rounded-xl px-3 py-2.5 text-sm" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 block mb-1.5">{sp.phoneLabel} <span className="text-rose-400">*</span></label>
-                    <input type="tel" dir="ltr" value={phone} onChange={e => setPhone(e.target.value)} required
+                    <input type="tel" aria-label={sp.phoneLabel} autoComplete="tel" maxLength={40} dir="ltr" value={phone} onChange={e => setPhone(e.target.value)} required
                       placeholder={sp.phonePlaceholder} className="field w-full rounded-xl px-3 py-2.5 text-sm" />
                   </div>
                 </div>
+                <p className="mt-3 text-xs text-slate-500">{sp.phoneHint}</p>
               </div>
 
               {/* Submit */}
+              {formError && <p role="alert" className="text-sm text-rose-700 bg-rose-50 rounded-xl p-3">{formError}</p>}
               <button type="submit" disabled={!canSubmit}
                 className="btn-primary flex items-center justify-center gap-2 py-3.5 text-sm w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
                 {formStatus === "sending" ? (

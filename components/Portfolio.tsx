@@ -1,45 +1,48 @@
 "use client";
 import Image from "next/image";
-import { useRef, useState } from "react";
-import { ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/lib/data";
 import type { Project } from "@/lib/data";
 import { useLang } from "@/lib/language-context";
 import ProjectInquiryModal from "@/components/ProjectInquiryModal";
 
-const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
+const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 const item = { hidden: { opacity: 0, y: 32 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } };
 
-const GROUP_IDS = {
-  management: ["qoya-furniture", "ahmed-elakad", "zahrtelkhlig", "mr-mohammed", "sunset-management"],
-  ecommerce: ["qoya-furniture", "ahmed-elakad", "zahrtelkhlig", "furniture-studio"],
-  mobile: ["elghaly-vr"],
-} as const;
+const FLAGSHIP_IDS = ["qoya-furniture", "ahmed-elakad"];
 
-function CategoryBadge({ label, color }: { label: string; color: string }) {
-  return (
-    <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest text-white bg-gradient-to-r ${color} shadow-md`}>
-      {label}
-    </span>
-  );
-}
+type CaseStudy = { problem: string; built: string; outcome: string };
+type LocalizedProject = Project & { description: string; caseStudy?: CaseStudy };
+
+type CardProps = {
+  project: LocalizedProject;
+  liveLabel: string;
+  liveSiteLabel: string;
+  buildLikeLabel: string;
+  onOpen: () => void;
+};
 
 function LiveBadge({ label, dark = false }: { label: string; dark?: boolean }) {
   return (
-    <div className={`flex items-center gap-1.5 backdrop-blur-sm border rounded-full px-2.5 py-1 ${dark ? "bg-white/15 border-white/25" : "bg-white/80 border-slate-200"}`}>
+    <div
+      className={`flex items-center gap-1.5 backdrop-blur-sm border rounded-full px-2.5 py-1 ${dark ? "bg-white/15 border-white/25" : "bg-white/80 border-slate-200"}`}
+    >
       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
       <span className={`text-[10px] font-bold tracking-widest uppercase ${dark ? "text-white" : "text-slate-600"}`}>{label}</span>
     </div>
   );
 }
 
-function BookButton({ label, dark = false, onClick }: { label: string; dark?: boolean; onClick: () => void }) {
+function BookButton({ label, dark = false, onClick, big = false }: { label: string; dark?: boolean; onClick: () => void; big?: boolean }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-center ${
+      className={`flex-1 sm:flex-none font-bold transition-all text-center rounded-xl ${
+        big ? "px-6 py-3.5 text-sm" : "px-4 py-2.5 text-xs"
+      } ${
         dark
           ? "text-violet-300 hover:text-white bg-violet-900/50 hover:bg-violet-700 border border-violet-700/50 hover:border-violet-500"
           : "text-violet-700 hover:text-white bg-violet-50 hover:bg-violet-600 border border-violet-200 hover:border-violet-600"
@@ -50,179 +53,122 @@ function BookButton({ label, dark = false, onClick }: { label: string; dark?: bo
   );
 }
 
-type CaseStudy = { problem: string; built: string; outcome: string };
-type LocalizedProject = Project & { description: string; categoryLabel: string; caseStudy?: CaseStudy };
-
-function ProjectCard({
-  project,
-  liveLabel,
-  liveSiteLabel,
-  buildLikeLabel,
-  onOpen,
-  className = "",
-}: {
-  project: LocalizedProject;
-  liveLabel: string;
-  liveSiteLabel: string;
-  buildLikeLabel: string;
-  onOpen: () => void;
-  className?: string;
-}) {
-  const { t } = useLang();
-  const cl = t.portfolio.caseLabels;
-
+function LiveLink({ project, label, big = false }: { project: LocalizedProject; label: string; big?: boolean }) {
   return (
-    <motion.div variants={item} className={`group card card-hover rounded-2xl overflow-hidden flex flex-col cursor-pointer ${className}`}>
-      <div className="relative h-56 md:h-64 overflow-hidden bg-slate-50">
-        <Image src={project.screenshot} alt={project.name} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/50 via-transparent to-transparent" />
-        <div className="absolute top-4 left-4"><CategoryBadge label={project.categoryLabel} color={project.categoryColor} /></div>
-        <div className="absolute top-4 right-4"><LiveBadge label={liveLabel} /></div>
-      </div>
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="text-lg font-extrabold text-slate-900 mb-2">{project.name}</h3>
-        {project.caseStudy ? (
-          <dl className="flex flex-col gap-2.5 mb-5 flex-1">
-            <div>
-              <dt className="text-[10px] font-extrabold uppercase tracking-wider text-rose-500 mb-0.5">{cl.problem}</dt>
-              <dd className="text-sm text-slate-500 leading-relaxed">{project.caseStudy.problem}</dd>
-            </div>
-            <div>
-              <dt className="text-[10px] font-extrabold uppercase tracking-wider text-violet-600 mb-0.5">{cl.built}</dt>
-              <dd className="text-sm text-slate-500 leading-relaxed">{project.caseStudy.built}</dd>
-            </div>
-            <div>
-              <dt className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 mb-0.5">{cl.outcome}</dt>
-              <dd className="text-sm text-slate-500 leading-relaxed">{project.caseStudy.outcome}</dd>
-            </div>
-          </dl>
-        ) : (
-          <p className="text-sm text-slate-500 leading-relaxed mb-5 flex-1">{project.description}</p>
-        )}
-        <div className="flex gap-2">
-          <a href={project.url} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border border-slate-200 hover:border-violet-200 transition">
-            <ExternalLink size={12} />{liveSiteLabel}
-          </a>
-          <BookButton label={buildLikeLabel} onClick={onOpen} />
-        </div>
-      </div>
-    </motion.div>
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 font-bold transition rounded-xl border ${
+        big ? "px-6 py-3.5 text-sm" : "px-4 py-2.5 text-xs"
+      } text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border-slate-200 hover:border-violet-200`}
+    >
+      <ExternalLink size={big ? 14 : 12} />
+      {label}
+    </a>
   );
 }
 
-function GroupSection({
-  label,
-  desc,
-  projects,
-  liveLabel,
-  liveSiteLabel,
-  buildLikeLabel,
-  onOpen,
-}: {
-  label: string;
-  desc: string;
-  projects: LocalizedProject[];
-  liveLabel: string;
-  liveSiteLabel: string;
-  buildLikeLabel: string;
-  onOpen: (project: LocalizedProject) => void;
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-  const total = projects.length;
+function FeatureChips({ tags, dark = false }: { tags: string[]; dark?: boolean }) {
+  if (!tags?.length) return null;
+  return (
+    <ul className="flex flex-wrap gap-2" aria-label="Features">
+      {tags.map((tag) => (
+        <li
+          key={tag}
+          className={`text-[11px] font-bold px-2.5 py-1 rounded-full border ${
+            dark ? "bg-white/10 border-white/20 text-slate-700" : "bg-violet-50 text-violet-700 border-violet-100"
+          }`}
+        >
+          {tag}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-  function slide(dir: 1 | -1) {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * el.offsetWidth * 0.85, behavior: "smooth" });
-  }
-
-  function onScroll() {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cardW = el.scrollWidth / total;
-    setActiveIdx(Math.min(Math.round(el.scrollLeft / cardW), total - 1));
-  }
+function FlagshipCard({ project, caseLabels, badgeLabel, ...rest }: CardProps & { caseLabels: CaseStudy; badgeLabel: string }) {
+  const cs = project.caseStudy;
+  const rows = cs
+    ? [
+        { key: "problem", label: caseLabels.problem, text: cs.problem, accent: "text-rose-500" },
+        { key: "built", label: caseLabels.built, text: cs.built, accent: "text-violet-600" },
+        { key: "outcome", label: caseLabels.outcome, text: cs.outcome, accent: "text-emerald-600" },
+      ]
+    : [];
 
   return (
-    <div className="mb-12 last:mb-0">
-      <div className="mb-5">
-        <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-wide text-slate-900 mb-1">{label}</h3>
-        <p className="text-sm text-slate-500">{desc}</p>
-      </div>
-
-      {/* Mobile: horizontal scroll */}
-      <div className="md:hidden">
-        <div className="relative">
-          {total > 1 && (
-            <>
-              <button
-                onClick={() => slide(-1)}
-                className="absolute left-1 top-[42%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 border border-violet-100 shadow-md flex items-center justify-center text-violet-600 hover:bg-violet-50 transition"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                onClick={() => slide(1)}
-                className="absolute right-1 top-[42%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 border border-violet-100 shadow-md flex items-center justify-center text-violet-600 hover:bg-violet-50 transition"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </>
-          )}
-          <motion.div
-            ref={scrollRef}
-            dir="ltr"
-            onScroll={onScroll}
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar"
-          >
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                liveLabel={liveLabel}
-                liveSiteLabel={liveSiteLabel}
-                buildLikeLabel={buildLikeLabel}
-                onOpen={() => onOpen(project)}
-                className="snap-start shrink-0 w-[80vw] max-w-xs"
-              />
-            ))}
-          </motion.div>
+    <motion.article variants={item} className="group card card-hover rounded-3xl overflow-hidden bg-white">
+      <div className="relative aspect-[4/3] md:aspect-[2/1] overflow-hidden bg-slate-50">
+        <Image
+          src={project.screenshot}
+          alt={project.name}
+          fill
+          sizes="(min-width: 1024px) 1152px, 100vw"
+          className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        <div className="absolute top-4 left-4 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest text-white bg-gradient-to-r from-violet-600 to-sky-500 shadow-lg">
+          {badgeLabel}
         </div>
-
-        {total > 1 && (
-          <div className="flex gap-1.5 items-center justify-center mt-1">
-            {[...Array(total)].map((_, i) => (
-              <div key={i} className={`rounded-full transition-all duration-300 ${i === activeIdx ? "w-5 h-1.5 bg-violet-500" : "w-1.5 h-1.5 bg-slate-200"}`} />
-            ))}
-          </div>
-        )}
+        <div className="absolute top-4 right-4">
+          <LiveBadge label={rest.liveLabel} dark />
+        </div>
       </div>
 
-      {/* Desktop: grid */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-        className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-      >
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            liveLabel={liveLabel}
-            liveSiteLabel={liveSiteLabel}
-            buildLikeLabel={buildLikeLabel}
-            onOpen={() => onOpen(project)}
-          />
-        ))}
-      </motion.div>
-    </div>
+      <div className="p-5 md:p-8">
+        <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">{project.name}</h3>
+        <p className="text-sm md:text-base text-slate-500 leading-relaxed mb-5 max-w-3xl">{project.description}</p>
+
+        {rows.length > 0 && (
+          <dl className="grid md:grid-cols-3 gap-3 md:gap-4 mb-5">
+            {rows.map((r) => (
+              <div key={r.key} className="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+                <dt className={`text-[10px] font-extrabold uppercase tracking-wider mb-1 ${r.accent}`}>{r.label}</dt>
+                <dd className="text-sm text-slate-600 leading-relaxed">{r.text}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+
+        <FeatureChips tags={project.tags} />
+
+        <div className="flex flex-col sm:flex-row gap-2.5 mt-6">
+          <LiveLink project={project} label={rest.liveSiteLabel} big />
+          <BookButton label={rest.buildLikeLabel} onClick={rest.onOpen} big />
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+function ProjectCard({ project, ...rest }: CardProps) {
+  return (
+    <motion.article variants={item} className="group card card-hover rounded-2xl overflow-hidden flex flex-col bg-white h-full">
+      <div className="relative h-52 md:h-64 overflow-hidden bg-slate-50">
+        <Image
+          src={project.screenshot}
+          alt={project.name}
+          fill
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/45 via-transparent to-transparent" />
+        <div className="absolute top-3 right-3">
+          <LiveBadge label={rest.liveLabel} />
+        </div>
+      </div>
+
+      <div className="p-5 md:p-6 flex flex-col flex-1">
+        <h3 className="text-lg font-extrabold text-slate-900 mb-2">{project.name}</h3>
+        <p className="text-sm text-slate-500 leading-relaxed mb-4 flex-1">{project.description}</p>
+        <FeatureChips tags={project.tags} />
+        <div className="flex gap-2 mt-5">
+          <LiveLink project={project} label={rest.liveSiteLabel} />
+          <BookButton label={rest.buildLikeLabel} onClick={rest.onOpen} />
+        </div>
+      </div>
+    </motion.article>
   );
 }
 
@@ -235,86 +181,107 @@ export default function Portfolio() {
     setModalProject({ project, displayName });
   }
 
-  const localize = (id: string): LocalizedProject => {
-    const proj = projects.find((pr) => pr.id === id)!;
+  const localize = (id: string): LocalizedProject | null => {
+    const proj = projects.find((pr) => pr.id === id);
+    if (!proj) return null;
     return {
       ...proj,
       description: t.projectDescs[id] || proj.description,
-      categoryLabel: t.categoryLabels[proj.category] || proj.categoryLabel,
       caseStudy: t.caseStudies?.[id],
     };
   };
 
-  const managementProjects = GROUP_IDS.management.map(localize);
-  const ecommerceProjects = GROUP_IDS.ecommerce.map(localize);
-  const mobileProjects = GROUP_IDS.mobile.map(localize);
+  const flagshipProjects = FLAGSHIP_IDS.map(localize).filter(Boolean) as LocalizedProject[];
+  const otherProjects = projects
+    .map((pr) => pr.id)
+    .filter((id) => !FLAGSHIP_IDS.includes(id))
+    .map(localize)
+    .filter(Boolean) as LocalizedProject[];
 
   return (
     <>
-    <AnimatePresence>
-      {modalProject && (
-        <ProjectInquiryModal
-          project={modalProject.project}
-          projectDisplayName={modalProject.displayName}
-          onClose={() => setModalProject(null)}
-        />
-      )}
-    </AnimatePresence>
-    <section id="portfolio" className="py-10 px-4 md:px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
-
-        {/* Header */}
-        <div className="text-center mb-8">
-          <p className="section-label justify-center mb-4">{p.sectionLabel}</p>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-            {p.title1 && <>{p.title1}<br /></>}
-            <span className="text-gradient">{p.title2}</span>
-          </h2>
-          <p className="text-slate-500 text-lg max-w-xl mx-auto">{p.desc}</p>
-        </div>
-
-        {/* Grouped: Management Systems → E-Commerce → Mobile-First Web Solutions */}
-        <GroupSection
-          label={p.groups.management.label}
-          desc={p.groups.management.desc}
-          projects={managementProjects}
-          liveLabel={p.live}
-          liveSiteLabel={p.liveSite}
-          buildLikeLabel={p.buildLike}
-          onOpen={(project) => openModal(project, project.name)}
-        />
-        <GroupSection
-          label={p.groups.ecommerce.label}
-          desc={p.groups.ecommerce.desc}
-          projects={ecommerceProjects}
-          liveLabel={p.live}
-          liveSiteLabel={p.liveSite}
-          buildLikeLabel={p.buildLike}
-          onOpen={(project) => openModal(project, project.name)}
-        />
-        <GroupSection
-          label={p.groups.mobile.label}
-          desc={p.groups.mobile.desc}
-          projects={mobileProjects}
-          liveLabel={p.live}
-          liveSiteLabel={p.liveSite}
-          buildLikeLabel={p.buildLike}
-          onOpen={(project) => openModal(project, project.name)}
-        />
-
-        {/* Final CTA */}
-        <div className="card card-hover rounded-2xl p-10 flex flex-col items-center justify-center text-center gap-5 border-dashed border-violet-200 cursor-pointer">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-sky-500 flex items-center justify-center text-2xl text-white shadow-lg shadow-violet-200">✦</div>
-          <div>
-            <h3 className="text-xl font-extrabold text-slate-900 mb-2">{p.ctaCard.title}</h3>
-            <p className="text-sm text-slate-400 leading-relaxed max-w-xs mx-auto">{p.ctaCard.desc}</p>
+      <AnimatePresence>
+        {modalProject && (
+          <ProjectInquiryModal
+            project={modalProject.project}
+            projectDisplayName={modalProject.displayName}
+            onClose={() => setModalProject(null)}
+          />
+        )}
+      </AnimatePresence>
+      <section id="portfolio" className="py-14 px-4 md:px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <p className="section-label justify-center mb-4">{p.sectionLabel}</p>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
+              {p.title1 && (
+                <>
+                  {p.title1}
+                  <br />
+                </>
+              )}
+              <span className="text-gradient">{p.title2}</span>
+            </h2>
+            <p className="text-slate-500 text-lg max-w-xl mx-auto">{p.desc}</p>
           </div>
-          <a href="#start-project" className="btn-primary px-7 py-3 text-sm flex items-center gap-2">
-            {p.ctaCard.btn}<ArrowRight size={14} />
-          </a>
+
+          {/* Flagship showcases — biggest visual space */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="flex flex-col gap-6 md:gap-8 mb-6 md:mb-8"
+          >
+            {flagshipProjects.map((project) => (
+              <FlagshipCard
+                key={project.id}
+                project={project}
+                caseLabels={p.caseLabels}
+                badgeLabel={p.flagshipBadge}
+                liveLabel={p.live}
+                liveSiteLabel={p.liveSite}
+                buildLikeLabel={p.buildLike}
+                onOpen={() => openModal(project, project.name)}
+              />
+            ))}
+          </motion.div>
+
+          {/* All remaining projects — one list, no duplicate categories */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid md:grid-cols-2 gap-5 md:gap-6"
+          >
+            {otherProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                liveLabel={p.live}
+                liveSiteLabel={p.liveSite}
+                buildLikeLabel={p.buildLike}
+                onOpen={() => openModal(project, project.name)}
+              />
+            ))}
+          </motion.div>
+
+          {/* Final CTA */}
+          <div className="card card-hover rounded-2xl p-10 mt-10 flex flex-col items-center justify-center text-center gap-5 border-dashed border-violet-200 cursor-pointer">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-sky-500 flex items-center justify-center text-2xl text-white shadow-lg shadow-violet-200">✦</div>
+            <div>
+              <h3 className="text-xl font-extrabold text-slate-900 mb-2">{p.ctaCard.title}</h3>
+              <p className="text-sm text-slate-400 leading-relaxed max-w-xs mx-auto">{p.ctaCard.desc}</p>
+            </div>
+            <a href="#start-project" className="btn-primary px-7 py-3 text-sm flex items-center gap-2">
+              {p.ctaCard.btn}
+              <ArrowRight size={14} />
+            </a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </>
   );
 }

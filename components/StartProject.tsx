@@ -4,7 +4,9 @@ import { CheckCircle2, Mic, Square, RotateCcw, Send, Play, Pause, X, MessageCirc
 import { motion, AnimatePresence } from "framer-motion";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { useLang } from "@/lib/language-context";
-import { trackLead } from "@/lib/fbpixel";
+import { trackLead, trackContact } from "@/lib/fbpixel";
+import { whatsappUrl } from "@/lib/contact";
+import { normalizePhone } from "@/lib/inquiry-validation";
 
 type RecordState = "idle" | "requesting" | "recording" | "recorded";
 type FormStatus = "idle" | "sending" | "success";
@@ -28,8 +30,6 @@ const WAVE_CONFIG = [
   { dur: "0.5s", delay: "0.24s" },
 ];
 
-const WHATSAPP_NUMBER = "201007526882";
-
 export default function StartProject() {
   const { t } = useLang();
   const sp = t.startProject;
@@ -41,6 +41,7 @@ export default function StartProject() {
   const [projectType, setProjectType] = useState<string | null>(null);
   const [showVoice, setShowVoice] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+  const [formError, setFormError] = useState(false);
 
   const [chatToken, setChatToken] = useState<string | null>(null);
   const [chatLinkCopied, setChatLinkCopied] = useState(false);
@@ -66,7 +67,7 @@ export default function StartProject() {
   }, [audioUrl]);
 
   const activePlaceholder = projectType
-    ? (sp as any).typePlaceholders?.[projectType] ?? sp.textPlaceholder
+    ? sp.typePlaceholders[projectType as keyof typeof sp.typePlaceholders] ?? sp.textPlaceholder
     : sp.textPlaceholder;
 
   async function startRecording() {
@@ -156,14 +157,8 @@ export default function StartProject() {
   }
 
   function validatePhone(value: string): string {
-    const digits = value.replace(/\D/g, "");
-    const normalized = digits.startsWith("20") ? "0" + digits.slice(2) : digits;
-    if (!normalized) return t.lang === "ar" ? "رقم الموبايل مطلوب" : "Phone number is required";
-    if (!/^(010|011|012|015)\d{8}$/.test(normalized))
-      return t.lang === "ar"
-        ? "رقم غير صحيح — لازم يبدأ بـ 010 أو 011 أو 012 أو 015"
-        : "Invalid number — must start with 010, 011, 012, or 015";
-    return "";
+    if (!value.trim()) return sp.phoneRequired;
+    return normalizePhone(value) ? "" : sp.phoneInvalid;
   }
 
   function handlePhoneChange(value: string) {
@@ -175,27 +170,27 @@ export default function StartProject() {
     e.preventDefault();
     const err = validatePhone(phone);
     if (err) { setPhoneError(err); return; }
-    if (!name.trim() || !textMessage.trim()) return;
-
+    if (!name.trim() || formStatus === "sending") return;
+    setFormError(false);
     setFormStatus("sending");
-
-    let voiceNote: string | null = null;
-    if (audioBlob) {
-      voiceNote = await blobToDataUrl(audioBlob);
+    try {
+      const voiceNote = audioBlob ? await blobToDataUrl(audioBlob) : null;
+      const result = await submitInquiry({ name, phone, message: textMessage, voiceNote, projectType });
+      if (!result.success || !result.chatToken) throw new Error("Inquiry was not saved");
+      setChatToken(result.chatToken);
+      trackLead();
+      setFormStatus("success");
+    } catch {
+      setFormError(true);
+      setFormStatus("idle");
     }
-
-    const result = await submitInquiry({ name, phone, message: textMessage, voiceNote });
-    if (result.chatToken) setChatToken(result.chatToken);
-    if (result.success) trackLead();
-    setFormStatus("success");
   }
 
   const canSubmit =
     formStatus !== "sending" &&
     name.trim() !== "" &&
     phone.trim() !== "" &&
-    !validatePhone(phone) &&
-    textMessage.trim() !== "";
+    !validatePhone(phone);
 
   if (formStatus === "success") {
     const chatUrl = chatToken ? `https://webistrydev.com/m/${chatToken}` : null;
@@ -208,8 +203,10 @@ export default function StartProject() {
     }
 
     return (
-      <section id="start-project" className="py-16 px-4 md:px-6 bg-white">
-        <div className="max-w-lg mx-auto">
+      <section id="start-project" className="relative overflow-hidden scroll-mt-16 py-16 md:py-20 px-4 md:px-6 bg-gradient-to-b from-violet-50 via-white to-violet-50">
+        <div aria-hidden="true" className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-violet-300/30 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-20 w-80 h-80 rounded-full bg-sky-300/25 blur-3xl" />
+        <div className="max-w-xl mx-auto bg-white rounded-3xl shadow-xl shadow-violet-300/40 border border-violet-100 p-6 md:p-9">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -281,13 +278,15 @@ export default function StartProject() {
     );
   }
 
-  const projectTypes: { key: string; label: string }[] = (sp as any).projectTypes ?? [];
-  const trustBadges: string[] = (sp as any).trustBadges ?? [];
-  const nextSteps: string[] = (sp as any).nextSteps ?? [];
+  const projectTypes = sp.projectTypes;
+  const trustBadges = sp.trustBadges;
+  const nextSteps = sp.nextSteps;
 
   return (
-    <section id="start-project" className="py-16 px-4 md:px-6 bg-white">
-      <div className="max-w-lg mx-auto">
+    <section id="start-project" className="relative overflow-hidden scroll-mt-16 py-16 md:py-20 px-4 md:px-6 bg-gradient-to-b from-violet-50 via-white to-violet-50">
+        <div aria-hidden="true" className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-violet-300/30 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-20 w-80 h-80 rounded-full bg-sky-300/25 blur-3xl" />
+      <div className="max-w-xl mx-auto bg-white rounded-3xl shadow-xl shadow-violet-300/40 border border-violet-100 p-6 md:p-9">
 
         {/* ── Trust badges ─────────────────────────────────── */}
         {trustBadges.length > 0 && (
@@ -330,6 +329,15 @@ export default function StartProject() {
           </button>
         </div>
 
+        <div className="mb-7 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-center">
+          <p className="font-bold text-emerald-900 mb-2">{sp.directIntro}</p>
+          <p className="text-sm text-emerald-800 leading-relaxed mb-4">{sp.directNote}</p>
+          <a href={whatsappUrl(t.hero.whatsappMessage)} target="_blank" rel="noopener noreferrer" onClick={() => trackContact("form-top")}
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 font-bold text-sm text-white hover:bg-emerald-700">
+            <MessageCircle size={18} />{t.hero.whatsapp}
+          </a>
+        </div>
+
         {/* ── Project type picker ───────────────────────────── */}
         {projectTypes.length > 0 && (
           <motion.div
@@ -340,7 +348,7 @@ export default function StartProject() {
             className="mb-6"
           >
             <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 text-center mb-3">
-              {(sp as any).typePickerLabel}
+              {sp.typePickerLabel}
             </p>
             <div className="grid grid-cols-3 gap-2">
               {projectTypes.map((pt) => (
@@ -365,15 +373,16 @@ export default function StartProject() {
           {/* ── Message card ─────────────────────────────────── */}
           <div className="card rounded-3xl p-6 flex flex-col gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-2">
-                {sp.textLabel} <span className="text-rose-400">*</span>
+              <label htmlFor="project-message" className="text-xs font-bold text-slate-500 block mb-2">
+                {sp.messageOptional}
               </label>
               <textarea
                 ref={messageRef}
+                id="project-message"
+                maxLength={6000}
                 value={textMessage}
                 onChange={(e) => setTextMessage(e.target.value)}
                 rows={5}
-                required
                 placeholder={activePlaceholder}
                 className="field w-full rounded-2xl px-4 py-3 text-sm resize-none"
               />
@@ -478,15 +487,18 @@ export default function StartProject() {
           {/* ── Contact card ─────────────────────────────────── */}
           <div className="card rounded-3xl p-6">
             <p className="text-xs font-extrabold uppercase tracking-widest text-violet-600 mb-4">
-              {t.lang === "ar" ? "إزاي أوصلك؟" : "How to reach you"}
+              {sp.contactHeading}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-bold text-slate-500 block mb-2">
+                <label htmlFor="project-name" className="text-xs font-bold text-slate-500 block mb-2">
                   {sp.nameLabel} <span className="text-rose-400">*</span>
                 </label>
                 <input
                   type="text"
+                  id="project-name"
+                  autoComplete="name"
+                  maxLength={100}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -495,11 +507,16 @@ export default function StartProject() {
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-slate-500 block mb-2">
+                <label htmlFor="project-phone" className="text-xs font-bold text-slate-500 block mb-2">
                   {sp.phoneLabel} <span className="text-rose-400">*</span>
                 </label>
                 <input
                   type="tel"
+                  id="project-phone"
+                  autoComplete="tel"
+                  maxLength={40}
+                  aria-invalid={Boolean(phoneError)}
+                  aria-describedby="project-phone-hint"
                   dir="ltr"
                   value={phone}
                   onChange={(e) => handlePhoneChange(e.target.value)}
@@ -513,10 +530,12 @@ export default function StartProject() {
                 )}
               </div>
             </div>
+            <p id="project-phone-hint" className="text-xs text-slate-500 mt-3">{sp.phoneHint}</p>
             <p className="text-[11px] text-slate-400 mt-3">{sp.contactNote}</p>
           </div>
 
           {/* ── Submit button ─────────────────────────────────── */}
+          {formError && <p role="alert" className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">{sp.formError}</p>}
           <div className="relative">
             {canSubmit && (
               <span className="absolute inset-0 rounded-2xl bg-violet-500 opacity-30 animate-ping pointer-events-none" />
@@ -551,7 +570,7 @@ export default function StartProject() {
               style={{ background: "linear-gradient(135deg, #faf8ff 0%, #f3f0ff 100%)", borderColor: "rgba(124,58,237,0.12)" }}
             >
               <p className="text-xs font-extrabold uppercase tracking-widest text-violet-500 mb-3 text-center">
-                {(sp as any).nextStepsTitle}
+                {sp.nextStepsTitle}
               </p>
               <ol className="flex flex-col gap-2">
                 {nextSteps.map((step, i) => (
@@ -569,13 +588,14 @@ export default function StartProject() {
           {/* ── WhatsApp direct fallback ─────────────────────── */}
           <div className="text-center pt-1">
             <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              href={whatsappUrl(t.hero.whatsappMessage)}
+              onClick={() => trackContact("form-bottom")}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-emerald-600 transition-colors"
             >
               <MessageCircle size={15} />
-              {(sp as any).whatsappDirect}
+              {sp.whatsappDirect}
             </a>
           </div>
         </form>

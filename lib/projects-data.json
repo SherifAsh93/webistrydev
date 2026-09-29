@@ -6,7 +6,7 @@
     "category": "corporate",
     "categoryLabel": "Luxury Brand",
     "categoryColor": "from-amber-700 to-yellow-800",
-    "tags": ["Next.js", "Tailwind CSS", "Neon DB", "Editorial Design"],
+    "tags": ["Fullscreen Editorial Design", "90+ Product Photos", "Collection Catalogue + PDF", "Two-Branch Store Locator", "Inquiry System"],
     "url": "https://qoya-furniture.vercel.app",
     "screenshot": "/projects/qoya-furniture.png",
     "featured": true
@@ -18,7 +18,7 @@
     "category": "fashion",
     "categoryLabel": "Fashion Brand",
     "categoryColor": "from-rose-500 to-pink-600",
-    "tags": ["Next.js", "Cloudinary", "VPS", "Full-Stack"],
+    "tags": ["Custom Couture Gallery", "Collection Management", "Appointment Booking", "Cloudinary Media Library"],
     "url": "https://ahmed-elakad-dvbpaopcp-sherifs-projects-75c57a99.vercel.app",
     "screenshot": "/projects/ahmed-elakad.png",
     "featured": true
@@ -30,7 +30,7 @@
     "category": "ecommerce",
     "categoryLabel": "E-Commerce",
     "categoryColor": "from-amber-500 to-orange-600",
-    "tags": ["Next.js", "Neon DB", "Admin Panel", "Full-Stack"],
+    "tags": ["Product Management", "Cart & Checkout", "Order Tracking", "Admin Dashboard"],
     "url": "https://furniture-studio-fs.vercel.app/",
     "screenshot": "/projects/furniture-studio.png",
     "featured": true
@@ -42,7 +42,7 @@
     "category": "ecommerce",
     "categoryLabel": "E-Commerce",
     "categoryColor": "from-amber-500 to-orange-600",
-    "tags": ["Next.js", "PostgreSQL", "Mobile-First", "POS System"],
+    "tags": ["Checkout & Order Tracking", "Wishlist", "POS System", "Full Admin Panel"],
     "url": "https://zahrtelkhlig.vercel.app/",
     "screenshot": "/projects/zahrtelkhlig.png",
     "featured": true
@@ -54,7 +54,7 @@
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-violet-500 to-purple-600",
-    "tags": ["Next.js", "Camera API", "WebRTC", "AR/VR"],
+    "tags": ["Live Camera Color Capture", "Real-Time AR Rooms", "WebRTC"],
     "url": "https://elghaly-vr.vercel.app/",
     "screenshot": "/projects/elghaly-vr.png",
     "featured": false
@@ -66,7 +66,7 @@
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-indigo-500 to-blue-700",
-    "tags": ["Next.js", "PostgreSQL", "Mobile-First", "Arabic RTL"],
+    "tags": ["Live Course Enrollment", "Vodafone Cash Payments", "Hidden Admin Panel", "Arabic RTL"],
     "url": "https://mohammedcourses.vercel.app",
     "screenshot": "/projects/mr-mohammed.png",
     "featured": false
@@ -78,7 +78,7 @@
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-indigo-500 to-blue-700",
-    "tags": ["Next.js", "Vercel", "Real-time Search", "Admin Dashboard"],
+    "tags": ["Real-Time Search", "Admin Dashboard", "Compound Operations"],
     "url": "https://sunset-management.vercel.app/",
     "screenshot": "/projects/sunset.PNG",
     "featured": false
@@ -90,7 +90,7 @@
     "category": "self",
     "categoryLabel": "Company Site",
     "categoryColor": "from-violet-600 to-sky-500",
-    "tags": ["Next.js", "Neon DB", "Bilingual AR/EN", "Lead Gen"],
+    "tags": ["Voice + Text Inquiries", "Live Client Chat", "Bilingual AR/EN", "Lead Admin Dashboard"],
     "url": "https://www.webistrydev.com",
     "screenshot": "/projects/webistrydev.jpg",
     "featured": false

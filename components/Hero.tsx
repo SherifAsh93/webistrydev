@@ -1,6 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language-context";
+import { whatsappUrl } from "@/lib/contact";
+import { trackContact } from "@/lib/fbpixel";
+import { MessageCircle } from "lucide-react";
 
 export default function Hero() {
   const { t } = useLang();
@@ -78,18 +81,20 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center mb-5"
         >
           <a href="#start-project" className="btn-primary flex items-center justify-center gap-2 px-12 py-5 text-lg">
             {t.hero.cta1} →
           </a>
           <a
-            href="#portfolio"
+            href={whatsappUrl(t.hero.whatsappMessage)} target="_blank" rel="noopener noreferrer" onClick={() => trackContact("hero")}
             className="flex items-center justify-center gap-2 px-9 py-4 text-base font-bold text-slate-700 bg-white border border-slate-200 rounded-2xl shadow-sm hover:border-violet-200 hover:shadow-md hover:-translate-y-0.5 transition-all"
           >
-            {t.hero.cta2} ↓
+            <MessageCircle size={20} className="text-emerald-600" />{t.hero.whatsapp}
           </a>
         </motion.div>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto mb-4 leading-relaxed">{t.hero.introduction}</p>
+        <a href="#portfolio" className="inline-block mb-10 font-bold text-sm text-violet-700 hover:underline">{t.hero.cta2} ↓</a>
 
         {/* Stats */}
         <motion.div

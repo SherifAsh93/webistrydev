@@ -13,6 +13,7 @@ import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import DesktopFloatingCTA from "@/components/DesktopFloatingCTA";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
+import ConversionFAQ from "@/components/ConversionFAQ";
 
 export default function Page() {
   return (
@@ -28,6 +29,7 @@ export default function Page() {
         <Services />
         <Pricing />
         <HowItWorks />
+        <ConversionFAQ />
         <StartProject />
       </main>
       <Footer />

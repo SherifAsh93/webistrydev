@@ -1,11 +1,12 @@
 "use client";
 import Logo from "@/components/Logo";
 import { useLang } from "@/lib/language-context";
+import { CONTACT, whatsappUrl } from "@/lib/contact";
+import { trackContact } from "@/lib/fbpixel";
 
-const PHONE = "+20 100 752 6882";
-const WHATSAPP = "201007526882";
-const EMAIL = "sherif.hany@proton.me";
-const FACEBOOK = "https://www.facebook.com/WebistryDev";
+const PHONE = CONTACT.phoneDisplay;
+const EMAIL = CONTACT.email;
+const FACEBOOK = CONTACT.facebook;
 
 export default function Footer() {
   const { t } = useLang();
@@ -37,7 +38,8 @@ export default function Footer() {
           {/* Contact icons row */}
           <div className="flex flex-wrap gap-3">
             <a
-              href={`https://wa.me/${WHATSAPP}`}
+              href={whatsappUrl(t.hero.whatsappMessage)}
+              onClick={() => trackContact("footer")}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-sm text-emerald-700 font-semibold hover:bg-emerald-100 transition group"

@@ -4,6 +4,10 @@ import { CheckCircle2, Mic, Square, RotateCcw, Play, Pause, Send, X } from "luci
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { trackLead } from "@/lib/fbpixel";
 import Logo from "@/components/Logo";
+import { normalizePhone } from "@/lib/inquiry-validation";
+import { translations } from "@/lib/translations";
+import { whatsappUrl } from "@/lib/contact";
+import { trackContact } from "@/lib/fbpixel";
 
 type Lang = "ar" | "en";
 type RecordState = "idle" | "requesting" | "recording" | "recorded";
@@ -22,7 +26,7 @@ const TEXT = {
     phoneLabel: "رقم تلفونك للتواصل",
     phonePlaceholder: "مثال: 01012345678",
     phoneErrorEmpty: "من فضلك اكتب رقم تليفونك",
-    phoneErrorInvalid: "الرقم مش صحيح — لازم يبدأ بـ 010 أو 011 أو 012 أو 015",
+    phoneErrorInvalid: translations.ar.startProject.phoneInvalid,
     requestingMic: "بناخد إذن الميكروفون...",
     recordingLabel: "بيسجل...",
     stopRecording: "وقف التسجيل",
@@ -32,8 +36,8 @@ const TEXT = {
     pause: "إيقاف",
     reRecord: "إعادة التسجيل",
     sendVoice: "ابعت الرسالة الصوتية",
-    submitMobile: "سجل الآن",
-    submitDesktop: "سجل واحنا هنكلمك",
+    submitMobile: translations.ar.startProject.submit,
+    submitDesktop: translations.ar.startProject.submit,
     errorGeneric: "حصل خطأ، من فضلك حاول تاني.",
     footer: "بياناتك في أمان تام وهيتم التواصل معاك خلال وقت قصير.",
     successTitle: "تم التسجيل بنجاح! 🎉",
@@ -52,7 +56,7 @@ const TEXT = {
     phoneLabel: "Your phone number",
     phonePlaceholder: "e.g. 01012345678",
     phoneErrorEmpty: "Please enter your phone number",
-    phoneErrorInvalid: "Invalid number — must start with 010, 011, 012, or 015",
+    phoneErrorInvalid: translations.en.startProject.phoneInvalid,
     requestingMic: "Requesting microphone access...",
     recordingLabel: "Recording...",
     stopRecording: "Stop recording",
@@ -62,8 +66,8 @@ const TEXT = {
     pause: "Pause",
     reRecord: "Re-record",
     sendVoice: "Send voice message",
-    submitMobile: "Sign up now",
-    submitDesktop: "Sign up — we'll call you",
+    submitMobile: translations.en.startProject.submit,
+    submitDesktop: translations.en.startProject.submit,
     errorGeneric: "Something went wrong, please try again.",
     footer: "Your information is completely safe and we'll be in touch shortly.",
     successTitle: "Successfully signed up! 🎉",
@@ -79,10 +83,8 @@ function formatTime(s: number) {
 }
 
 function validatePhone(value: string, t: (typeof TEXT)["ar"] | (typeof TEXT)["en"]): string {
-  const digits = value.replace(/\D/g, "");
-  const normalized = digits.startsWith("20") ? "0" + digits.slice(2) : digits;
-  if (!normalized) return t.phoneErrorEmpty;
-  if (!/^(010|011|012|015)\d{8}$/.test(normalized)) return t.phoneErrorInvalid;
+  if (!value.trim()) return t.phoneErrorEmpty;
+  if (!normalizePhone(value)) return t.phoneErrorInvalid;
   return "";
 }
 
@@ -228,20 +230,24 @@ export default function LeadPageClient({ lang }: { lang: Lang }) {
   }
 
   async function submitText() {
-    if (!validateFields()) return;
+    if (!validateFields() || formStatus === "sending") return;
     setFormStatus("sending");
-    const result = await submitInquiry({ name, phone, message: message.trim() || undefined, reference: "تسجيل سريع" });
-    if (result.success) trackLead();
-    setFormStatus(result.success ? "success" : "error");
+    try {
+      const result = await submitInquiry({ name, phone, message: message.trim() || undefined, reference: "Quick consultation" });
+      if (result.success) trackLead();
+      setFormStatus(result.success ? "success" : "error");
+    } catch { setFormStatus("error"); }
   }
 
   async function submitVoice() {
-    if (!audioBlob) return;
+    if (!audioBlob || !validateFields() || formStatus === "sending") return;
     setFormStatus("sending");
-    const voiceNote = await blobToDataUrl(audioBlob);
-    const result = await submitInquiry({ name, phone, message: message.trim() || undefined, voiceNote, reference: "تسجيل سريع" });
-    if (result.success) trackLead();
-    setFormStatus(result.success ? "success" : "error");
+    try {
+      const voiceNote = await blobToDataUrl(audioBlob);
+      const result = await submitInquiry({ name, phone, message: message.trim() || undefined, voiceNote, reference: "Quick consultation" });
+      if (result.success) trackLead();
+      setFormStatus(result.success ? "success" : "error");
+    } catch { setFormStatus("error"); }
   }
 
   function resetAll() {
@@ -299,6 +305,9 @@ export default function LeadPageClient({ lang }: { lang: Lang }) {
             <label className="text-xs font-semibold text-slate-400 block mb-1.5">{t.nameLabel}</label>
             <input
               type="text"
+              aria-label={t.nameLabel}
+              autoComplete="name"
+              maxLength={100}
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -327,6 +336,8 @@ export default function LeadPageClient({ lang }: { lang: Lang }) {
               )}
             </div>
             <textarea
+              aria-label={t.messageLabel}
+              maxLength={6000}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder={t.messagePlaceholder}
@@ -339,6 +350,9 @@ export default function LeadPageClient({ lang }: { lang: Lang }) {
             <label className="text-xs font-bold text-slate-500 block mb-2">{t.phoneLabel}</label>
             <input
               type="tel"
+              aria-label={t.phoneLabel}
+              autoComplete="tel"
+              maxLength={40}
               dir="ltr"
               value={phone}
               onChange={(e) => {
@@ -351,6 +365,7 @@ export default function LeadPageClient({ lang }: { lang: Lang }) {
               } ${phoneError ? "border-rose-300 bg-rose-50" : "border-teal-100 bg-teal-50/40 focus:border-teal-400"}`}
             />
             {phoneError && <p className="text-xs text-rose-500 font-semibold mt-1.5">{phoneError}</p>}
+            <p className="mt-2 text-xs text-slate-500">{translations[lang].startProject.phoneHint}</p>
           </div>
 
           {/* Voice recording flow */}
@@ -473,11 +488,16 @@ export default function LeadPageClient({ lang }: { lang: Lang }) {
           )}
 
           {formStatus === "error" && (
-            <p className="text-center text-xs text-rose-500 font-semibold">{t.errorGeneric}</p>
+            <p role="alert" className="text-center text-xs text-rose-500 font-semibold">{t.errorGeneric}</p>
           )}
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-6">{t.footer}</p>
+        <a href={whatsappUrl(translations[lang].hero.whatsappMessage)} target="_blank" rel="noopener noreferrer"
+          onClick={() => trackContact("lead-page")}
+          className="mt-4 block text-center text-sm font-bold text-teal-700 underline underline-offset-4">
+          {translations[lang].hero.whatsapp}
+        </a>
       </div>
     </div>
   );

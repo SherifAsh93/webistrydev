@@ -38,7 +38,9 @@ export default function Pricing() {
         <div className="max-w-2xl mx-auto mb-8">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-4">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 text-white text-sm font-extrabold shadow-md whitespace-nowrap">
-              {t.pricing.startingBadge}
+              {t.pricing.startingBadge.replace("{price}", t.lang === "ar"
+                ? `${pricing[0].egp.split("–")[0].trim()} ${t.pricing.egpLabel}`
+                : `${pricing[0].usd.split("–")[0].trim()} ${t.pricing.usdLabel}`)}
             </span>
             <p className="text-sm text-emerald-800 font-medium">{t.pricing.startingNote}</p>
           </div>
