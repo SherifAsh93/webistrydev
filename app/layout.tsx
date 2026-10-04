@@ -16,23 +16,43 @@ const cairo = Cairo({
   variable: "--font-cairo",
 });
 
+const SITE_URL = "https://www.webistrydev.com";
+const SITE_NAME = "WebistryDev";
+const SITE_TITLE = "WebistryDev — Custom Websites, E-Commerce & Business Apps";
+const SITE_DESCRIPTION =
+  "Egypt-based full-stack developer building custom websites, online stores, booking systems and business apps for owners in Egypt and abroad. Bilingual Arabic & English, projects from $440.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://webistrydev.com"),
-  title: "Webistrydev — Global Software Solutions for Modern Businesses",
-  description:
-    "I build fast, elegant websites and web applications for businesses worldwide. E-commerce, brand sites, clinic apps, and custom web platforms.",
-  keywords: ["web developer", "freelance", "Next.js", "React", "full-stack", "e-commerce"],
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "web developer Egypt",
+    "freelance web developer",
+    "custom website development",
+    "e-commerce development Egypt",
+    "booking system development",
+    "POS system Egypt",
+    "Next.js developer",
+    "React developer",
+    "Arabic website RTL",
+    "business app development",
+  ],
+  alternates: { canonical: "/" },
   appleWebApp: { capable: true, statusBarStyle: "default", title: "Webistrydev" },
   openGraph: {
-    title: "Webistrydev — Global Software Solutions for Modern Businesses",
-    description: "I build fast, elegant websites and web applications for businesses worldwide.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     type: "website",
-    url: "https://webistrydev.com",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_US",
+    alternateLocale: "ar_EG",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Webistrydev — Global Software Solutions for Modern Businesses",
-    description: "I build fast, elegant websites and web applications for businesses worldwide.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 
@@ -75,12 +95,109 @@ fbq('track', 'PageView');
 `
   : "";
 
+// GA4 — active only when NEXT_PUBLIC_GA_ID is set in the environment
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
+const gaScript = gaId
+  ? `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`
+  : "";
+
+// Structured data — helps search engines understand the business and surface it in results
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${SITE_URL}/#business`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/icon.svg`,
+      image: `${SITE_URL}/icon.svg`,
+      description: SITE_DESCRIPTION,
+      email: "sherif.hany@proton.me",
+      telephone: "+201007526882",
+      priceRange: "$440+",
+      currenciesAccepted: "EGP, USD",
+      areaServed: ["Egypt", "Worldwide"],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Cairo",
+        addressCountry: "EG",
+      },
+      founder: {
+        "@type": "Person",
+        name: "Sherif Hany",
+        jobTitle: "Full-Stack Developer",
+      },
+      sameAs: ["https://www.facebook.com/WebistryDev"],
+      availableLanguage: ["ar", "en"],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Web & App Development Services",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Basic Website" }, priceCurrency: "EGP", price: "20000" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Business App with Admin Panel" }, priceCurrency: "EGP", price: "45000" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "E-Commerce App" }, priceCurrency: "EGP", price: "75000" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Enterprise App" }, priceCurrency: "EGP", price: "120000" },
+        ],
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: `${SITE_URL}/`,
+      name: SITE_NAME,
+      inLanguage: ["en", "ar"],
+      publisher: { "@id": `${SITE_URL}/#business` },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/#faq`,
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Do I need a complete project brief?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Tell me what your business does and what you want to improve, or leave your name and contact number. We'll work out the required pages and features before I quote.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you work with clients outside Egypt?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. We can work remotely in Arabic or English. Include your country code in the contact form, or start a WhatsApp conversation.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What determines the price?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The number of pages, admin features, payment methods, and integrations. Packages provide an initial guide; we agree the scope, price, and timeline before work starts.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does sending a request commit me to buying?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. The initial discussion and quote are free. Payment comes after we agree on the project, according to the terms in your quote.",
+          },
+        },
+      ],
+    },
+  ],
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="ltr" className={`${plusJakarta.variable} ${cairo.variable}`} suppressHydrationWarning>
       <head>
         {/* Blocking script: sets dir/lang before first paint — no RTL flash */}
         <script dangerouslySetInnerHTML={{ __html: langDetectScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
         {fbPixelId && (
           <>
             <script dangerouslySetInnerHTML={{ __html: metaPixelScript }} />
@@ -94,6 +211,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 src={`https://www.facebook.com/tr?id=${fbPixelId}&ev=PageView&noscript=1`}
               />
             </noscript>
+          </>
+        )}
+        {gaId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+            <script dangerouslySetInnerHTML={{ __html: gaScript }} />
           </>
         )}
       </head>
