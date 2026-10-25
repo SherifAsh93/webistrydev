@@ -6,20 +6,24 @@ Live: https://www.webistrydev.com (Vercel, auto-deploy from `main`)
 ## Branch rule (non-negotiable)
 
 - The only valid branch is `main`.
-- Before any change: `git checkout main`, then confirm `git branch --show-current` prints `main`.
-- If `main` is missing or the repo is in a detached state, stop and ask. Do not force, stash, or reset.
+- `master` is archive-only. Never edit, commit, or push on it.
 
-## Source of truth
+## Worktree rule (non-negotiable)
 
-- This repository is the source of truth for the site.
-- Deployment is Vercel: pushing to `main` triggers a production build.
-- There is no separate server to update for the public site.
+- Every WebistryDev task MUST run in a fresh, clean worktree of `main`:
+  1. `git fetch origin`
+  2. `git worktree add --detach /home/sherif/tmp/<task> origin/main`
+  3. Do all work inside `/home/sherif/tmp/<task>`
+- Before editing, confirm the worktree is clean (`git status --short` is empty) and points at current `origin/main`.
+- When the task is done: `git worktree remove /home/sherif/tmp/<task>`.
+- The workspace at `/home/sherif/workspaces/WebistryDev` is a **permanent archive** on `master` with hundreds of uncommitted changes. Never edit, stash, reset, or switch branches there. Read it if useful; change nothing.
+- If a clean worktree cannot be created, stop and ask. Do not force, stash, or reset.
 
 ## Before committing
 
 1. Show `git status` and `git diff` (plus `git diff --staged`) to the user.
 2. Wait for explicit approval.
-3. Re-confirm the branch is `main` immediately before pushing.
+3. Re-confirm the worktree is based on `main` and the push target is `main` immediately before pushing.
 
 Never use `git commit -a`. Stage exact files only.
 
