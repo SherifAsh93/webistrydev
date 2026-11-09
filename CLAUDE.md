@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+> **Hosting update — 9 October 2026:** VPS runtime is now built and running under PM2 `webistrydev`, loopback 3001. Public DNS still points to Vercel through Hostinger nameservers; cutover and local TLS renewal are blocked on Hostinger DNS access. Read `HANDOFF.md` first. Older Vercel deployment descriptions below are historical, not current task instructions.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview

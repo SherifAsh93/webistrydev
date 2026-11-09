@@ -1,11 +1,15 @@
 "use client";
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useSyncExternalStore, ReactNode } from "react";
 import { translations, type Lang } from "./translations";
 
 type T = (typeof translations)[Lang];
 type LangCtx = { lang: Lang; toggle: () => void; t: T };
 
 const LanguageContext = createContext<LangCtx | null>(null);
+
+const subscribeToHydration = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 function detectLang(): Lang {
   try {
@@ -25,24 +29,20 @@ function applyLang(lang: Lang) {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Lazy init runs on client only — picks up localStorage/browser lang instantly
-  const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "en";
-    return detectLang();
-  });
+  // Match the server's English HTML during hydration, then use the saved/browser language.
+  const hydrated = useSyncExternalStore(subscribeToHydration, clientSnapshot, serverSnapshot);
+  const [selectedLang, setSelectedLang] = useState<Lang | null>(null);
+  const lang = hydrated ? selectedLang ?? detectLang() : "en";
 
-  // Apply DOM attributes once on mount (catches SSR→client transition)
   useEffect(() => {
-    applyLang(lang);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // Do not overwrite a saved Arabic preference with the server snapshot.
+    if (hydrated) applyLang(lang);
+  }, [hydrated, lang]);
 
   function toggle() {
-    setLang((l) => {
-      const next = l === "en" ? "ar" : "en";
-      applyLang(next);
-      return next;
-    });
+    const next = lang === "en" ? "ar" : "en";
+    applyLang(next);
+    setSelectedLang(next);
   }
 
   return (

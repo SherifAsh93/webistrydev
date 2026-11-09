@@ -113,7 +113,7 @@ Visit `/admin` and enter password `114891`.
 | Al-Batrawy Clinic | Web App | https://batrawy-clinic.vercel.app |
 | Ameer Dental | Web App | https://ameer-dental-clinic.vercel.app |
 | Elghaly VR | Web App | https://elghaly-vr.vercel.app |
-| QOYA Furniture | Luxury Brand | https://qoya-furniture.vercel.app |
+| QOYA Furniture | Luxury Brand | https://qoyafurniture.com |
 | Mr. Mohammed | Web App | https://mohammedcourses.vercel.app |
 | Olympia Beach Club | Web App | https://olympia-club-sherifs-projects-75c57a99.vercel.app |
 

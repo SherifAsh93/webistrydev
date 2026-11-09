@@ -1,0 +1,108 @@
+[2026-10-15T20:40:36.849Z] next queue slot 1: id=1 lang=ar media=/home/sherif/sites/webistrydev/facebook/fresh-launch/qoya-preview.png
+[2026-10-15T20:40:36.852Z] mode=dry-run (no PAGE_ACCESS_TOKEN in .env.facebook) — posting nothing
+[2026-10-15T20:40:36.852Z] [dry-run] would publish slot 1 (queue id 1, lang ar):
+[2026-10-15T20:40:36.852Z] [dry-run]   🟢 مشروع جديد شغّال دلوقتي — QOYA Furniture على دومينه الخاص qoyafurniture.com
+[2026-10-15T20:40:36.852Z] [dry-run]   ٤٥ مجموعة أثاث بتتصفح أونلاين زي الكتالوج، وكتالوج PDF كامل يتحمّل من الموبايل.
+[2026-10-15T20:40:36.852Z] [dry-run]   https://www.webistrydev.com/start
+[2026-10-15T20:40:36.852Z] [dry-run] media: /home/sherif/sites/webistrydev/facebook/fresh-launch/qoya-preview.png (exists=true)
+[2026-10-15T20:40:36.852Z] [dry-run] state unchanged; no Graph API call made
+[2026-10-15T20:40:36.908Z] next queue slot 1: id=1 lang=ar media=/home/sherif/sites/webistrydev/facebook/fresh-launch/qoya-preview.png
+[2026-10-15T20:40:36.911Z] mode=dry-run (no PAGE_ACCESS_TOKEN in .env.facebook) — posting nothing
+[2026-10-15T20:40:36.911Z] [dry-run] would publish slot 1 (queue id 1, lang ar):
+[2026-10-15T20:40:36.911Z] [dry-run]   🟢 مشروع جديد شغّال دلوقتي — QOYA Furniture على دومينه الخاص qoyafurniture.com
+[2026-10-15T20:40:36.911Z] [dry-run]   ٤٥ مجموعة أثاث بتتصفح أونلاين زي الكتالوج، وكتالوج PDF كامل يتحمّل من الموبايل.
+[2026-10-15T20:40:36.911Z] [dry-run]   https://www.webistrydev.com/start
+[2026-10-15T20:40:36.911Z] [dry-run] media: /home/sherif/sites/webistrydev/facebook/fresh-launch/qoya-preview.png (exists=true)
+[2026-10-15T20:40:36.911Z] [dry-run] state unchanged; no Graph API call made
+[2026-10-15T20:40:42.792Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 23); skipped
+[2026-10-15T20:41:05.996Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 23); skipped
+[2026-10-16T17:00:02.154Z] next queue slot 4: id=4 lang=ar media=/home/sherif/sites/webistrydev/public/projects/batrawy-clinic.png
+[2026-10-16T17:00:02.358Z] publishing slot 4 (queue id 4) via POST /1126001733940519/photos ...
+[2026-10-16T17:00:09.891Z] WARNING: published post 122137660413384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-16T17:00:09.894Z] PUBLISHED slot 4: post id 122137660413384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-16T18:00:03.033Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-17T17:00:02.567Z] next queue slot 5: id=5 lang=ar media=/home/sherif/sites/webistrydev/public/projects/furniture-studio.png
+[2026-10-17T17:00:02.886Z] publishing slot 5 (queue id 5) via POST /1126001733940519/photos ...
+[2026-10-17T17:00:03.472Z] FATAL: Page token rejected: HTTP 400, Graph code 200, type OAuthException
+[2026-10-17T17:00:04.033Z] critical telegram alert delivered (message id redacted from log detail)
+[2026-10-17T18:00:02.631Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-18T17:00:01.872Z] next queue slot 5: id=5 lang=ar media=/home/sherif/sites/webistrydev/public/projects/furniture-studio.png
+[2026-10-18T17:00:02.281Z] publishing slot 5 (queue id 5) via POST /1126001733940519/photos ...
+[2026-10-18T17:00:02.655Z] FATAL: Page token rejected: HTTP 400, Graph code 200, type OAuthException
+[2026-10-18T17:00:02.655Z] token-invalid alert already sent at 2026-10-17T17:00:04.033Z; suppressed (one alert per 24h)
+[2026-10-18T18:00:02.342Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-19T17:00:02.976Z] next queue slot 5: id=5 lang=ar media=/home/sherif/sites/webistrydev/public/projects/furniture-studio.png
+[2026-10-19T17:00:03.426Z] publishing slot 5 (queue id 5) via POST /1126001733940519/photos ...
+[2026-10-19T17:00:04.126Z] FATAL: Page token rejected: HTTP 400, Graph code 200, type OAuthException
+[2026-10-19T17:00:04.838Z] critical telegram alert delivered (message id redacted from log detail)
+[2026-10-19T18:00:01.725Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-20T17:00:02.083Z] next queue slot 5: id=5 lang=ar media=/home/sherif/sites/webistrydev/public/projects/furniture-studio.png
+[2026-10-20T17:00:02.443Z] publishing slot 5 (queue id 5) via POST /1126001733940519/photos ...
+[2026-10-20T17:00:02.701Z] FATAL: Page token rejected: HTTP 400, Graph code 200, type OAuthException
+[2026-10-20T17:00:02.701Z] token-invalid alert already sent at 2026-10-19T17:00:04.838Z; suppressed (one alert per 24h)
+[2026-10-20T18:00:02.290Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-21T17:00:01.752Z] next queue slot 5: id=11 lang=ar media=/home/sherif/sites/webistrydev/public/projects/webistrydev.jpg
+[2026-10-21T17:00:01.893Z] publishing slot 5 (queue id 11) via POST /1126001733940519/photos ...
+[2026-10-21T17:00:10.128Z] WARNING: published post 122138696367384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-21T17:00:10.131Z] PUBLISHED slot 5: post id 122138696367384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-21T18:00:02.632Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-22T17:00:03.357Z] next queue slot 6: id=12 lang=ar media=/home/sherif/sites/webistrydev/public/projects/furniture-studio.png
+[2026-10-22T17:00:03.479Z] publishing slot 6 (queue id 12) via POST /1126001733940519/photos ...
+[2026-10-22T17:00:10.987Z] WARNING: published post 122138919159384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-22T17:00:10.994Z] PUBLISHED slot 6: post id 122138919159384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-22T18:00:02.260Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-23T17:00:01.398Z] next queue slot 7: id=13 lang=ar media=/home/sherif/sites/webistrydev/public/projects/olympia-beach-club.png
+[2026-10-23T17:00:01.487Z] publishing slot 7 (queue id 13) via POST /1126001733940519/photos ...
+[2026-10-23T17:00:07.837Z] WARNING: published post 122139110025384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-23T17:00:07.839Z] PUBLISHED slot 7: post id 122139110025384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-23T18:00:02.367Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-24T17:00:03.182Z] next queue slot 8: id=5 lang=ar media=/home/sherif/sites/webistrydev/public/projects/furniture-studio.png
+[2026-10-24T17:00:03.653Z] publishing slot 8 (queue id 5) via POST /1126001733940519/photos ...
+[2026-10-24T17:00:11.750Z] WARNING: published post 122139311691384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-24T17:00:11.754Z] PUBLISHED slot 8: post id 122139311691384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-24T18:00:01.986Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-25T17:00:02.424Z] next queue slot 9: id=6 lang=ar media=/home/sherif/sites/webistrydev/public/projects/ahmed-elakad.png
+[2026-10-25T17:00:02.662Z] publishing slot 9 (queue id 6) via POST /1126001733940519/photos ...
+[2026-10-25T17:00:09.661Z] WARNING: published post 122139512271384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-25T17:00:09.664Z] PUBLISHED slot 9: post id 122139512271384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-25T18:00:01.561Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-26T17:00:02.380Z] next queue slot 10: id=7 lang=ar media=/home/sherif/sites/webistrydev/public/projects/mr-mohammed.png
+[2026-10-26T17:00:02.528Z] publishing slot 10 (queue id 7) via POST /1126001733940519/photos ...
+[2026-10-26T17:00:09.547Z] WARNING: published post 122139702291384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-26T17:00:09.552Z] PUBLISHED slot 10: post id 122139702291384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-26T18:00:01.691Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-27T17:00:04.183Z] next queue slot 11: id=8 lang=ar media=/home/sherif/sites/webistrydev/public/projects/sunset.PNG
+[2026-10-27T17:00:05.033Z] publishing slot 11 (queue id 8) via POST /1126001733940519/photos ...
+[2026-10-27T17:00:11.656Z] WARNING: published post 122139891825384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-27T17:00:11.665Z] PUBLISHED slot 11: post id 122139891825384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-27T18:00:02.966Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-28T17:00:02.395Z] next queue slot 12: id=9 lang=ar media=/home/sherif/sites/webistrydev/public/projects/elghaly-vr.png
+[2026-10-28T17:00:02.689Z] publishing slot 12 (queue id 9) via POST /1126001733940519/photos ...
+[2026-10-28T17:00:08.423Z] WARNING: published post 122140075413384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-28T17:00:08.428Z] PUBLISHED slot 12: post id 122140075413384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-28T18:00:03.223Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-29T17:00:02.526Z] next queue slot 13: id=10 lang=ar media=/home/sherif/sites/webistrydev/public/projects/olympia-beach-club.png
+[2026-10-29T17:00:02.651Z] publishing slot 13 (queue id 10) via POST /1126001733940519/photos ...
+[2026-10-29T17:00:10.027Z] WARNING: published post 122140324119384950 but fetch-back verification failed: Page token rejected: HTTP 400, Graph code 100, type OAuthException
+[2026-10-29T17:00:10.031Z] PUBLISHED slot 13: post id 122140324119384950 (permalink unverified — recorded so it is never re-posted)
+[2026-10-29T18:00:01.855Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 21); skipped
+[2026-10-30T17:00:02.447Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-10-30T18:00:01.803Z] queue fully published (13 posts); nothing to do
+[2026-10-31T17:00:02.134Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-10-31T18:00:02.384Z] queue fully published (13 posts); nothing to do
+[2026-11-01T17:00:02.674Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-01T18:00:01.593Z] queue fully published (13 posts); nothing to do
+[2026-11-02T17:00:06.347Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-02T18:00:03.247Z] queue fully published (13 posts); nothing to do
+[2026-11-03T17:00:05.392Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-03T18:00:03.851Z] queue fully published (13 posts); nothing to do
+[2026-11-04T17:00:04.556Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-04T18:00:03.647Z] queue fully published (13 posts); nothing to do
+[2026-11-05T17:00:05.093Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-05T18:00:04.166Z] queue fully published (13 posts); nothing to do
+[2026-11-06T17:00:04.507Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-06T18:00:04.796Z] queue fully published (13 posts); nothing to do
+[2026-11-07T17:00:04.513Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-07T18:00:03.213Z] queue fully published (13 posts); nothing to do
+[2026-11-08T17:00:03.511Z] outside 20:00-20:59 Africa/Cairo window (Cairo hour 19); skipped
+[2026-11-08T18:00:03.323Z] queue fully published (13 posts); nothing to do

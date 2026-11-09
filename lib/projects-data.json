@@ -2,24 +2,36 @@
   {
     "id": "qoya-furniture",
     "name": "QOYA Furniture",
-    "description": "Ultra-luxury furniture brand website for a premium showroom. Fullscreen editorial design, auto-cycling hero slider, 90+ product images, contact inquiry system, and two-branch store locator.",
+    "description": "Live website for a real luxury furniture showroom — fullscreen editorial design, 45 collections with a downloadable PDF catalogue, two-branch store locator, and inquiries that go straight to the business.",
     "category": "corporate",
     "categoryLabel": "Luxury Brand",
     "categoryColor": "from-amber-700 to-yellow-800",
-    "tags": ["Fullscreen Editorial Design", "90+ Product Photos", "Collection Catalogue + PDF", "Two-Branch Store Locator", "Inquiry System"],
-    "url": "https://qoya-furniture.vercel.app",
+    "tags": [
+      "Live Custom Domain",
+      "45 Collections + PDF Catalogue",
+      "Two-Branch Store Locator",
+      "Inquiry System",
+      "Mobile-First Editorial"
+    ],
+    "url": "https://qoya.webistrydev.com",
     "screenshot": "/projects/qoya-furniture.png",
     "featured": true
   },
   {
     "id": "ahmed-elakad",
     "name": "Ahmed El Akad",
-    "description": "Luxury couture brand website for a premier fashion designer. Custom gallery, collection management, and appointment booking system.",
+    "description": "Live brand site for a luxury fashion designer — custom gallery, collection management, and appointment booking that reaches the business directly, beyond Instagram DMs.",
     "category": "fashion",
     "categoryLabel": "Fashion Brand",
     "categoryColor": "from-rose-500 to-pink-600",
-    "tags": ["Custom Couture Gallery", "Collection Management", "Appointment Booking", "Cloudinary Media Library"],
-    "url": "https://ahmed-elakad-dvbpaopcp-sherifs-projects-75c57a99.vercel.app",
+    "tags": [
+      "Live Custom Domain",
+      "Custom Couture Gallery",
+      "Collection Management",
+      "Appointment Booking",
+      "Media Library"
+    ],
+    "url": "https://ahmedelakad.com",
     "screenshot": "/projects/ahmed-elakad.png",
     "featured": true
   },
@@ -30,8 +42,13 @@
     "category": "ecommerce",
     "categoryLabel": "E-Commerce",
     "categoryColor": "from-amber-500 to-orange-600",
-    "tags": ["Product Management", "Cart & Checkout", "Order Tracking", "Admin Dashboard"],
-    "url": "https://furniture-studio-fs.vercel.app/",
+    "tags": [
+      "Product Management",
+      "Cart & Checkout",
+      "Order Tracking",
+      "Admin Dashboard"
+    ],
+    "url": "https://furniture-studio.webistrydev.com",
     "screenshot": "/projects/furniture-studio.png",
     "featured": true
   },
@@ -42,8 +59,13 @@
     "category": "ecommerce",
     "categoryLabel": "E-Commerce",
     "categoryColor": "from-amber-500 to-orange-600",
-    "tags": ["Checkout & Order Tracking", "Wishlist", "POS System", "Full Admin Panel"],
-    "url": "https://zahrtelkhlig.vercel.app/",
+    "tags": [
+      "Checkout & Order Tracking",
+      "Wishlist",
+      "POS System",
+      "Full Admin Panel"
+    ],
+    "url": "https://zahrtelkhlig.webistrydev.com",
     "screenshot": "/projects/zahrtelkhlig.png",
     "featured": true
   },
@@ -54,8 +76,12 @@
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-violet-500 to-purple-600",
-    "tags": ["Live Camera Color Capture", "Real-Time AR Rooms", "WebRTC"],
-    "url": "https://elghaly-vr.vercel.app/",
+    "tags": [
+      "Live Camera Color Capture",
+      "Real-Time AR Rooms",
+      "WebRTC"
+    ],
+    "url": "https://elghaly-vr.webistrydev.com",
     "screenshot": "/projects/elghaly-vr.png",
     "featured": false
   },
@@ -66,8 +92,13 @@
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-indigo-500 to-blue-700",
-    "tags": ["Live Course Enrollment", "Vodafone Cash Payments", "Hidden Admin Panel", "Arabic RTL"],
-    "url": "https://mohammedcourses.vercel.app",
+    "tags": [
+      "Live Course Enrollment",
+      "Vodafone Cash Payments",
+      "Hidden Admin Panel",
+      "Arabic RTL"
+    ],
+    "url": "https://mr-mohammed.webistrydev.com",
     "screenshot": "/projects/mr-mohammed.png",
     "featured": false
   },
@@ -78,21 +109,13 @@
     "category": "web-app",
     "categoryLabel": "Web App",
     "categoryColor": "from-indigo-500 to-blue-700",
-    "tags": ["Real-Time Search", "Admin Dashboard", "Compound Operations"],
-    "url": "https://sunset-management.vercel.app/",
+    "tags": [
+      "Real-Time Search",
+      "Admin Dashboard",
+      "Compound Operations"
+    ],
+    "url": "https://sunset-management.webistrydev.com",
     "screenshot": "/projects/sunset.PNG",
-    "featured": false
-  },
-  {
-    "id": "webistrydev",
-    "name": "WebistryDev",
-    "description": "This site — a lead-generation platform with a voice-or-text inquiry form, admin dashboard, live client chat, and bilingual AR/EN support.",
-    "category": "self",
-    "categoryLabel": "Company Site",
-    "categoryColor": "from-violet-600 to-sky-500",
-    "tags": ["Voice + Text Inquiries", "Live Client Chat", "Bilingual AR/EN", "Lead Admin Dashboard"],
-    "url": "https://www.webistrydev.com",
-    "screenshot": "/projects/webistrydev.jpg",
     "featured": false
   }
 ]

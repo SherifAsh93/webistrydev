@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-16T04:10:00Z",
+  "note": "Fresh Arabic engagement queue. One post/day 20:00-20:59 Africa/Cairo. Media: real project screenshots in public/projects/. Links: #start-project request form or #portfolio. Replaces the 2026-10-15 dark teaser queue by owner decision (delete-all-old + start-fresh).",
+  "defaultLink": "https://www.webistrydev.com/#start-project",
+  "items": [
+    {
+      "id": 11,
+      "lang": "ar",
+      "lines": [
+        "عايز موقع لمشروعك ومش متأكد التكلفة؟ 💬",
+        "الاستشارة الأولى ببلاش — ٥ دقايق واتساب وببعتلك السعر الصريح بالأرقام. من غير إلزام.",
+        "اضغط واحجز الاستشارة دلوقتي 👇"
+      ],
+      "media": "public/projects/webistrydev.jpg",
+      "link": "https://wa.me/201007526882?text=%D8%B9%D9%86%D8%AF%D9%89%20%D9%81%D9%83%D8%B1%D8%A9%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D9%88%D8%A3%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9",
+      "source": "lead-gen 2026-10-21 offer (owner: get orders)"
+    },
+    {
+      "id": 12,
+      "lang": "ar",
+      "lines": [
+        "متجر إلكتروني كامل: منتجات + سلة + طلبات تديرها من موبايلك 🛒",
+        "يبدأ من ٧٥ ألف، مقدم ٥٠٪ بس وصيانة سنة ببلاش.",
+        "ابعت فكرتك واتساب دلوقتي 👇"
+      ],
+      "media": "public/projects/furniture-studio.png",
+      "link": "https://wa.me/201007526882?text=%D8%B9%D8%A7%D9%8A%D8%B2%20%D9%85%D8%AA%D8%AC%D8%B1%20%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A%20%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D9%8A",
+      "source": "lead-gen 2026-10-21 offer (owner: get orders)"
+    },
+    {
+      "id": 13,
+      "lang": "ar",
+      "lines": [
+        "أكتر من ١١ مشروع متسلم فعلاً — أثاث، عيادات، منتجعات، كوتور 👨‍💻",
+        "كل واحد منهم مبني من الصفر وبيبيع عن صاحبه.",
+        "عندك مشروع وحابب يكون عندك كمان؟ ابعتلي 👇"
+      ],
+      "media": "public/projects/olympia-beach-club.png",
+      "link": "https://wa.me/201007526882?text=%D8%A8%D8%AD%D8%A8%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D9%8A",
+      "source": "lead-gen 2026-10-21 offer (owner: get orders)"
+    },
+    {
+      "id": 1,
+      "lang": "ar",
+      "lines": [
+        "أنا شريف 👋 مطوّر full-stack ببني مواقع وتطبيقات لأصحاب البيزنس في مصر وبرّاها.",
+        "من أول فكرة لحد التسليم — تشتغل معايا مباشرة، بالعربي أو الإنجليزي.",
+        "شوف شغلي وقولي عايز إيه 👇"
+      ],
+      "media": "public/projects/webistrydev.jpg",
+      "link": "https://www.webistrydev.com/#portfolio",
+      "source": "fresh-2026-10-16 intro (site hero + old page intro posts)"
+    },
+    {
+      "id": 2,
+      "lang": "ar",
+      "lines": [
+        "بتبيع أونلاين؟ عندك عيادة؟ ولا عندك فكرة ومش عارف تبدأ منين؟",
+        "متاجر إلكترونية، مواقع براند، أنظمة حجز، وبرامج مخصوصة — كل حاجة بتتبني من الصفر.",
+        "قولي فكرتك وهقولك هتتعمل إزاي 👇"
+      ],
+      "media": "public/projects/zahrtelkhlig.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 services (site What-I-Build section)"
+    },
+    {
+      "id": 3,
+      "lang": "ar",
+      "lines": [
+        "من شغلي: موقع QOYA Furniture شغّال دلوقتي على qoyafurniture.com 🪑",
+        "٤٥ مجموعة أثاث، كتالوج PDF، وتحديد فروع — كله من الموبايل.",
+        "عايز حاجة زي كده لشغلك؟ قوللي 👇"
+      ],
+      "media": "public/projects/qoya-furniture.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase QOYA (portfolio card)"
+    },
+    {
+      "id": 4,
+      "lang": "ar",
+      "lines": [
+        "للعيادات: موقع بيوصّل المرضى بمواعيدكم من غير ما حد يضيّع رسالة 💬",
+        "حجوزات أونلاين + لوحة تحكم للمواعيد.",
+        "عايز معاينة لعيادتك؟ قوللي 👇"
+      ],
+      "media": "public/projects/batrawy-clinic.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase clinic (portfolio + old posts)"
+    },
+    {
+      "id": 5,
+      "lang": "ar",
+      "lines": [
+        "متجر أونلاين كامل: منتجات، سلة، طلب وتتبع — من غير عمولات أي marketplace 🛒",
+        "وأنت بيدير كل حاجة من لوحة تحكم على موبايلك.",
+        "ابدأ متجرك 👇"
+      ],
+      "media": "public/projects/furniture-studio.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase store (Furniture Studio card)"
+    },
+    {
+      "id": 6,
+      "lang": "ar",
+      "lines": [
+        "للبراندات وأصحاب الأزياء: موقع بيعرض مجموعاتك، والمواعيد توصلك بدل ما تضيع في الديركت 📩",
+        "تصميم على مقاس هويتك — عربي وإنجليزي.",
+        "قولي عن براندك 👇"
+      ],
+      "media": "public/projects/ahmed-elakad.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase brand (Ahmed El Akad card)"
+    },
+    {
+      "id": 7,
+      "lang": "ar",
+      "lines": [
+        "لو بتدرّس أو بتقدّم كورسات: منصة بتسجّل طلابك وتاخد الفلوس أونلاين، حتى بفودافون كاش 💳",
+        "وإنت بتدير كل حاجة من ورا الكواليس.",
+        "ابدأ خطوتك 👇"
+      ],
+      "media": "public/projects/mr-mohammed.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase courses (Mr. Mohammed card)"
+    },
+    {
+      "id": 8,
+      "lang": "ar",
+      "lines": [
+        "للمنشآت والكمباوندات: لوحة تحكم تدير الشغل كله — بحث لحظي وتقارير يومية 📊",
+        "بدل الورق والرسائل، كل حاجة في مكان واحد.",
+        "محتاج نظام يدير شغلك؟ 👇"
+      ],
+      "media": "public/projects/sunset.PNG",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase dashboard (Sunset Management card)"
+    },
+    {
+      "id": 9,
+      "lang": "ar",
+      "lines": [
+        "تطبيقات مخصوصة بتوصل لعميلك على موبايله — زي تطبيق elghaly-vr اللي بيعرّف على لون الحائط بالكاميرا 📱",
+        "فكرتك ممكن تكون تطبيق كامل.",
+        "قولي الفكرة 👇"
+      ],
+      "media": "public/projects/elghaly-vr.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 showcase app (Elghaly VR card)"
+    },
+    {
+      "id": 10,
+      "lang": "ar",
+      "lines": [
+        "عرض هذا الشهر: خصم ٢٠٪ لأول ٣ عملاء 🔥",
+        "الدفع ٥٠٪ مقدّم و٥٠٪ عند التسليم + سنة صيانة مجانًا.",
+        "احجز مكالمتك المجانية دلوقتي 👇"
+      ],
+      "media": "public/projects/olympia-beach-club.png",
+      "link": "https://www.webistrydev.com/#start-project",
+      "source": "fresh-2026-10-16 conversion (site hero offer + pricing)"
+    }
+  ]
+}

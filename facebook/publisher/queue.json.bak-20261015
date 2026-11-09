@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-15T20:35:00Z",
+  "note": "Teaser queue for the WebistryDev Facebook page. One post per day at the 20:00-20:59 Africa/Cairo slot. Sources: facebook/fresh-launch/POSTS.md, facebook/qoya-announcement-posts.txt, facebook/conversion-posts.md. Never use launch-ar.png (fake CTA).",
+  "defaultLink": "https://www.webistrydev.com/start",
+  "items": [
+    {
+      "id": 1,
+      "lang": "ar",
+      "lines": [
+        "🟢 مشروع جديد شغّال دلوقتي — QOYA Furniture على دومينه الخاص qoyafurniture.com",
+        "٤٥ مجموعة أثاث بتتصفح أونلاين زي الكتالوج، وكتالوج PDF كامل يتحمّل من الموبايل."
+      ],
+      "media": "facebook/fresh-launch/qoya-preview.png",
+      "source": "facebook/qoya-announcement-posts.txt [POST A]"
+    },
+    {
+      "id": 2,
+      "lang": "en",
+      "lines": [
+        "New live project — QOYA Furniture launched on its own custom domain.",
+        "45 collection albums, downloadable PDF catalogue, two-branch locator. Mobile-first, AR + EN."
+      ],
+      "media": "facebook/fresh-launch/international-en.png",
+      "source": "facebook/qoya-announcement-posts.txt [POST B]"
+    },
+    {
+      "id": 3,
+      "lang": "ar",
+      "lines": [
+        "صور شغلك متوزعة بين بوستات ورسائل؟",
+        "في QOYA، رحلة العميل بقت واضحة: مجموعات ← ألبومات لكل طقم ← صور وتفاصيل ← تواصل مباشر."
+      ],
+      "media": "facebook/fresh-launch/showroom-ar.png",
+      "source": "facebook/fresh-launch/POSTS.md Post 2"
+    },
+    {
+      "id": 4,
+      "lang": "en",
+      "lines": [
+        "Make the next step clearer for your customers.",
+        "Brand websites, online stores, and business tools — built mobile-first for Egypt and worldwide."
+      ],
+      "media": "public/projects/zahrtelkhlig.png",
+      "source": "facebook/fresh-launch/POSTS.md Post 4"
+    },
+    {
+      "id": 5,
+      "lang": "ar",
+      "lines": [
+        "كل أوردر بيحتاج رسائل كتير علشان المقاس والسعر والتفاصيل؟",
+        "متجر أونلاين بيجمع المنتجات والخيارات والسلة والطلبات في مكان واحد، مع لوحة إدارة لصاحب البيزنس."
+      ],
+      "media": "facebook/fresh-launch/store-preview.png",
+      "source": "facebook/fresh-launch/POSTS.md Post 5"
+    },
+    {
+      "id": 6,
+      "lang": "en",
+      "lines": [
+        "You don't need a technical specification to start a website project.",
+        "Tell me your business — you get a clear scope, timeline, and quote before development starts."
+      ],
+      "media": "public/projects/qoya-furniture.png",
+      "source": "facebook/fresh-launch/POSTS.md Post 8"
+    },
+    {
+      "id": 7,
+      "lang": "ar",
+      "lines": [
+        "«محتاج موقع… بس مش عارف أطلب إيه.»",
+        "ثلاث أسئلة بس: نشاطك إيه، بيوصلك العميل إزاي دلوقتي، وإيه الخطوة اللي حابب تبقى أسهل؟"
+      ],
+      "media": "public/projects/batrawy-clinic.png",
+      "source": "facebook/fresh-launch/POSTS.md Post 3"
+    },
+    {
+      "id": 8,
+      "lang": "ar",
+      "lines": [
+        "📂 من شغلي: إزاي بنائي موقع QOYA Furniture",
+        "شوروم تاني مفتوح ٢٤ ساعة — العميل يتصفح ويصل لصاحب الشغل من غير ما يمرّ على الفرع."
+      ],
+      "media": "public/projects/furniture-studio.png",
+      "source": "facebook/qoya-announcement-posts.txt [POST C]"
+    },
+    {
+      "id": 9,
+      "lang": "en",
+      "lines": [
+        "A website should make your next customer's decision easier.",
+        "Work directly with me — English or Arabic, Egypt and worldwide."
+      ],
+      "media": "public/projects/olympia-beach-club.png",
+      "source": "facebook/conversion-posts.md #3"
+    },
+    {
+      "id": 10,
+      "lang": "ar",
+      "lines": [
+        "عندك محل، براند، عيادة أو خدمة وعايز الناس تعرف شغلك وتوصلك بسهولة؟",
+        "مناقشة الفكرة مجانًا وبدون التزام — وبعدها نطاق الشغل والمدة وعرض سعر واضح."
+      ],
+      "media": "public/projects/ahmed-elakad.png",
+      "source": "facebook/conversion-posts.md #1"
+    }
+  ]
+}

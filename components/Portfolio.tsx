@@ -40,7 +40,7 @@ function BookButton({ label, dark = false, onClick, big = false }: { label: stri
     <button
       type="button"
       onClick={onClick}
-      className={`flex-1 sm:flex-none font-bold transition-all text-center rounded-xl ${
+      className={`min-h-11 flex-1 sm:flex-none font-bold transition-all text-center rounded-xl ${
         big ? "px-6 py-3.5 text-sm" : "px-4 py-2.5 text-xs"
       } ${
         dark
@@ -59,7 +59,7 @@ function LiveLink({ project, label, big = false }: { project: LocalizedProject; 
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 font-bold transition rounded-xl border ${
+      className={`min-h-11 flex-1 sm:flex-none flex items-center justify-center gap-1.5 font-bold transition rounded-xl border ${
         big ? "px-6 py-3.5 text-sm" : "px-4 py-2.5 text-xs"
       } text-slate-600 hover:text-violet-700 bg-slate-50 hover:bg-violet-50 border-slate-200 hover:border-violet-200`}
     >
@@ -70,9 +70,10 @@ function LiveLink({ project, label, big = false }: { project: LocalizedProject; 
 }
 
 function FeatureChips({ tags, dark = false }: { tags: string[]; dark?: boolean }) {
+  const { t } = useLang();
   if (!tags?.length) return null;
   return (
-    <ul className="flex flex-wrap gap-2" aria-label="Features">
+    <ul className="flex flex-wrap gap-2" aria-label={t.portfolio.featuresLabel}>
       {tags.map((tag) => (
         <li
           key={tag}
@@ -163,7 +164,7 @@ function ProjectCard({ project, ...rest }: CardProps) {
         <h3 className="text-lg font-extrabold text-slate-900 mb-2">{project.name}</h3>
         <p className="text-sm text-slate-500 leading-relaxed mb-4 flex-1">{project.description}</p>
         <FeatureChips tags={project.tags} />
-        <div className="flex gap-2 mt-5">
+        <div className="flex flex-col lg:flex-row gap-2 mt-5">
           <LiveLink project={project} label={rest.liveSiteLabel} />
           <BookButton label={rest.buildLikeLabel} onClick={rest.onOpen} />
         </div>
@@ -187,6 +188,7 @@ export default function Portfolio() {
     return {
       ...proj,
       description: t.projectDescs[id] || proj.description,
+      tags: t.projectFeatures[id] || proj.tags,
       caseStudy: t.caseStudies?.[id],
     };
   };

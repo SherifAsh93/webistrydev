@@ -1,0 +1,86 @@
+[
+  {
+    "id": "qoya-furniture",
+    "name": "QOYA Furniture",
+    "description": "Ultra-luxury furniture brand website for a premium showroom. Fullscreen editorial design, auto-cycling hero slider, 90+ product images, contact inquiry system, and two-branch store locator.",
+    "category": "corporate",
+    "categoryLabel": "Luxury Brand",
+    "categoryColor": "from-amber-700 to-yellow-800",
+    "tags": ["Fullscreen Editorial Design", "90+ Product Photos", "Collection Catalogue + PDF", "Two-Branch Store Locator", "Inquiry System"],
+    "url": "https://qoya-furniture.vercel.app",
+    "screenshot": "/projects/qoya-furniture.png",
+    "featured": true
+  },
+  {
+    "id": "ahmed-elakad",
+    "name": "Ahmed El Akad",
+    "description": "Luxury couture brand website for a premier fashion designer. Custom gallery, collection management, and appointment booking system.",
+    "category": "fashion",
+    "categoryLabel": "Fashion Brand",
+    "categoryColor": "from-rose-500 to-pink-600",
+    "tags": ["Custom Couture Gallery", "Collection Management", "Appointment Booking", "Cloudinary Media Library"],
+    "url": "https://ahmed-elakad-dvbpaopcp-sherifs-projects-75c57a99.vercel.app",
+    "screenshot": "/projects/ahmed-elakad.png",
+    "featured": true
+  },
+  {
+    "id": "furniture-studio",
+    "name": "Furniture Studio",
+    "description": "Premium architectural furniture marketplace with full e-commerce: product management, cart, orders, and a powerful admin dashboard.",
+    "category": "ecommerce",
+    "categoryLabel": "E-Commerce",
+    "categoryColor": "from-amber-500 to-orange-600",
+    "tags": ["Product Management", "Cart & Checkout", "Order Tracking", "Admin Dashboard"],
+    "url": "https://furniture-studio-fs.vercel.app/",
+    "screenshot": "/projects/furniture-studio.png",
+    "featured": true
+  },
+  {
+    "id": "zahrtelkhlig",
+    "name": "Zahrtelkhlig",
+    "description": "Full-featured hijab fashion e-commerce — product catalog, size picker, wishlist, cart, checkout, order tracking, POS system, and a complete admin panel. Built mobile-first so it feels like a native app.",
+    "category": "ecommerce",
+    "categoryLabel": "E-Commerce",
+    "categoryColor": "from-amber-500 to-orange-600",
+    "tags": ["Checkout & Order Tracking", "Wishlist", "POS System", "Full Admin Panel"],
+    "url": "https://zahrtelkhlig.vercel.app/",
+    "screenshot": "/projects/zahrtelkhlig.png",
+    "featured": true
+  },
+  {
+    "id": "elghaly-vr",
+    "name": "Elghaly VR",
+    "description": "Innovative AR room visualizer — captures real-world colors from your mobile camera and paints virtual rooms in real-time.",
+    "category": "web-app",
+    "categoryLabel": "Web App",
+    "categoryColor": "from-violet-500 to-purple-600",
+    "tags": ["Live Camera Color Capture", "Real-Time AR Rooms", "WebRTC"],
+    "url": "https://elghaly-vr.vercel.app/",
+    "screenshot": "/projects/elghaly-vr.png",
+    "featured": false
+  },
+  {
+    "id": "mr-mohammed",
+    "name": "Mr. Mohammed",
+    "description": "Mobile-first Arabic & Islamic Studies teacher platform — students browse and enroll in live online courses, with Vodafone Cash payment integration. Includes a hidden admin panel for managing courses, enrollments, materials, and student results.",
+    "category": "web-app",
+    "categoryLabel": "Web App",
+    "categoryColor": "from-indigo-500 to-blue-700",
+    "tags": ["Live Course Enrollment", "Vodafone Cash Payments", "Hidden Admin Panel", "Arabic RTL"],
+    "url": "https://mohammedcourses.vercel.app",
+    "screenshot": "/projects/mr-mohammed.png",
+    "featured": false
+  },
+  {
+    "id": "sunset-management",
+    "name": "Sunset Management",
+    "description": "Managerial dashboard platform for a private compound — real-time search and a full admin dashboard for day-to-day operations.",
+    "category": "web-app",
+    "categoryLabel": "Web App",
+    "categoryColor": "from-indigo-500 to-blue-700",
+    "tags": ["Real-Time Search", "Admin Dashboard", "Compound Operations"],
+    "url": "https://sunset-management.vercel.app/",
+    "screenshot": "/projects/sunset.PNG",
+    "featured": false
+  }
+]

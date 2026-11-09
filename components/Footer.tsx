@@ -12,7 +12,7 @@ export default function Footer() {
   const { t } = useLang();
 
   return (
-    <footer className="border-t border-violet-100 pt-10 pb-28 md:pb-10 px-4 md:px-6 bg-white">
+    <footer className="border-t border-violet-100 pt-10 pb-40 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
 
         {/* Main row */}
@@ -79,7 +79,14 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-slate-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-slate-400">{t.footer.rights}</p>
-          <p className="text-xs text-slate-300">{t.footer.built}</p>
+          <a
+            href="https://www.webistrydev.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-slate-500 hover:text-violet-700 transition-colors text-center"
+          >
+            Designed &amp; developed by WebistryDev
+          </a>
         </div>
 
       </div>

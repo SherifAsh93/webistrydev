@@ -62,12 +62,12 @@ export default function Navbar() {
         </button>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden lg:flex items-center gap-7 shrink-0">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-slate-500 hover:text-violet-700 transition-colors font-semibold"
+              className="text-sm text-slate-500 hover:text-violet-700 transition-colors font-semibold whitespace-nowrap"
             >
               {l.label}
             </a>
@@ -87,14 +87,14 @@ export default function Navbar() {
 
           <a
             href="#start-project"
-            className="btn-primary hidden md:flex items-center gap-1.5 px-5 py-2.5 text-sm"
+            className="btn-primary hidden lg:flex items-center gap-1.5 px-5 py-2.5 text-sm whitespace-nowrap"
           >
             {t.nav.hire}
           </a>
 
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-xl border border-violet-100 bg-white shadow-sm"
+            className="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-xl border border-violet-100 bg-white shadow-sm"
             aria-label="Toggle menu"
           >
             <span className={`block w-4 h-0.5 bg-slate-600 rounded-full transition-all ${menuOpen ? "rotate-45 translate-y-1.5" : ""}`} />
@@ -106,7 +106,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="absolute top-20 left-4 right-4 bg-white rounded-2xl p-5 flex flex-col gap-2 shadow-2xl shadow-violet-100 border border-violet-100 md:hidden">
+        <div className="absolute top-20 left-4 right-4 bg-white rounded-2xl p-5 flex flex-col gap-2 shadow-2xl shadow-violet-100 border border-violet-100 lg:hidden">
           {links.map((l) => (
             <a
               key={l.href}

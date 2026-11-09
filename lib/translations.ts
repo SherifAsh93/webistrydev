@@ -23,7 +23,7 @@ export const translations = {
       cta2: "شوف شغلي",
       whatsapp: "كلّمني على واتساب",
       whatsappMessage: "أهلاً شريف، حابب أتكلم معاك عن موقع أو برنامج لبيزنسي.",
-      introduction: "أنا شريف، مطور مواقع وبرامج. بتتعامل معايا مباشرة من أول مكالمة لحد التسليم — بالعربي أو الإنجليزي، في مصر وخارجها.",
+      introduction: "أنا شريف، مطور Full-Stack ببني مواقع وتطبيقات وأنظمة متكاملة. بتتعامل معايا مباشرة من أول مكالمة لحد التسليم — بالعربي أو الإنجليزي، في مصر وخارجها.",
       urgency: "🔥 خصم 20% لأول 3 عملاء هذا الشهر",
       stats: [
         { number: "11+", label: "فكرة اتبنت" },
@@ -57,6 +57,7 @@ export const translations = {
       viewLive: "زور الموقع",
       live: "شغّال",
       flagshipBadge: "أحدث شغل",
+      featuresLabel: "مميزات المشروع",
       groups: {
         management: { label: "أنظمة الإدارة", desc: "لوحات تحكم لحظية وأنظمة إدارة بتدير البيزنس بالكامل." },
         ecommerce: { label: "تجارة إلكترونية", desc: "متاجر أونلاين متكاملة — من التصفح للدفع للتوصيل." },
@@ -266,18 +267,26 @@ export const translations = {
       contact: "تواصل",
     },
     projectDescs: {
-      "ahmed-elakad": "موقع فاخر لأشهر مصمم أزياء — بيعرض مجموعاته ويخلي عملاؤه يحجزوا مباشرة.",
+      "ahmed-elakad": "موقع شغّال دلوقتي على ahmedelakad.com لبراند أزياء فاخر — جاليري مخصوص، إدارة مجموعات، وحجز مواعيد يوصل للبيزنس مباشرة مش بس عن طريق إنستجرام.",
       "furniture-studio": "متجر أثاث راقي — اتفرج على القطع، اختار اللي يعجبك، واطلب اونلاين.",
       "zahrtelkhlig": "متجر حجاب متكامل — منتجات ومقاسات وأوردرات وتوصيل، كل حاجة من موبايلك.",
       "batrawy-clinic": "نظام إدارة عيادة — مواعيد ومرضى وفواتير، كل ده اونلاين من أي جهاز في أي وقت.",
       "ameer-dental": "عيادة أسنان اونلاين — حجز مواعيد وملفات مرضى وتتبع العلاجات بكل سهولة.",
       "elghaly-vr": "برنامج ذكي بيلتقط الألوان من الكاميرا ويريك إزاي هتبان في أوضتك قبل ما تصبغها.",
-      "qoya-furniture": "موقع براند فاخر لشوروم أثاث راقي — تصميم تحريري كامل الشاشة، 90+ صورة احترافية، ونظام استفسار مع لوكيتور الفروع.",
+      "qoya-furniture": "موقع شغّال دلوقتي على دومين خاص qoyafurniture.com لشوروم أثاث فاخر حقيقي — 45 مجموعة مع كتالوج PDF، لوكيتور لفرعين، والاستفسارات توصل للبيزنس على طول.",
       "olympia-beach-club": "تطبيق موبايل لنادي شاطئ راقي — حجز مرافق، فعاليات، اشتراكات، وتجربة شبه أبليكيشن على الموبايل.",
       "mr-mohammed": "موقع أستاذ لغة عربية وتربية إسلامية — بيسجّل الطلاب في الدورات أونلاين، بيدفعوا عبر فودافون كاش، ولوحة تحكم سرية للإدارة الكاملة.",
       "sunset-management": "لوحة تحكم إدارية لكمبوند خاص — بحث لحظي ولوحة تحكم كاملة لتسيير الشغل اليومي.",
-      "webistrydev": "الموقع ده — منصة لجذب العملاء فيها فورم استفسار بالصوت أو الكتابة، لوحة تحكم إدارية، شات مباشر مع العميل، ودعم كامل للعربي والإنجليزي.",
     } as Record<string, string>,
+    projectFeatures: {
+      "qoya-furniture": ["تصميم تحريري كامل الشاشة", "أكتر من 90 صورة للمنتجات", "كتالوج المجموعات + PDF", "مواقع الفرعين", "نظام استفسارات"],
+      "ahmed-elakad": ["معرض أزياء بتصميم خاص", "إدارة المجموعات", "حجز مواعيد", "مكتبة صور Cloudinary"],
+      "furniture-studio": ["إدارة المنتجات", "عربة وإتمام الطلب", "تتبع الطلبات", "لوحة تحكم إدارية"],
+      "zahrtelkhlig": ["إتمام الطلب وتتبعه", "المفضلة", "نظام كاشير (POS)", "لوحة تحكم متكاملة"],
+      "elghaly-vr": ["التقاط الألوان بالكاميرا", "معاينة الغرف بالواقع المعزز", "WebRTC"],
+      "mr-mohammed": ["التسجيل في الدورات المباشرة", "الدفع بفودافون كاش", "لوحة تحكم للإدارة", "دعم العربي (RTL)"],
+      "sunset-management": ["بحث لحظي", "لوحة تحكم إدارية", "إدارة عمليات الكمبوند"],
+    } as Record<string, string[]>,
     caseStudies: {
       "mr-mohammed": {
         problem: "أستاذ لغة عربية وتربية إسلامية معندوش وسيلة يبيع أو يدير بيها دوراته اونلاين غير المكالمات والواتساب — مفيش تسجيل ذاتي، ولا دفع اتوماتيك، ولا سجل للطلاب.",
@@ -307,7 +316,7 @@ export const translations = {
       "ahmed-elakad": {
         problem: "مصمم أزياء فاخر محتاج حضور رقمي يواكب مستوى البراند، ووسيلة يستقبل بيها طلبات مواعيد غير رسايل الإنستجرام.",
         built: "جاليري مخصوص، إدارة كولكشنز، ونظام حجز مواعيد.",
-        outcome: "واجهة دائمة وعلى مستوى البراند يقدر العميل يتصفحها في أي وقت، وطلبات الحجز بقت توصل من الموقع مش بس عن طريق الرسايل.",
+        outcome: "الموقع شغّال دلوقتي على ahmedelakad.com — واجهة دائمة على مستوى البراند، والمواعيد بقت توصل من الموقع مباشرة مش بس عن طريق رسايل إنستجرام.",
       },
       "furniture-studio": {
         problem: "متجر أثاث معماري كان محتاج يبيع اونلاين فعليًا — بإدارة أوردرات ومخزون حقيقية، مش مجرد صفحة كتالوج.",
@@ -316,8 +325,8 @@ export const translations = {
       },
       "qoya-furniture": {
         problem: "شوروم أثاث فاخر محتاج حضور على الويب بنفس تأثير دخول المحل، وطريقة سهلة يلاقي بيها الفرع الأقرب.",
-        built: "تصميم تحريري كامل الشاشة بسلايدر تلقائي، أكتر من 90 صورة منتج، نظام استفسار، ولوكيتور لفرعين.",
-        outcome: "الموقع بقى شبه شوروم تاني ممكن تتصفحه في أي وقت، وبيبعت استفسارات للبيزنس مباشرة بدل الاعتماد على اللي بيمر بالمحل.",
+        built: "تصميم تحريري كامل الشاشة، 45 ألبوم مجموعة، كتالوج PDF للتحميل، نظام استفسار، ولوكيتور لفرعين.",
+        outcome: "الموقع شغّال دلوقتي على qoyafurniture.com — شوروم تاني مفتوح 24 ساعة، 45 مجموعة بتتصفح أونلاين، والاستفسارات توصل البيزنس على طول بدل الاعتماد على اللي بيمر بالمحل.",
       },
       "elghaly-vr": {
         problem: "العملاء كانوا محتاجين يتخيلوا لون الدهان هيبان إزاي في مكانهم، أو يعتمدوا على عينات فيزيائية.",
@@ -362,7 +371,7 @@ export const translations = {
       cta2: "See My Work",
       whatsapp: "Chat with me on WhatsApp",
       whatsappMessage: "Hi Sherif, I'd like to discuss a website or app for my business.",
-      introduction: "I'm Sherif, a web developer. You work directly with me from the first conversation to handover — in Arabic or English, in Egypt or abroad.",
+      introduction: "I'm Sherif, a full-stack developer building websites, apps, and business systems. You work directly with me from the first conversation to handover — in Arabic or English, in Egypt or abroad.",
       urgency: "🔥 20% off for the first 3 clients this month",
       stats: [
         { number: "11+", label: "Projects Built" },
@@ -396,6 +405,7 @@ export const translations = {
       viewLive: "View Live Site",
       live: "Live",
       flagshipBadge: "Latest Build",
+      featuresLabel: "Project features",
       groups: {
         management: { label: "Management Systems", desc: "Real-time dashboards and management systems that run the business." },
         ecommerce: { label: "E-Commerce", desc: "Full online stores — from browsing to checkout to fulfillment." },
@@ -605,18 +615,18 @@ export const translations = {
       contact: "Contact",
     },
     projectDescs: {
-      "ahmed-elakad": "Luxury website for a premier fashion designer — showcasing his collections and letting clients book appointments.",
+      "ahmed-elakad": "Live at ahmedelakad.com — a luxury fashion designer site with a custom gallery, collection management, and appointment booking that reaches the business beyond Instagram DMs.",
       "furniture-studio": "Premium furniture store — browse beautiful pieces, choose your favorites, and order online.",
       "zahrtelkhlig": "Full hijab fashion store — products, sizes, orders, and delivery, all from your phone.",
       "batrawy-clinic": "Clinic management system — appointments, patient records, and billing, all online from any device.",
       "ameer-dental": "Dental clinic online — easy appointment booking, patient files, and treatment tracking.",
       "elghaly-vr": "Smart app that captures room colors through your camera and shows how they'll look before you paint.",
-      "qoya-furniture": "Ultra-luxury brand website for a premium furniture showroom — fullscreen editorial design, 90+ professional photos, inquiry system, and dual-branch store locator.",
+      "qoya-furniture": "Live at qoyafurniture.com — a real luxury furniture showroom with 45 collections, a downloadable PDF catalogue, two-branch store locator, and inquiries that reach the business directly.",
       "olympia-beach-club": "Mobile-first beach club app — facility booking, events, membership plans, and a native app feel on any phone.",
       "mr-mohammed": "Arabic & Islamic Studies teacher platform — students enroll in live online courses, pay via Vodafone Cash, and the teacher manages everything from a hidden admin panel.",
       "sunset-management": "Managerial dashboard platform for a private compound — real-time search and a full admin dashboard for day-to-day operations.",
-      "webistrydev": "This site — a lead-generation platform with a voice-or-text inquiry form, admin dashboard, live client chat, and bilingual AR/EN support.",
     } as Record<string, string>,
+    projectFeatures: {} as Record<string, string[]>,
     caseStudies: {
       "mr-mohammed": {
         problem: "An Arabic & Islamic Studies teacher had no way to sell or manage live online courses beyond phone calls and WhatsApp — no self-serve enrollment, no automated payment, no student records.",
@@ -646,7 +656,7 @@ export const translations = {
       "ahmed-elakad": {
         problem: "A premium fashion designer needed a digital presence matching the brand's positioning, and a way to take appointment requests beyond Instagram DMs.",
         built: "A custom gallery, collection management, and an appointment booking system.",
-        outcome: "A permanent, on-brand showcase clients can browse any time, with booking requests landing on the site instead of only in DMs.",
+        outcome: "Live at ahmedelakad.com — a permanent, on-brand showcase clients browse any time, with bookings landing on the site instead of only in Instagram DMs.",
       },
       "furniture-studio": {
         problem: "An architectural furniture marketplace needed to actually sell online — with real order and inventory management, not just a catalog page.",
@@ -655,8 +665,8 @@ export const translations = {
       },
       "qoya-furniture": {
         problem: "A luxury furniture showroom needed a web presence with the same impact as walking into the store, plus an easy way to find the nearest branch.",
-        built: "A fullscreen editorial design with an auto-cycling hero slider, 90+ product images, a contact inquiry system, and a two-branch store locator.",
-        outcome: "The site functions as a second showroom that's browsable any time, sending inquiries straight to the business instead of relying on walk-ins.",
+        built: "A fullscreen editorial design with 45 collection albums, a downloadable PDF catalogue, a contact inquiry system, and a two-branch store locator.",
+        outcome: "Live at qoyafurniture.com — a second showroom open 24/7 with 45 collections browsable online, sending inquiries straight to the business instead of relying on walk-ins.",
       },
       "elghaly-vr": {
         problem: "Customers had to imagine how a paint color would look in their space, or rely on physical swatches.",

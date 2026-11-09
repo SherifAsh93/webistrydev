@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-15T20:35:00Z",
+  "published": [
+    {
+      "queueId": 1,
+      "slot": 1,
+      "postId": "122137547829384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-16T04:06:30.300Z",
+      "lang": "ar",
+      "media": "public/projects/webistrydev.jpg"
+    },
+    {
+      "queueId": 2,
+      "slot": 2,
+      "postId": "122137547889384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-16T04:06:36.623Z",
+      "lang": "ar",
+      "media": "public/projects/zahrtelkhlig.png"
+    },
+    {
+      "queueId": 3,
+      "slot": 3,
+      "postId": "122137547985384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-16T04:06:42.934Z",
+      "lang": "ar",
+      "media": "public/projects/qoya-furniture.png"
+    },
+    {
+      "queueId": 4,
+      "slot": 4,
+      "postId": "122137660413384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-16T17:00:09.891Z",
+      "lang": "ar",
+      "media": "public/projects/batrawy-clinic.png"
+    },
+    {
+      "queueId": 11,
+      "slot": 5,
+      "postId": "122138696367384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-21T17:00:10.128Z",
+      "lang": "ar",
+      "media": "public/projects/webistrydev.jpg"
+    },
+    {
+      "queueId": 12,
+      "slot": 6,
+      "postId": "122138919159384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-22T17:00:10.987Z",
+      "lang": "ar",
+      "media": "public/projects/furniture-studio.png"
+    },
+    {
+      "queueId": 13,
+      "slot": 7,
+      "postId": "122139110025384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-23T17:00:07.837Z",
+      "lang": "ar",
+      "media": "public/projects/olympia-beach-club.png"
+    },
+    {
+      "queueId": 5,
+      "slot": 8,
+      "postId": "122139311691384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-24T17:00:11.751Z",
+      "lang": "ar",
+      "media": "public/projects/furniture-studio.png"
+    },
+    {
+      "queueId": 6,
+      "slot": 9,
+      "postId": "122139512271384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-25T17:00:09.662Z",
+      "lang": "ar",
+      "media": "public/projects/ahmed-elakad.png"
+    },
+    {
+      "queueId": 7,
+      "slot": 10,
+      "postId": "122139702291384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-26T17:00:09.548Z",
+      "lang": "ar",
+      "media": "public/projects/mr-mohammed.png"
+    },
+    {
+      "queueId": 8,
+      "slot": 11,
+      "postId": "122139891825384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-27T17:00:11.656Z",
+      "lang": "ar",
+      "media": "public/projects/sunset.PNG"
+    },
+    {
+      "queueId": 9,
+      "slot": 12,
+      "postId": "122140075413384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-28T17:00:08.425Z",
+      "lang": "ar",
+      "media": "public/projects/elghaly-vr.png"
+    },
+    {
+      "queueId": 10,
+      "slot": 13,
+      "postId": "122140324119384950",
+      "permalink": null,
+      "verified": false,
+      "publishedAt": "2026-10-29T17:00:10.027Z",
+      "lang": "ar",
+      "media": "public/projects/olympia-beach-club.png"
+    }
+  ],
+  "alerts": {
+    "tokenInvalid": {
+      "at": "2026-10-19T17:00:04.838Z",
+      "delivered": "telegram",
+      "messageId": 471
+    }
+  }
+}
